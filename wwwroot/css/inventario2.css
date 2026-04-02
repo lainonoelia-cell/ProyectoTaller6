@@ -1,0 +1,133 @@
+body {
+    background: rgba(216, 193, 193, 0.91);
+    font-family: Arial;
+    margin: 0;
+}
+
+/* TITULO */
+.titulo {
+    text-align: center;
+    font-size: 40px;
+    margin: 20px;
+    font-family: cursive;
+}
+
+/* CONTENEDOR PRINCIPAL */
+.contenedor-inv2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    padding: 40px;
+}
+
+/* IMAGEN */
+.producto-img img {
+    width: 100%;
+    max-width: 400px;
+}
+
+/* PROMO */
+.promo {
+    background: #d8caca;
+    padding: 20px;
+    border: 2px solid black;
+}
+
+.promo h2 {
+    text-align: center;
+}
+
+/* GRID DESCUENTOS */
+.grid-descuentos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.grid-descuentos button {
+    padding: 10px;
+    font-size: 18px;
+    background: #fff;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+/* MENU DESPLEGABLE DESCUENTOS */
+.dropdown select {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    border: 2px solid black;
+    background: white;
+    cursor: pointer;
+}
+
+/* BOTON */
+.btn-aplicar {
+    width: 100%;
+    padding: 15px;
+    background: black;
+    color: white;
+    font-size: 20px;
+}
+
+/* RESULTADO 1 */
+.resultado1 {
+    grid-column: span 1;
+    background: #d8caca;
+    padding: 20px;
+    border: 2px solid black;
+    text-align: left;
+}
+
+/* RESULTADO 2 */
+.resultado2 {
+    grid-column: span 1;
+    background: #d8caca;
+    padding: 20px;
+    border: 2px solid black;
+    text-align: left;
+}
+
+.precio-final {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* VOLVER */
+.btn-volver {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: #9B6C05;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+}
+
+/* LOGO CENTRO ABAJO */
+.logo-centro {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.logo-centro img {
+    width: 200px;
+}
+
+/* LOGO ESQUINA DERECHA */
+.logo-derecha {
+    position: fixed;
+    bottom: 600px;
+    right: 10px;
+}
+
+.logo-derecha img {
+    width: 80px;
+}
+
+.navbar {
+    display: none;
+}

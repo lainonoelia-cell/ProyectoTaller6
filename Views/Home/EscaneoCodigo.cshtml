@@ -1,0 +1,43 @@
+@{
+    ViewData["Title"] = "Escaneo Codigo";
+}
+
+<link rel="stylesheet" href="~/css/escaneo.css" />
+
+<!-- BOTON VOLVER -->
+<a href="/Home/Inventario1" class="volver">⬅</a>
+
+<h1 class="titulo">ESCANEO CÓDIGO PRODUCTO</h1>
+
+<div class="contenedor-escaneo">
+
+    <!-- MENSAJE -->
+    <p class="mensaje">
+        Por favor, apunte la cámara al código de la prenda
+    </p>
+
+    <!-- CAMARA -->
+    <div class="camara-grande">
+        <img src="~/images/camara.png" />
+    </div>
+
+    <!-- RESULTADOS -->
+    <p class="resultado ok">Producto encontrado ✅</p>
+    <p class="resultado error">Producto no encontrado ❌</p>
+
+    <!-- INGRESO MANUAL -->
+    <div class="manual">
+        <input type="text" placeholder="Ingresar código manual" />
+        <button>Buscar 🔎</button>
+    </div>
+
+</div>
+
+<!-- LOGOS -->
+<div class="logo-centro">
+    <img src="~/images/logoCDNsis.png" />
+</div>
+
+<div class="logo-derecha">
+    <img src="~/images/logoMM.png" />
+</div>
