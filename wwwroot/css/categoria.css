@@ -13,16 +13,6 @@ body {
     
 }
 
-.producto img {
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.producto img:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-}
-
 /* CONTENEDOR */
 .contenedor {
     display: flex;
@@ -94,6 +84,7 @@ body {
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
+
 .btn-volver {
     position: fixed;
     top: 20px;
@@ -111,8 +102,6 @@ body {
     background: #7a5304;
     transform: scale(1.1);
 }
-
-
 .navbar {
     display: none;
 }

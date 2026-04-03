@@ -95,7 +95,9 @@ C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\ProyectoTaller6.pdb
 C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\ProyectoTaller6.genruntimeconfig.cache
 C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\ref\ProyectoTaller6.dll
 C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\compressed\c1jkjok0kx-{0}-ej91gfq5eu-ej91gfq5eu.gz
-C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\compressed\jkydkuy7ju-{0}-gl6kv2w5na-gl6kv2w5na.gz
 C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\ProyectoTaller6.sourcelink.json
-C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\compressed\l7sttlletx-{0}-u89irchjaf-u89irchjaf.gz
-C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\compressed\6wamlvx0qv-{0}-y4ijap13fq-y4ijap13fq.gz
+C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\compressed\rszvoaauag-{0}-hvwc4nabdr-hvwc4nabdr.gz
+C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\compressed\l7sttlletx-{0}-94pltct7af-94pltct7af.gz
+C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\compressed\jkydkuy7ju-{0}-t8isw2fho5-t8isw2fho5.gz
+C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\compressed\6wamlvx0qv-{0}-dop7re9t2t-dop7re9t2t.gz
+C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\compressed\y79ms81gl3-{0}-7qqgsejyau-7qqgsejyau.gz

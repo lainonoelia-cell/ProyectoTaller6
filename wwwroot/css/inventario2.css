@@ -95,7 +95,6 @@ body {
     font-weight: bold;
 }
 
-/* VOLVER */
 .btn-volver {
     position: fixed;
     top: 20px;
@@ -104,6 +103,14 @@ body {
     color: white;
     padding: 10px 15px;
     text-decoration: none;
+    border-radius: 8px;
+    font-size: 18px;
+    transition: all 0.2s;
+}
+
+.btn-volver:hover {
+    background: #7a5304;
+    transform: scale(1.1);
 }
 
 /* LOGO CENTRO ABAJO */
@@ -117,15 +124,15 @@ body {
     width: 200px;
 }
 
-/* LOGO ESQUINA DERECHA */
+* /* LOGO ESQUINA DERECHA */
 .logo-derecha {
     position: fixed;
-    bottom: 600px;
+    bottom: 700px;
     right: 10px;
 }
 
 .logo-derecha img {
-    width: 80px;
+    width: 98px;
 }
 
 .navbar {

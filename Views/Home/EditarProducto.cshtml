@@ -1,0 +1,51 @@
+@model ProyectoTaller6.Models.Producto
+
+@{
+    ViewData["Title"] = "Editar Producto";
+}
+
+<link rel="stylesheet" href="~/css/editarProducto.css" />
+
+<form method="post" action="/Home/GuardarProducto">
+
+<input type="hidden" name="tipo" value="@ViewBag.Tipo" />
+
+
+<h1 class="titulo">EDITAR PRODUCTO</h1>
+
+
+
+<input type="hidden" name="Id" value="@Model.Id" />
+
+<div class="producto">
+    <img src="~/images/@Model.Imagen" />
+</div>
+
+<label>Nombre:</label>
+<input type="text" name="Nombre" value="@Model.Nombre" />
+
+<label>Stock:</label>
+<input type="number" name="Stock" value="@Model.Stock" />
+
+<label>Precio:</label>
+<input type="number" name="Precio" value="@Model.Precio" />
+
+
+<button type="submit">Guardar</button>
+
+<a href="/Home/Categoria?tipo=@Model.Categoria" class="btn-volver">⬅</a>
+
+</form>
+
+    <!-- LOGO CENTRO ABAJO -->
+<div class="logo-centro">
+    <img src="~/images/logoCDNsis.png" />
+</div>
+
+<!-- LOGO DERECHA -->
+<div class="logo-derecha">
+    <img src="~/images/logoMM.png" />
+</div>
+
+<!-- VOLVER -->
+<a href="/Home/Categoria?tipo=@ViewBag.Tipo" class="btn-volver">⬅</a>

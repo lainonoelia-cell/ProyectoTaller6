@@ -10,17 +10,8 @@ body {
     font-size: 40px;
     font-family: cursive;
     margin: 20px;
+    white-space: nowrap; /* 👈 CLAVE */
     
-}
-
-.producto img {
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.producto img:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
 /* CONTENEDOR */
@@ -47,15 +38,7 @@ body {
     object-fit: cover;  /* no se deforma */
 }
 
-/* BOTONES */
-.acciones button {
-    margin: 5px;
-    padding: 10px;
-    background: #0a0a0a;
-    border: none;
-    cursor: pointer;
-    color: aliceblue;
-}
+
 /* LOGO CENTRO ABAJO */
 .logo-centro {
     display: flex;
@@ -78,21 +61,6 @@ body {
     width: 98px;
 }
 
-/* CAMARA */
-.camara {
-    position: fixed; /* queda fija en pantalla */
-    right: 90px;     /* separación del borde derecho */
-    top: 50%;        /* mitad de pantalla */
-    transform: translateY(-50%); /* centra verticalmente */
-}
-
-.camara img {
-    width: 80px;
-    background: #d8caca;
-    border-radius: 50%;
-    padding: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-}
 
 .btn-volver {
     position: fixed;
@@ -112,6 +80,26 @@ body {
     transform: scale(1.1);
 }
 
+
+form {
+    width: 300px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+input {
+    padding: 8px;
+}
+
+button {
+    background: #9B6C05;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
 
 .navbar {
     display: none;
