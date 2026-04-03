@@ -48,16 +48,17 @@ body {
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
-/* RESULTADOS */
-.resultado {
+/* RESULTADOS 1 */
+.resultado1 {
     font-size: 20px;
+    font-family: cursive;
 }
 
-.ok {
+.ok1 {
     color: green;
 }
 
-.error {
+.error1 {
     color: red;
 }
 
@@ -81,6 +82,20 @@ body {
     padding: 10px 15px;
     border: none;
     cursor: pointer;
+}
+
+/* RESULTADOS 2 */
+.resultado2 {
+    font-size: 20px;
+    font-family: cursive;
+}
+
+.ok2 {
+    color: green;
+}
+
+.error2 {
+    color: red;
 }
 
 /* LOGO CENTRO ABAJO */

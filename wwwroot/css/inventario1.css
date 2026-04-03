@@ -42,14 +42,14 @@ body {
     background: #d8caca;
     border: 2px solid black;
     padding: 20px;
-    width: 300px;
+    width: 350px;
     text-align: center;
 }
 
 /* IMAGEN */
 .producto img {
     width: 200px;       /* tamaño fijo */
-    height: 200px;
+    height: 260px;
     object-fit: cover;  /* no se deforma */
 }
 
@@ -57,7 +57,7 @@ body {
 .acciones button {
     margin: 5px;
     padding: 10px;
-    background: #3f3e3e;
+    background: #0a0a0a;
     border: none;
     cursor: pointer;
     color: aliceblue;
@@ -87,7 +87,7 @@ body {
 /* CAMARA */
 .camara {
     position: fixed; /* queda fija en pantalla */
-    right: 30px;     /* separación del borde derecho */
+    right: 90px;     /* separación del borde derecho */
     top: 50%;        /* mitad de pantalla */
     transform: translateY(-50%); /* centra verticalmente */
 }
