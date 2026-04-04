@@ -17,6 +17,7 @@ public static List<Producto> productos = new List<Producto>
     new Producto { Id = 1, Nombre = "Remera gris", Stock = 10, Precio = 5000, Categoria = "Remeras", Imagen = "remeragris.jpeg" },
     new Producto { Id = 2, Nombre = "Remera blanca", Stock = 5, Precio = 6000, Categoria = "Remeras", Imagen = "remerablanca.jpeg" },
     new Producto { Id = 3, Nombre = "Remera azul", Stock = 2, Precio = 8000, Categoria = "Remeras", Imagen = "remeraazul.jpeg" },
+     new Producto { Id = 3, Nombre = "Remera oso", Stock = 2, Precio = 8000, Categoria = "Remeras", Imagen = "remeraoso.jpeg" },
 
     // ABRIGOS
     new Producto { Id = 4, Nombre = "Campera negra", Stock = 4, Precio = 15000, Categoria = "Abrigos", Imagen = "campera1.jpeg" },
