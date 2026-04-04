@@ -84,6 +84,10 @@ body {
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
+.camara img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
 
 .btn-volver {
     position: fixed;
@@ -102,6 +106,29 @@ body {
     background: #7a5304;
     transform: scale(1.1);
 }
+
+
+
+.subcategorias {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.subcategorias button {
+    background: #9B6C05;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.subcategorias button:hover {
+    background: #7a5304;
+}
+
 .navbar {
     display: none;
 }

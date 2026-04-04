@@ -1,81 +1,114 @@
- @model List<ProyectoTaller6.Models.Producto>
-    
+@model List<ProyectoTaller6.Models.Producto>
+
 @{
     ViewData["Title"] = "Categoria";
-    var tipo = ViewBag.Tipo;
-    var nombre = TempData["Nombre"];
-var stock = TempData["Stock"];
-var precio = TempData["Precio"];
 }
-
 
 <link rel="stylesheet" href="~/css/categoria.css" />
 
 <!-- BOTON VOLVER -->
 <a href="/Home/Inventario1" class="btn-volver">⬅</a>
 
-
-<div class="contenedor">
-
-  
-
 <h1 class="titulo">@ViewBag.Tipo</h1>
 
-<div class="contenedor">
-
-@foreach (var p in Model)
+<!-- FILTROS DINAMICOS -->
+@if (ViewBag.Tipo == "Remeras")
 {
-    <div class="producto">
-        <img src="~/images/@p.Imagen" />
-
-        <p>@p.Nombre</p>
-        <p>Stock: @p.Stock</p>
-        <p>Precio: $@p.Precio</p>
-
-        <div class="acciones">
-            <a href="/Home/EditarProducto?id=@p.Id">
-                <button>Editar</button>
-            </a>
-            <button onclick="alert('Eliminar')">Eliminar</button>
-            <button onclick="alert('Agregar')">Agregar</button>
-        </div>
+    <div class="subcategorias">
+        <button onclick="filtrar('Todos')">Todos</button>
+        <button onclick="filtrar('RemerasLisas')">Remeras lisas</button>
+        <button onclick="filtrar('RemerasEstampadas')">Remeras estampadas</button>
     </div>
 }
+
+@if (ViewBag.Tipo == "Abrigos")
+{
+    <div class="subcategorias">
+        <button onclick="filtrar('Todos')">Todos</button>
+        <button onclick="filtrar('Camperas')">Camperas</button>
+        <button onclick="filtrar('Chalecos')">Chalecos</button>
+    </div>
+}
+
+@if (ViewBag.Tipo == "Pantalones")
+{
+    <div class="subcategorias">
+        <button onclick="filtrar('Todos')">Todos</button>
+        <button onclick="filtrar('Jeans')">Jeans</button>
+        <button onclick="filtrar('Algodon')">Algodón</button>
+    </div>
+}
+
+
+@if (ViewBag.Tipo == "Cortos")
+{
+    <div class="subcategorias">
+        <button onclick="filtrar('Todos')">Todos</button>
+        <button onclick="filtrar('Bermudas')">Bermudas</button>
+        <button onclick="filtrar('Shorts')">Shorts</button>
+    </div>
+}
+
+
+@if (ViewBag.Tipo == "Accesorios")
+{
+    <div class="subcategorias">
+        <button onclick="filtrar('Todos')">Todos</button>
+        <button onclick="filtrar('Gorros')">Gorros</button>
+        <button onclick="filtrar('Riñoneras')">Riñoneras</button>
+    </div>
+}
+
+<!-- PRODUCTOS -->
+<div class="contenedor">
+
+    @foreach (var p in Model)
+    {
+        <div class="producto" data-tipo="@p.Tipo">
+            <img src="~/images/@p.Imagen" />
+
+            <p>@p.Nombre</p>
+            <p>Stock: @p.Stock</p>
+            <p>Precio: $@p.Precio</p>
+
+            <div class="acciones">
+                <a href="/Home/EditarProducto?id=@p.Id">
+                    <button>Editar</button>
+                </a>
+                <button onclick="alert('Eliminar')">Eliminar</button>
+                <button onclick="alert('Agregar')">Agregar</button>
+            </div>
+        </div>
+    }
 
 </div>
 
 <script>
-function editar() {
-    alert("Editar producto");
-}
+function filtrar(tipo) {
+    let productos = document.querySelectorAll(".producto");
 
-function eliminar() {
-    alert("Producto eliminado");
-}
-
-function agregar() {
-    alert("Producto agregado");
+    productos.forEach(p => {
+        if (tipo === "Todos" || p.dataset.tipo === tipo) {
+            p.style.display = "block";
+        } else {
+            p.style.display = "none";
+        }
+    });
 }
 </script>
 
-
-
-</div> <!-- cierre de contenedor -->
-
 <!-- CAMARA -->
 <div class="camara">
-       <a href="/Home/EscaneoCodigo">
-    <img src="~/images/camara.png" />
+    <a href="/Home/EscaneoCodigo">
+        <img src="~/images/camara.png" />
     </a> 
 </div>
 
-<!-- LOGO CENTRO ABAJO -->
+<!-- LOGOS -->
 <div class="logo-centro">
     <img src="~/images/logoCDNsis.png" />
 </div>
 
-<!-- LOGO DERECHA -->
 <div class="logo-derecha">
     <img src="~/images/logoMM.png" />
 </div>
-

@@ -13,26 +13,32 @@ public class HomeController : Controller
 
 public static List<Producto> productos = new List<Producto>
 {
-    // REMERAS
-    new Producto { Id = 1, Nombre = "Remera gris", Stock = 10, Precio = 5000, Categoria = "Remeras", Imagen = "remeragris.jpeg" },
-    new Producto { Id = 2, Nombre = "Remera blanca", Stock = 5, Precio = 6000, Categoria = "Remeras", Imagen = "remerablanca.jpeg" },
-    new Producto { Id = 3, Nombre = "Remera azul", Stock = 2, Precio = 8000, Categoria = "Remeras", Imagen = "remeraazul.jpeg" },
-     new Producto { Id = 3, Nombre = "Remera oso", Stock = 2, Precio = 8000, Categoria = "Remeras", Imagen = "remeraoso.jpeg" },
+   // REMERAS
+   new Producto { Id = 1, Nombre = "Remera gris", Stock = 10, Precio = 3000, Categoria = "Remeras", Tipo = "RemerasLisas", Imagen = "remerablanca.jpeg" },
+   new Producto { Id = 2, Nombre = "Remera blanca", Stock = 5, Precio = 6000, Categoria = "Remeras", Tipo = "RemerasEstampadas", Imagen = "remeragris.jpeg" },
+   new Producto { Id = 3, Nombre = "Remera azul", Stock = 2, Precio = 8000, Categoria = "Remeras", Tipo = "RemerasEstampadas", Imagen = "remeraazul.jpeg" },
+   new Producto { Id = 4, Nombre = "Remera oso", Stock = 2, Precio = 8000, Categoria = "Remeras", Tipo = "RemerasEstampadas", Imagen = "remeraoso.jpeg" },
 
-    // ABRIGOS
-    new Producto { Id = 4, Nombre = "Campera negra", Stock = 4, Precio = 15000, Categoria = "Abrigos", Imagen = "campera1.jpeg" },
-    new Producto { Id = 5, Nombre = "Campera verde", Stock = 3, Precio = 18000, Categoria = "Abrigos", Imagen = "campera2.jpeg" },
-    new Producto { Id = 5, Nombre = "Campera verde", Stock = 3, Precio = 18000, Categoria = "Abrigos", Imagen = "campera3.jpeg" },
-    new Producto { Id = 5, Nombre = "Chaleco", Stock = 3, Precio = 18000, Categoria = "Abrigos", Imagen = "chaleco.jpeg" },
-    
-    // PANTALONES
-    new Producto { Id = 6, Nombre = "Pantalón jean", Stock = 6, Precio = 12000, Categoria = "Pantalones", Imagen = "pantalon1.jpeg" },
 
-    // BERMUDAS
-    new Producto { Id = 7, Nombre = "Bermuda gris", Stock = 8, Precio = 9000, Categoria = "Bermudas", Imagen = "bermuda1.jpeg" },
+   // ABRIGOS
+   new Producto { Id = 5, Nombre = "Campera 1", Stock = 10, Precio = 3000, Categoria = "Abrigos", Tipo = "Camperas", Imagen = "campera1.jpeg" },
+   new Producto { Id = 6, Nombre = "Campera 2", Stock = 5, Precio = 6000, Categoria = "Abrigos", Tipo = "Camperas", Imagen = "campera2.jpeg" },
+   new Producto { Id = 7, Nombre = "Campera 3", Stock = 2, Precio = 8000, Categoria = "Abrigos", Tipo = "Camperas", Imagen = "campera3.jpeg" },
+   new Producto { Id = 8, Nombre = "Chaleco", Stock = 2, Precio = 8000, Categoria = "Abrigos", Tipo = "Chalecos", Imagen = "chaleco.jpeg" },
+   
+   
+   // PANTALONES
+   new Producto { Id = 9, Nombre = "Campera 1", Stock = 10, Precio = 3000, Categoria = "Pantalones", Tipo = "Jeans", Imagen = "campera1.jpeg" },
+   new Producto { Id = 10, Nombre = "Campera 2", Stock = 5, Precio = 6000, Categoria = "Pantalones", Tipo = "Algodon", Imagen = "campera2.jpeg" },
 
+   // CORTOS
+   new Producto { Id = 9, Nombre = "Campera 1", Stock = 10, Precio = 3000, Categoria = "Cortos", Tipo = "Bermudas", Imagen = "campera1.jpeg" },
+   new Producto { Id = 10, Nombre = "Campera 2", Stock = 5, Precio = 6000, Categoria = "Cortos", Tipo = "Shorts", Imagen = "campera2.jpeg" },
+   
     // ACCESORIOS
-    new Producto { Id = 8, Nombre = "Gorra", Stock = 15, Precio = 3000, Categoria = "Accesorios", Imagen = "gorra.jpeg" }
+    new Producto { Id = 8, Nombre = "Gorra Nike", Stock = 10, Precio = 3000, Categoria = "Accesorios", Tipo = "Gorros", Imagen = "gorra.jpeg" },
+    new Producto { Id = 9, Nombre = "Riñonera Negra", Stock = 5, Precio = 4500, Categoria = "Accesorios", Tipo = "Riñoneras", Imagen = "rinonera.jpeg" }
+
 };
     
     public IActionResult Index()
@@ -56,12 +62,19 @@ public static List<Producto> productos = new List<Producto>
 }
 
 
-public IActionResult Categoria(string tipo)
+public IActionResult Categoria(string tipo, string filtro)
 {
-    ViewBag.Tipo = tipo; // 👈 ESTA LÍNEA FALTABA
+    ViewBag.Tipo = tipo;
+    ViewBag.Filtro = filtro;
 
-    var lista = productos.Where(p => p.Categoria == tipo).ToList();
-    return View(lista);
+    var lista = productos.Where(p => p.Categoria == tipo);
+
+    if (!string.IsNullOrEmpty(filtro))
+    {
+        lista = lista.Where(p => p.Tipo == filtro);
+    }
+
+    return View(lista.ToList());
 }
 
 
