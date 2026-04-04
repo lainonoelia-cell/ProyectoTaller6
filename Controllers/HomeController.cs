@@ -32,12 +32,12 @@ public static List<Producto> productos = new List<Producto>
    new Producto { Id = 10, Nombre = "Campera 2", Stock = 5, Precio = 6000, Categoria = "Pantalones", Tipo = "Algodon", Imagen = "campera2.jpeg" },
 
    // CORTOS
-   new Producto { Id = 9, Nombre = "Campera 1", Stock = 10, Precio = 3000, Categoria = "Cortos", Tipo = "Bermudas", Imagen = "campera1.jpeg" },
-   new Producto { Id = 10, Nombre = "Campera 2", Stock = 5, Precio = 6000, Categoria = "Cortos", Tipo = "Shorts", Imagen = "campera2.jpeg" },
+   new Producto { Id = 11, Nombre = "Campera 1", Stock = 10, Precio = 3000, Categoria = "Cortos", Tipo = "Bermudas", Imagen = "campera1.jpeg" },
+   new Producto { Id = 12, Nombre = "Campera 2", Stock = 5, Precio = 6000, Categoria = "Cortos", Tipo = "Shorts", Imagen = "campera2.jpeg" },
    
     // ACCESORIOS
-    new Producto { Id = 8, Nombre = "Gorra Nike", Stock = 10, Precio = 3000, Categoria = "Accesorios", Tipo = "Gorros", Imagen = "gorra.jpeg" },
-    new Producto { Id = 9, Nombre = "Riñonera Negra", Stock = 5, Precio = 4500, Categoria = "Accesorios", Tipo = "Riñoneras", Imagen = "rinonera.jpeg" }
+    new Producto { Id = 13, Nombre = "Gorra Nike", Stock = 10, Precio = 3000, Categoria = "Accesorios", Tipo = "Gorros", Imagen = "gorra.jpeg" },
+    new Producto { Id = 14, Nombre = "Riñonera Negra", Stock = 5, Precio = 4500, Categoria = "Accesorios", Tipo = "Riñoneras", Imagen = "rinonera.jpeg" }
 
 };
     
