@@ -14,10 +14,10 @@ public class HomeController : Controller
 public static List<Producto> productos = new List<Producto>
 {
    // REMERAS
-   new Producto { Id = 1, Nombre = "Remera gris", Stock = 10, Precio = 3000, Categoria = "Remeras", Tipo = "RemerasLisas", Imagen = "remerablanca.jpeg" },
-   new Producto { Id = 2, Nombre = "Remera blanca", Stock = 5, Precio = 6000, Categoria = "Remeras", Tipo = "RemerasEstampadas", Imagen = "remeragris.jpeg" },
-   new Producto { Id = 3, Nombre = "Remera azul", Stock = 2, Precio = 8000, Categoria = "Remeras", Tipo = "RemerasEstampadas", Imagen = "remeraazul.jpeg" },
-   new Producto { Id = 4, Nombre = "Remera oso", Stock = 2, Precio = 8000, Categoria = "Remeras", Tipo = "RemerasEstampadas", Imagen = "remeraoso.jpeg" },
+   new Producto { Id = 1, Nombre = "Remera Blanca", Stock = 10, Precio = 3000, Categoria = "Remeras", Tipo = "RemerasLisas", Imagen = "remerablanca.jpeg" },
+   new Producto { Id = 2, Nombre = "Remera Gris", Stock = 5, Precio = 6000, Categoria = "Remeras", Tipo = "RemerasEstampadas", Imagen = "remeragris.jpeg" },
+   new Producto { Id = 3, Nombre = "Remera Azul", Stock = 2, Precio = 8000, Categoria = "Remeras", Tipo = "RemerasEstampadas", Imagen = "remeraazul.jpeg" },
+   new Producto { Id = 4, Nombre = "Remera Oso", Stock = 2, Precio = 8000, Categoria = "Remeras", Tipo = "RemerasEstampadas", Imagen = "remeraoso.jpeg" },
 
 
    // ABRIGOS
@@ -28,16 +28,24 @@ public static List<Producto> productos = new List<Producto>
    
    
    // PANTALONES
-   new Producto { Id = 9, Nombre = "Campera 1", Stock = 10, Precio = 3000, Categoria = "Pantalones", Tipo = "Jeans", Imagen = "campera1.jpeg" },
-   new Producto { Id = 10, Nombre = "Campera 2", Stock = 5, Precio = 6000, Categoria = "Pantalones", Tipo = "Algodon", Imagen = "campera2.jpeg" },
+   new Producto { Id = 9, Nombre = "Pantalón Baggy", Stock = 10, Precio = 3000, Categoria = "Pantalones", Tipo = "Jeans", Imagen = "pantalonBaggy.png" },
+   new Producto { Id = 10, Nombre = "Deportivo", Stock = 5, Precio = 6000, Categoria = "Pantalones", Tipo = "Deportivo", Imagen = "deportivo.png" },
+   new Producto { Id = 11, Nombre = "Cargo Camuflado", Stock = 5, Precio = 6000, Categoria = "Pantalones", Tipo = "Cargo", Imagen = "cargoCamuflado.png" },
+   new Producto { Id = 12, Nombre = "Cargo con abrojo", Stock = 5, Precio = 6000, Categoria = "Pantalones", Tipo = "Cargo", Imagen = "cargoAbrojo.png" },
+   new Producto { Id = 13, Nombre = "Joggins", Stock = 5, Precio = 6000, Categoria = "Pantalones", Tipo = "Joggins", Imagen = "joggins.png" },
+   new Producto { Id = 14, Nombre = "Gabardina", Stock = 5, Precio = 6000, Categoria = "Pantalones", Tipo = "Gabardina", Imagen = "gabardina.png" },
+
+
 
    // CORTOS
-   new Producto { Id = 11, Nombre = "Campera 1", Stock = 10, Precio = 3000, Categoria = "Cortos", Tipo = "Bermudas", Imagen = "campera1.jpeg" },
-   new Producto { Id = 12, Nombre = "Campera 2", Stock = 5, Precio = 6000, Categoria = "Cortos", Tipo = "Shorts", Imagen = "campera2.jpeg" },
+   new Producto { Id = 15, Nombre = "Shorts Deportivos", Stock = 10, Precio = 3000, Categoria = "Cortos", Tipo = "Shorts", Imagen = "shortDeportivo.jpg" },
+   new Producto { Id = 16, Nombre = "Short Deportivo Lycra", Stock = 5, Precio = 6000, Categoria = "Cortos", Tipo = "Shorts", Imagen = "shortDeportivoLycra.png" },
+   new Producto { Id = 17, Nombre = "Bermudas Camufladas", Stock = 5, Precio = 6000, Categoria = "Cortos", Tipo = "Bermudas", Imagen = "bermudasCamufladas.png" },
+   
    
     // ACCESORIOS
-    new Producto { Id = 13, Nombre = "Gorra Nike", Stock = 10, Precio = 3000, Categoria = "Accesorios", Tipo = "Gorros", Imagen = "gorra.jpeg" },
-    new Producto { Id = 14, Nombre = "Riñonera Negra", Stock = 5, Precio = 4500, Categoria = "Accesorios", Tipo = "Riñoneras", Imagen = "rinonera.jpeg" }
+    new Producto { Id = 18, Nombre = "Gorra Bordada", Stock = 10, Precio = 3000, Categoria = "Accesorios", Tipo = "Gorros", Imagen = "gorra.png" },
+    new Producto { Id = 19, Nombre = "Riñoneras Varias", Stock = 5, Precio = 4500, Categoria = "Accesorios", Tipo = "Riñoneras", Imagen = "riñoneras.png" }
 
 };
     

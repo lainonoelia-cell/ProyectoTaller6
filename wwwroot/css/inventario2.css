@@ -21,9 +21,17 @@ body {
 }
 
 /* IMAGEN */
-.producto-img img {
+.producto img {
     width: 100%;
-    max-width: 400px;
+    height: 260px;
+    object-fit: contain;
+}
+
+/* CELULAR */
+@media (max-width: 600px) {
+    .producto img {
+        height: 180px;
+    }
 }
 
 /* PROMO */

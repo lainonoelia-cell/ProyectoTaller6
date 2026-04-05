@@ -33,9 +33,16 @@ body {
 
 /* IMAGEN */
 .producto img {
-    width: 200px;       /* tamaño fijo */
+    width: 100%;
     height: 260px;
-    object-fit: cover;  /* no se deforma */
+    object-fit: contain;
+}
+
+/* CELULAR */
+@media (max-width: 600px) {
+    .producto img {
+        height: 180px;
+    }
 }
 
 

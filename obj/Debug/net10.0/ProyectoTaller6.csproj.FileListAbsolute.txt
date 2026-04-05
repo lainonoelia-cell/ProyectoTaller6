@@ -96,13 +96,8 @@ C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\ProyectoTaller6.genruntimeconfi
 C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\ref\ProyectoTaller6.dll
 C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\compressed\c1jkjok0kx-{0}-ej91gfq5eu-ej91gfq5eu.gz
 C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\ProyectoTaller6.sourcelink.json
-C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\compressed\jkydkuy7ju-{0}-t8isw2fho5-t8isw2fho5.gz
-C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\compressed\6wamlvx0qv-{0}-dop7re9t2t-dop7re9t2t.gz
-C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\compressed\2uf7ki2g2l-{0}-20id8qtoog-20id8qtoog.gz
-C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\compressed\v3v12t02cd-{0}-9hg5ce3h50-9hg5ce3h50.gz
-C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\compressed\ji30ji0qvu-{0}-ozr20hn3w9-ozr20hn3w9.gz
-C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\compressed\vx610dldmf-{0}-8e84a80j88-8e84a80j88.gz
-C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\compressed\nyt2gqt2zg-{0}-xoo3qqka7c-xoo3qqka7c.gz
 C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\compressed\l7sttlletx-{0}-25xx50qn6m-25xx50qn6m.gz
-C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\compressed\y79ms81gl3-{0}-7qqgsejyau-7qqgsejyau.gz
-C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\compressed\rszvoaauag-{0}-53fi7mf4tq-53fi7mf4tq.gz
+C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\compressed\rszvoaauag-{0}-yp8n5l26o2-yp8n5l26o2.gz
+C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\compressed\6wamlvx0qv-{0}-s9j0okf14t-s9j0okf14t.gz
+C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\compressed\y79ms81gl3-{0}-itj9ubjzyd-itj9ubjzyd.gz
+C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\compressed\jkydkuy7ju-{0}-ib3lebyz08-ib3lebyz08.gz
