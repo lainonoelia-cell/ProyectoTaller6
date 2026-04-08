@@ -15,94 +15,88 @@ body {
 /* CONTENEDOR PRINCIPAL */
 .contenedor-inv2 {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 30px;
     padding: 40px;
+    align-items: start;
 }
 
-/* IMAGEN */
-.producto img {
+/* IMAGEN PRODUCTO */
+.producto-img {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.producto-img img {
     width: 100%;
-    height: 260px;
+    max-width: 500px;
+    height: auto;
     object-fit: contain;
-}
-
-/* CELULAR */
-@media (max-width: 600px) {
-    .producto img {
-        height: 180px;
-    }
+    border: 2px solid black;
 }
 
 /* PROMO */
 .promo {
+    grid-column: 2;
+    grid-row: 1;
     background: #d8caca;
     padding: 20px;
     border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .promo h2 {
     text-align: center;
 }
 
-/* GRID DESCUENTOS */
-.grid-descuentos {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin: 20px 0;
-}
-
-.grid-descuentos button {
-    padding: 10px;
-    font-size: 18px;
-    background: #fff;
-    border: 1px solid black;
-    cursor: pointer;
-}
-
-/* MENU DESPLEGABLE DESCUENTOS */
+/* DROPDOWN */
 .dropdown select {
     width: 100%;
-    padding: 15px;
-    font-size: 18px;
+    padding: 12px;
+    font-size: 16px;
     border: 2px solid black;
-    background: white;
     cursor: pointer;
 }
 
 /* BOTON */
 .btn-aplicar {
-    width: 100%;
-    padding: 15px;
+    padding: 12px;
     background: black;
     color: white;
-    font-size: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
 }
 
-/* RESULTADO 1 */
+/* INFO IZQUIERDA */
 .resultado1 {
-    grid-column: span 1;
+    grid-column: 1;
+    grid-row: 2;
     background: #d8caca;
     padding: 20px;
     border: 2px solid black;
-    text-align: left;
 }
 
-/* RESULTADO 2 */
+/* INFO DERECHA */
 .resultado2 {
-    grid-column: span 1;
+    grid-column: 2;
+    grid-row: 2;
     background: #d8caca;
     padding: 20px;
     border: 2px solid black;
-    text-align: left;
 }
 
 .precio-final {
-    font-size: 24px;
+    font-size: 22px;
     font-weight: bold;
 }
 
+/* BOTON VOLVER */
 .btn-volver {
     position: fixed;
     top: 20px;
@@ -121,18 +115,18 @@ body {
     transform: scale(1.1);
 }
 
-/* LOGO CENTRO ABAJO */
+/* LOGO CENTRO */
 .logo-centro {
     display: flex;
     justify-content: center;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .logo-centro img {
-    width: 200px;
+    width: 180px;
 }
 
-* /* LOGO ESQUINA DERECHA */
+/* LOGO ESQUINA DERECHA */
 .logo-derecha {
     position: fixed;
     bottom: 700px;
@@ -140,9 +134,28 @@ body {
 }
 
 .logo-derecha img {
-    width: 98px;
+    width: 90px;
 }
 
 .navbar {
     display: none;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+
+    .contenedor-inv2 {
+        grid-template-columns: 1fr;
+    }
+
+    .producto-img,
+    .promo,
+    .resultado1,
+    .resultado2 {
+        grid-column: 1;
+    }
+
+    .producto-img img {
+        max-width: 90%;
+    }
 }

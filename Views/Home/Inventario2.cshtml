@@ -1,3 +1,5 @@
+
+@model ProyectoTaller6.Models.Producto
 @{
     ViewData["Title"] = "Inventario2";
 }
@@ -10,7 +12,7 @@
 
     <!-- IMAGEN PRODUCTO -->
     <div class="producto-img">
-        <img src="~/images/remeragris.jpeg" />
+        <img src="~/images/@Model.Imagen" />
     </div>
 
     <!-- PROMO -->
@@ -41,15 +43,12 @@
     </div>
 
     
-    <script>
+
+
+<script>
     const select = document.getElementById("descuento");
 
-    const precioElemento = document.getElementById("precio");
-    const descuentoTexto = document.getElementById("descuento-texto");
-    const precioFinalElemento = document.getElementById("precio-final");
-
-    // Precio base (lo podés traer después de BD)
-    let precioBase = 5000;
+    let precioBase = @Model.Precio;
 
     select.addEventListener("change", function () {
         let descuento = parseFloat(this.value);
@@ -57,20 +56,25 @@
         if (!isNaN(descuento)) {
             let precioFinal = precioBase - (precioBase * descuento / 100);
 
-            descuentoTexto.innerText = "Descuento: " + descuento + "%";
-            precioFinalElemento.innerText = "Precio final: $" + precioFinal;
+            document.getElementById("descuento-texto").innerText = "Descuento: " + descuento + "%";
+            document.getElementById("precio-final").innerText = "Precio final: $" + precioFinal;
         }
     });
 </script>
+
+
     <!-- INFO FINAL 1 -->
     <div class="resultado1">
-        <p>Código: fewfewfew</p>
-        <p>Stock: 50 unidades</p>
+        <div class="resultado1">
+    <p>Código: @Model.Codigo</p>
+    <p>Nombre: @Model.Nombre</p>
+    <p>Stock: @Model.Stock unidades</p>
+</div>
     </div>
 
     <!-- INFO FINAL 2 -->
     <div class="resultado2">
-    <p id="precio">Precio: </p>
+   <p id="precio">Precio: $@Model.Precio</p>
     <p id="descuento-texto">Descuento: </p>
     <p id="precio-final" class="precio-final">Precio final: </p>
 </div>

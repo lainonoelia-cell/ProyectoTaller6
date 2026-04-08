@@ -1,3 +1,5 @@
+
+<script src="https://unpkg.com/html5-qrcode"></script>
 @{
     ViewData["Title"] = "Escaneo Codigo";
 }
@@ -10,33 +12,134 @@
 
 <div class="contenedor-escaneo">
 
-    <!-- MENSAJE -->
     <p class="mensaje">
         Por favor, apunte la cámara al código de la prenda
     </p>
 
-    <!-- CAMARA -->
-   <div class="camara-grande">
-    <a href="/Home/Inventario2">
-        <img src="~/images/camara.png" style="cursor:pointer;" />
-    </a>
-</div>
+    <!-- CAMARA (TU IMAGEN) -->
+    <div class="camara-grande">
+        <img src="~/images/camara2.png" onclick="iniciarEscaneo()" style="cursor:pointer;" />
+    </div>
 
-    <!-- RESULTADOS 1-->
-    <p class="resultado1 ok">Producto encontrado ✅</p>
-    <p class="resultado1 error">Producto no encontrado, intente nuevamnene ❌</p>
+    <div id="reader" style="width:300px; display:none;"></div>
+
+    <!-- RESULTADO ESCANEO -->
+    <p id="ok1" class="resultado1 ok1" style="display:none;">
+        Producto encontrado ✅
+    </p>
+<p id="nombreProducto" style="font-size:20px; font-weight:bold;"></p>
+
+    <p id="error1" class="resultado1 error1" style="display:none;">
+        Producto no encontrado ❌
+    </p>
 
     <!-- INGRESO MANUAL -->
     <div class="manual">
-        <input type="text" placeholder="Ingresar código manual" />
-        <button>Buscar 🔎</button>
+        <input type="text" id="codigoInput" placeholder="Ingresar código manual" />
+        <button onclick="buscarCodigo()">Buscar 🔎</button>
     </div>
 
-    <!-- RESULTADOS 2-->
-    <p class="resultado2 ok">Código registrado exitosamente ✅</p>
-    <p class="resultado2 error">Código no registrado, intente nuevamente ❌</p>
+    <!-- RESULTADO REGISTRO -->
+    <p id="ok2" class="resultado2 ok2" style="display:none;">
+        Código registrado exitosamente ✅
+    </p>
+
+    <p id="error2" class="resultado2 error2" style="display:none;">
+        Código no registrado ❌
+    </p>
 
 </div>
+
+
+<script>
+function iniciarEscaneo() {
+
+    document.getElementById("reader").style.display = "block";
+
+    let scanner = new Html5Qrcode("reader");
+
+    Html5Qrcode.getCameras().then(cameras => {
+        if (cameras && cameras.length) {
+
+            let cameraId = cameras[0].id;
+
+            scanner.start(
+                cameraId,
+                {
+                    fps: 10,
+                    qrbox: 250
+                },
+                (codigo) => {
+
+                    // 🔥 LIMPIAR CODIGO
+                    codigo = codigo.trim();
+
+                    console.log("CODIGO ESCANEADO:", codigo);
+
+                    // Mostrar en input
+                    document.getElementById("codigoInput").value = codigo;
+
+                    // UI
+                    document.getElementById("ok1").style.display = "block";
+                    document.getElementById("error1").style.display = "none";
+
+                    // 🚀 REDIRECCIONAR A INVENTARIO2
+                    window.location.href = '/Home/Inventario2?codigo=' + codigo;
+
+                    scanner.stop();
+                }
+            );
+
+        } else {
+            alert("No se encontró cámara");
+        }
+    }).catch(err => {
+        alert("Error al acceder a la cámara");
+        console.log(err);
+    });
+}
+</script>
+
+<script>
+function buscarCodigo() {
+    let codigo = document.getElementById("codigoInput").value;
+
+    fetch('/Home/BuscarPorCodigo?codigo=' + codigo)
+    .then(res => res.json())
+    .then(data => {
+
+        document.getElementById("ok2").style.display = "none";
+        document.getElementById("error2").style.display = "none";
+
+        if (data.encontrado) {
+            document.getElementById("ok2").innerText = "Producto encontrado ✅";
+            document.getElementById("ok2").style.display = "block";
+        } 
+        else if (data.creado) {
+            document.getElementById("ok2").innerText = "Producto creado automáticamente ✅";
+            document.getElementById("ok2").style.display = "block";
+        } 
+        else {
+            document.getElementById("error2").style.display = "block";
+        }
+    });
+}
+
+(codigo) => {
+
+    // LIMPIAR EL CODIGO 👇
+    codigo = codigo.trim();
+
+    document.getElementById("codigoInput").value = codigo;
+
+    document.getElementById("ok1").style.display = "block";
+    document.getElementById("error1").style.display = "none";
+
+    window.location.href = '/Home/Inventario2?codigo=' + codigo;
+
+    scanner.stop();
+}
+</script>
 
 <!-- LOGOS -->
 <div class="logo-centro">

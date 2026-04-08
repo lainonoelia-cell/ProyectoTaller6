@@ -27,6 +27,8 @@
         <button onclick="filtrar('Todos')">Todos</button>
         <button onclick="filtrar('Camperas')">Camperas</button>
         <button onclick="filtrar('Chalecos')">Chalecos</button>
+        <button onclick="filtrar('Buzos')">Buzos</button>
+        <button onclick="filtrar('Sweaters')">Sweaters</button>
     </div>
 }
 
@@ -79,7 +81,7 @@
                     <button>Editar</button>
                 </a>
                 <button onclick="alert('Eliminar')">Eliminar</button>
-                <button onclick="alert('Agregar')">Agregar</button>
+                <button onclick="agregarCodigo(@p.Id)">Agregar</button>
             </div>
         </div>
     }
@@ -103,9 +105,26 @@ function filtrar(tipo) {
 <!-- CAMARA -->
 <div class="camara">
     <a href="/Home/EscaneoCodigo">
-        <img src="~/images/camara.png" />
+        <img src="~/images/camara2.png" />
     </a> 
 </div>
+
+<script>
+function agregarCodigo(idProducto) {
+
+    fetch('/Home/GenerarCodigoProducto?id=' + idProducto)
+    .then(res => res.json())
+    .then(data => {
+
+        if (data.ok) {
+            alert("Código generado: " + data.codigo + " ✅");
+        } else {
+            alert("Error al generar código ❌");
+        }
+
+    });
+}
+</script>
 
 <!-- LOGOS -->
 <div class="logo-centro">
