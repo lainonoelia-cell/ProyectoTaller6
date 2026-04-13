@@ -101,29 +101,38 @@ function iniciarEscaneo() {
 </script>
 
 <script>
+
+    
 function buscarCodigo() {
-    let codigo = document.getElementById("codigoInput").value;
+
+    let codigo = document.getElementById("codigoInput").value.trim();
+
+    // ✅ VALIDACIÓN
+    if (codigo === "") {
+        alert("Ingresá un código");
+        return;
+    }
 
     fetch('/Home/BuscarPorCodigo?codigo=' + codigo)
     .then(res => res.json())
     .then(data => {
 
-        document.getElementById("ok2").style.display = "none";
-        document.getElementById("error2").style.display = "none";
+        if (data.encontrado || data.creado) {
 
-        if (data.encontrado) {
-            document.getElementById("ok2").innerText = "Producto encontrado ✅";
-            document.getElementById("ok2").style.display = "block";
-        } 
-        else if (data.creado) {
-            document.getElementById("ok2").innerText = "Producto creado automáticamente ✅";
-            document.getElementById("ok2").style.display = "block";
-        } 
-        else {
+            // 🚀 REDIRECCIÓN A INVENTARIO2
+            window.location.href = '/Home/Inventario2?codigo=' + codigo;
+
+        } else {
             document.getElementById("error2").style.display = "block";
         }
+
+    })
+    .catch(err => {
+        console.log("Error:", err);
+        alert("Error al buscar el código");
     });
 }
+
 
 (codigo) => {
 
@@ -140,6 +149,8 @@ function buscarCodigo() {
     scanner.stop();
 }
 </script>
+
+
 
 <!-- LOGOS -->
 <div class="logo-centro">

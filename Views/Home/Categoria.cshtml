@@ -11,6 +11,59 @@
 
 <h1 class="titulo">@ViewBag.Tipo</h1>
 
+<button onclick="mostrarFormulario()" class="btn-nuevo">➕ Nuevo Producto</button>
+
+<div id="formNuevo" style="display:none; margin-top:20px;">
+
+    <input type="text" id="nombre" placeholder="Nombre" />
+    <input type="number" id="stock" placeholder="Stock" />
+    <input type="number" id="precio" placeholder="Precio" />
+    <input type="text" id="imagen" placeholder="Nombre imagen (ej: remera.png)" />
+
+    <button onclick="crearProducto()">Guardar ✅</button>
+
+</div>
+
+<script>
+function mostrarFormulario() {
+    document.getElementById("formNuevo").style.display = "block";
+}
+</script>
+
+<script>
+function crearProducto() {
+
+    let nombre = document.getElementById("nombre").value;
+    let stock = document.getElementById("stock").value;
+    let precio = document.getElementById("precio").value;
+    let imagen = document.getElementById("imagen").value;
+
+    fetch('/Home/CrearProducto', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            Nombre: nombre,
+            Stock: stock,
+            Precio: precio,
+            Imagen: imagen,
+            Categoria: '@ViewBag.Tipo',
+            Tipo: 'General'
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.ok) {
+            alert("Producto creado ✅");
+            location.reload();
+        } else {
+            alert("Error ❌");
+        }
+    });
+}
+</script>
+
 <!-- FILTROS DINAMICOS -->
 @if (ViewBag.Tipo == "Remeras")
 {

@@ -131,26 +131,11 @@ public JsonResult BuscarPorCodigo(string codigo)
 
     if (producto != null)
     {
-        return Json(new { encontrado = true, nombre = producto.Nombre });
+        return Json(new { encontrado = true });
     }
 
-    var nuevoProducto = new Producto
-    {
-        Id = productos.Count + 1,
-        Nombre = "Producto Nuevo",
-        Stock = 0,
-        Precio = 0,
-        Categoria = "Sin categoría",
-        Tipo = "Sin tipo",
-        Imagen = "sinimagen.png",
-        Codigo = codigo
-    };
-
-    productos.Add(nuevoProducto);
-
-    return Json(new { encontrado = false, creado = true });
+    return Json(new { encontrado = false });
 }
-
 
 
 public JsonResult GenerarCodigoProducto(int id)
@@ -174,6 +159,16 @@ public JsonResult GenerarCodigoProducto(int id)
     return Json(new { ok = true, codigo = codigo });
 }
 
+
+[HttpPost]
+public JsonResult CrearProducto([FromBody] Producto nuevo)
+{
+    nuevo.Id = productos.Count + 1;
+
+    productos.Add(nuevo);
+
+    return Json(new { ok = true });
+}
 
 
 public IActionResult Inventario2(string codigo)
