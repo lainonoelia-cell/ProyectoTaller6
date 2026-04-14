@@ -1,3 +1,5 @@
+@model List<ProyectoTaller6.Models.Categoria>
+
 @{
     ViewData["Title"] = "Inventario1";
 }
@@ -6,54 +8,62 @@
 
 <h1 class="titulo">GESTIÓN INVENTARIO 1- Admin</h1>
 
+<!-- 🔥 CREAR CATEGORIA -->
+<div style="margin-bottom:20px;">
+    <input type="text" id="nombreCategoria" placeholder="Nombre categoría" />
+    <input type="text" id="imagenCategoria" placeholder="Imagen (ej: remera.png)" />
 
+    <button onclick="crearCategoria()">Crear categoría</button>
+</div>
+
+<!-- 🔥 CATEGORIAS DINAMICAS -->
 <div class="contenedor">
 
+@foreach (var c in Model)
+{
     <div class="producto">
-    <a href="/Home/Categoria?tipo=Remeras">
-        <img src="~/images/remeragris.jpeg" />
-    </a>
+        <a href="/Home/Categoria?tipo=@c.Nombre">
+            <img src="~/images/@c.Imagen" />
+        </a>
+    </div>
+}
+
 </div>
 
-<div class="producto">
-    <a href="/Home/Categoria?tipo=Abrigos">
-        <img src="~/images/sweaterAzul.png" />
-    </a>
-</div>
-
-<div class="producto">
-    <a href="/Home/Categoria?tipo=Pantalones">
-        <img src="~/images/pantalonBaggy.png" />
-    </a>
-</div>
-
-<div class="producto">
-    <a href="/Home/Categoria?tipo=Cortos">
-        <img src="~/images/shortDeportivo.jpg" />
-    </a>
-</div>
-
-
-<div class="producto">
-    <a href="/Home/Categoria?tipo=Accesorios">
-        <img src="~/images/riñoneras.png" />
-    </a>
-</div>
-     
-</div> <!-- cierre de contenedor -->
-
-<!-- LOGO CENTRO ABAJO -->
+<!-- LOGOS -->
 <div class="logo-centro">
     <img src="~/images/logoCDNsis.png" />
 </div>
 
-<!-- LOGO DERECHA -->
 <div class="logo-derecha">
     <img src="~/images/logoMM.png" />
 </div>
 
-<!-- VOLVER -->
 <a href="/Home/Index" class="btn-volver">⬅</a>
 
+<!-- 🔥 JS -->
+<script>
+function crearCategoria() {
 
+    let nombre = document.getElementById("nombreCategoria").value;
+    let imagen = document.getElementById("imagenCategoria").value;
 
+    fetch('/Home/CrearCategoria', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            Nombre: nombre,
+            Imagen: imagen
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.ok) {
+            alert("Categoría creada ✅");
+            location.reload();
+        } else {
+            alert("Error ❌");
+        }
+    });
+}
+</script>

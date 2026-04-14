@@ -8,14 +8,13 @@
 
 <form method="post" action="/Home/GuardarProducto">
 
-<input type="hidden" name="tipo" value="@ViewBag.Tipo" />
-
-
 <h1 class="titulo">EDITAR PRODUCTO</h1>
 
-
-
 <input type="hidden" name="Id" value="@Model.Id" />
+
+<!-- 🔥 ESTO ES LA CLAVE -->
+<input type="hidden" name="Categoria" value="@Model.Categoria" />
+<input type="hidden" name="Tipo" value="@Model.Tipo" />
 
 <div class="producto">
     <img src="~/images/@Model.Imagen" />
@@ -29,7 +28,6 @@
 
 <label>Precio:</label>
 <input type="number" name="Precio" value="@Model.Precio" />
-
 
 <button type="submit">Guardar</button>
 

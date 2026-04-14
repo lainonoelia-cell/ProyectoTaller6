@@ -69,7 +69,7 @@
         <div class="resultado1">
     <p>Código: @Model.Codigo</p>
     <p>Nombre: @Model.Nombre</p>
-    <p>Stock: @Model.Stock unidades</p>
+    <p style="color:@(Model.Stock == 0 ? "red" : "black")">Stock: @Model.Stock unidades</p>
 </div>
     </div>
 

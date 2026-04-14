@@ -20,8 +20,16 @@
     <input type="number" id="precio" placeholder="Precio" />
     <input type="text" id="imagen" placeholder="Nombre imagen (ej: remera.png)" />
 
-    <button onclick="crearProducto()">Guardar ✅</button>
+    <select id="tipo">
+    <option value="General">General</option>
 
+    @foreach (var s in ViewBag.Subcategorias)
+    {
+        <option value="@s.Nombre">@s.Nombre</option>
+    }
+</select>
+
+    <button onclick="crearProducto()">Guardar ✅</button>
 </div>
 
 <script>
@@ -37,19 +45,18 @@ function crearProducto() {
     let stock = document.getElementById("stock").value;
     let precio = document.getElementById("precio").value;
     let imagen = document.getElementById("imagen").value;
+    let tipo = document.getElementById("tipo").value;
 
     fetch('/Home/CrearProducto', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             Nombre: nombre,
-            Stock: stock,
-            Precio: precio,
+            Stock: parseInt(stock),
+            Precio: parseInt(precio),
             Imagen: imagen,
             Categoria: '@ViewBag.Tipo',
-            Tipo: 'General'
+            Tipo: tipo
         })
     })
     .then(res => res.json())
@@ -57,65 +64,49 @@ function crearProducto() {
         if (data.ok) {
             alert("Producto creado ✅");
             location.reload();
-        } else {
-            alert("Error ❌");
         }
     });
 }
 </script>
 
 <!-- FILTROS DINAMICOS -->
-@if (ViewBag.Tipo == "Remeras")
+<div class="subcategorias">
+
+<button onclick="filtrar('Todos')">Todos</button>
+
+@foreach (var s in ViewBag.Subcategorias)
 {
-    <div class="subcategorias">
-        <button onclick="filtrar('Todos')">Todos</button>
-        <button onclick="filtrar('RemerasLisas')">Remeras lisas</button>
-        <button onclick="filtrar('RemerasEstampadas')">Remeras estampadas</button>
-    </div>
+    <button onclick="filtrar('@s.Nombre')">@s.Nombre</button>
 }
 
-@if (ViewBag.Tipo == "Abrigos")
-{
-    <div class="subcategorias">
-        <button onclick="filtrar('Todos')">Todos</button>
-        <button onclick="filtrar('Camperas')">Camperas</button>
-        <button onclick="filtrar('Chalecos')">Chalecos</button>
-        <button onclick="filtrar('Buzos')">Buzos</button>
-        <button onclick="filtrar('Sweaters')">Sweaters</button>
-    </div>
+</div>
+
+<input type="text" id="nuevaSub" placeholder="Nueva subcategoría" />
+
+<button onclick="crearSub()">Agregar Subcategoría</button>
+
+<script>
+function crearSub() {
+
+    let nombre = document.getElementById("nuevaSub").value;
+
+    fetch('/Home/CrearSubcategoria', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            Nombre: nombre,
+            Categoria: '@ViewBag.Tipo'
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.ok) {
+            alert("Subcategoría creada ✅");
+            location.reload();
+        }
+    });
 }
-
-@if (ViewBag.Tipo == "Pantalones")
-{
-    <div class="subcategorias">
-        <button onclick="filtrar('Todos')">Todos</button>
-        <button onclick="filtrar('Jeans')">Jeans</button>
-        <button onclick="filtrar('Deportivo')">Deportivo</button>
-        <button onclick="filtrar('Cargo')">Cargo</button>
-        <button onclick="filtrar('Joggins')">Joggins</button>
-        <button onclick="filtrar('Gabardina')">Gabardina</button>
-    </div>
-}
-
-
-@if (ViewBag.Tipo == "Cortos")
-{
-    <div class="subcategorias">
-        <button onclick="filtrar('Todos')">Todos</button>
-        <button onclick="filtrar('Bermudas')">Bermudas</button>
-        <button onclick="filtrar('Shorts')">Shorts</button>
-    </div>
-}
-
-
-@if (ViewBag.Tipo == "Accesorios")
-{
-    <div class="subcategorias">
-        <button onclick="filtrar('Todos')">Todos</button>
-        <button onclick="filtrar('Gorros')">Gorros</button>
-        <button onclick="filtrar('Riñoneras')">Riñoneras</button>
-    </div>
-}
+</script>
 
 <!-- PRODUCTOS -->
 <div class="contenedor">
@@ -126,14 +117,14 @@ function crearProducto() {
             <img src="~/images/@p.Imagen" />
 
             <p>@p.Nombre</p>
-            <p>Stock: @p.Stock</p>
+            <p style="color:@(p.Stock == 0 ? "red" : "black")">Stock: @p.Stock</p>
             <p>Precio: $@p.Precio</p>
 
             <div class="acciones">
                 <a href="/Home/EditarProducto?id=@p.Id">
                     <button>Editar</button>
                 </a>
-                <button onclick="alert('Eliminar')">Eliminar</button>
+                <button onclick="eliminarProducto(@p.Id)">Eliminar</button>
                 <button onclick="agregarCodigo(@p.Id)">Agregar</button>
             </div>
         </div>
@@ -178,6 +169,26 @@ function agregarCodigo(idProducto) {
     });
 }
 </script>
+
+
+<script>
+function eliminarProducto(id) {
+
+    if (!confirm("¿Seguro que querés eliminar este producto?")) return;
+
+    fetch('/Home/EliminarProducto?id=' + id, {
+        method: 'POST'
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.ok) {
+            alert("Producto eliminado ✅");
+            location.reload();
+        }
+    });
+}
+</script>
+
 
 <!-- LOGOS -->
 <div class="logo-centro">
