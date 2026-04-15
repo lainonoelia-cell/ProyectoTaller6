@@ -22,8 +22,10 @@ public class HomeController : Controller
     public IActionResult Inventario1()
     {
         var categorias = _context.Categorias.ToList();
-        return View(categorias);
-    }
+
+    return View(categorias);
+}
+    
 
 public IActionResult Categoria(string tipo, string filtro)
 {
@@ -60,41 +62,51 @@ public IActionResult Categoria(string tipo, string filtro)
      
 
     // ✅ CREAR CATEGORIA
-    [HttpPost]
-    public JsonResult CrearCategoria([FromBody] Categoria nueva)
-    {
-        nueva.Nombre = nueva.Nombre?.Trim();
-        nueva.Imagen = nueva.Imagen?.Trim();
-
-        _context.Categorias.Add(nueva);
-        _context.SaveChanges();
-
-        return Json(new { ok = true });
-    }
-
-    // ✅ CREAR SUBCATEGORIA (🔥 CLAVE)
    [HttpPost]
-public JsonResult CrearSubcategoria([FromBody] Subcategoria nueva)
+public JsonResult CrearCategoria([FromBody] Categoria nueva)
 {
-    if (string.IsNullOrWhiteSpace(nueva.Nombre) || string.IsNullOrWhiteSpace(nueva.Categoria))
-    {
-        return Json(new { ok = false });
-    }
+    nueva.Nombre = nueva.Nombre?.Trim();
 
-    nueva.Nombre = nueva.Nombre.Trim();
-    nueva.Categoria = nueva.Categoria.Trim();
-
-    bool existe = _context.Subcategorias
-        .Any(s => s.Nombre == nueva.Nombre && s.Categoria == nueva.Categoria);
+    bool existe = _context.Categorias
+        .Any(c => c.Nombre == nueva.Nombre);
 
     if (existe)
-        return Json(new { ok = false });
+    {
+        return Json(new { ok = false, mensaje = "Ya existe esa categoría" });
+    }
+
+    _context.Categorias.Add(nueva);
+    _context.SaveChanges();
+
+    return Json(new { ok = true });
+}
+
+
+
+    // ✅ CREAR SUBCATEGORIA (🔥 CLAVE)
+  [HttpPost]
+public JsonResult CrearSubcategoria([FromBody] Subcategoria nueva)
+{
+    nueva.Nombre = nueva.Nombre?.Trim();
+    nueva.Categoria = nueva.Categoria?.Trim();
+
+    bool existe = _context.Subcategorias
+        .Any(s => s.Nombre == nueva.Nombre &&
+                  s.Categoria == nueva.Categoria);
+
+    if (existe)
+    {
+        return Json(new { ok = false, mensaje = "Ya existe esa subcategoría" });
+    }
 
     _context.Subcategorias.Add(nueva);
     _context.SaveChanges();
 
     return Json(new { ok = true });
 }
+
+
+
 
     public IActionResult EditarProducto(int id)
     {
