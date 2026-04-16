@@ -63,15 +63,6 @@ body {
     cursor: pointer;
 }
 
-/* BOTON */
-.btn-aplicar {
-    padding: 12px;
-    background: black;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    border: none;
-}
 
 /* INFO IZQUIERDA */
 .resultado1 {

@@ -48,7 +48,6 @@ C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\compressed\rszvoaauag-{0}-yp8n5
 C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\compressed\y79ms81gl3-{0}-itj9ubjzyd-itj9ubjzyd.gz
 C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\compressed\l7sttlletx-{0}-25xx50qn6m-25xx50qn6m.gz
 C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\compressed\6wamlvx0qv-{0}-s9j0okf14t-s9j0okf14t.gz
-C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\compressed\jkydkuy7ju-{0}-e2if5oaoyy-e2if5oaoyy.gz
 C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\compressed\c1jkjok0kx-{0}-ej91gfq5eu-ej91gfq5eu.gz
 C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\compressed\joe9xeethp-{0}-61n19gt1b8-61n19gt1b8.gz
 C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\compressed\uo7efqk7no-{0}-xtxxf3hu2r-xtxxf3hu2r.gz
@@ -124,3 +123,4 @@ C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\refint\ProyectoTaller6.dll
 C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\ProyectoTaller6.pdb
 C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\ProyectoTaller6.genruntimeconfig.cache
 C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\ref\ProyectoTaller6.dll
+C:\Users\noeli\ProyectoTaller6\obj\Debug\net10.0\compressed\jkydkuy7ju-{0}-zy977lfq47-zy977lfq47.gz
