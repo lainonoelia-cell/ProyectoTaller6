@@ -62,13 +62,21 @@ public IActionResult Categoria(string tipo, string filtro)
      
 
     // ✅ CREAR CATEGORIA
-   [HttpPost]
+  [HttpPost]
 public JsonResult CrearCategoria([FromBody] Categoria nueva)
 {
-    nueva.Nombre = nueva.Nombre?.Trim();
+    // 🔴 VALIDAR VACÍO
+    if (string.IsNullOrWhiteSpace(nueva.Nombre) || string.IsNullOrWhiteSpace(nueva.Imagen))
+    {
+        return Json(new { ok = false, mensaje = "Completar nombre e imagen" });
+    }
 
+    nueva.Nombre = nueva.Nombre.Trim();
+    nueva.Imagen = nueva.Imagen.Trim();
+
+    // 🔴 EVITAR DUPLICADOS (ignorando mayúsculas)
     bool existe = _context.Categorias
-        .Any(c => c.Nombre == nueva.Nombre);
+        .Any(c => c.Nombre.ToLower() == nueva.Nombre.ToLower());
 
     if (existe)
     {
@@ -87,12 +95,19 @@ public JsonResult CrearCategoria([FromBody] Categoria nueva)
   [HttpPost]
 public JsonResult CrearSubcategoria([FromBody] Subcategoria nueva)
 {
-    nueva.Nombre = nueva.Nombre?.Trim();
-    nueva.Categoria = nueva.Categoria?.Trim();
+    // 🔴 VALIDAR VACÍO
+    if (string.IsNullOrWhiteSpace(nueva.Nombre) || string.IsNullOrWhiteSpace(nueva.Categoria))
+    {
+        return Json(new { ok = false, mensaje = "Completar datos" });
+    }
 
+    nueva.Nombre = nueva.Nombre.Trim();
+    nueva.Categoria = nueva.Categoria.Trim();
+
+    // 🔴 EVITAR DUPLICADOS (case insensitive)
     bool existe = _context.Subcategorias
-        .Any(s => s.Nombre == nueva.Nombre &&
-                  s.Categoria == nueva.Categoria);
+        .Any(s => s.Nombre.ToLower() == nueva.Nombre.ToLower() &&
+                  s.Categoria.ToLower() == nueva.Categoria.ToLower());
 
     if (existe)
     {
