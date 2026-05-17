@@ -10,7 +10,6 @@ body {
     font-size: 40px;
     font-family: cursive;
     margin: 20px;
-    
 }
 
 /* CONTENEDOR */
@@ -28,6 +27,13 @@ body {
     padding: 20px;
     width: 350px;
     text-align: center;
+    border-radius: 15px;
+    transition: 0.3s;
+}
+
+.producto:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
 /* IMAGEN */
@@ -44,15 +50,75 @@ body {
     }
 }
 
-/* BOTONES */
+/* INPUTS Y SELECT */
+input,
+select {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #999;
+    margin: 5px;
+    font-size: 15px;
+}
+
+/* BOTONES GENERALES */
+button {
+    border: none;
+    border-radius: 10px;
+    padding: 10px 16px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+/* BOTON NUEVO PRODUCTO */
+.btn-nuevo {
+    background: #2563eb;
+    color: white;
+    margin-left: 20px;
+}
+
+.btn-nuevo:hover {
+    background: #1d4ed8;
+    transform: scale(1.05);
+}
+
+/* BOTON GUARDAR */
+.btn-guardar {
+    background: #16a34a;
+    color: white;
+}
+
+.btn-guardar:hover {
+    background: #15803d;
+}
+
+/* BOTON SUBCATEGORIA */
+.btn-subcategoria {
+    background: #ea580c;
+    color: white;
+}
+
+.btn-subcategoria:hover {
+    background: #c2410c;
+}
+
+/* BOTONES PRODUCTOS */
 .acciones button {
     margin: 5px;
     padding: 10px;
-    background: #0a0a0a;
+    background: #111827;
     border: none;
     cursor: pointer;
-    color: aliceblue;
+    color: white;
+    border-radius: 10px;
+    transition: 0.3s;
 }
+
+.acciones button:hover {
+    background: #2563eb;
+    transform: scale(1.05);
+}
+
 /* LOGO CENTRO ABAJO */
 .logo-centro {
     display: flex;
@@ -77,10 +143,10 @@ body {
 
 /* CAMARA */
 .camara {
-    position: fixed; /* queda fija en pantalla */
-    right: 90px;     /* separación del borde derecho */
-    top: 50%;        /* mitad de pantalla */
-    transform: translateY(-50%); /* centra verticalmente */
+    position: fixed;
+    right: 90px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .camara img {
@@ -89,6 +155,7 @@ body {
     border-radius: 50%;
     padding: 10px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: 0.3s;
 }
 
 .camara img:hover {
@@ -96,6 +163,7 @@ body {
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
+/* BOTON VOLVER */
 .btn-volver {
     position: fixed;
     top: 20px;
@@ -114,26 +182,23 @@ body {
     transform: scale(1.1);
 }
 
-
-
+/* SUBCATEGORIAS */
 .subcategorias {
     display: flex;
     justify-content: center;
     gap: 15px;
     margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 
 .subcategorias button {
     background: #9B6C05;
     color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 8px;
 }
 
 .subcategorias button:hover {
     background: #7a5304;
+    transform: scale(1.05);
 }
 
 .navbar {
