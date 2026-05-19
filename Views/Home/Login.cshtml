@@ -1,0 +1,108 @@
+@{
+    ViewData["Title"] = "Ingreso Administrativo";
+}
+
+<style>
+    body {
+        background-color: #1f1f1f;
+    }
+
+    .login-admin {
+        width: 140%;
+        min-height: 800px;
+        margin: 40px auto;
+        background-color: #dca98f;
+        position: relative;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    .logo-fondo {
+        position: absolute;
+        width: 850px;
+        opacity: 0.18;
+        top: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .titulo-admin {
+        position: relative;
+        z-index: 2;
+        font-size: 80px;
+        font-weight: bold;
+        margin-top: 25px;
+        color: black;
+    }
+
+    .form-admin {
+        position: relative;
+        z-index: 2;
+        margin-top: 70px;
+    }
+
+    .form-admin label {
+        display: block;
+        font-size: 42px;
+        font-weight: bold;
+        margin-top: 25px;
+    }
+
+    .form-admin input {
+        width: 340px;
+        height: 60px;
+        border-radius: 25px;
+        border: none;
+        background-color: rgba(255,255,255,0.75);
+        text-align: center;
+        font-size: 18px;
+    }
+
+    .btn-ingresar {
+        margin-top: 35px;
+        width: 140px;
+        height: 90px;
+        border-radius: 50%;
+        background-color: black;
+        color: white;
+        border: 5px solid white;
+        font-size: 20px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .btn-ingresar:hover {
+        transform: scale(1.05);
+    }
+</style>
+
+<div class="login-admin">
+
+    <img src="~/images/logommm.png" class="logo-fondo" />
+
+    <h1 class="titulo-admin">Administración MM&M</h1>
+
+    <form method="post" action="/Home/Login" class="form-admin">
+
+        <label>Usuario:</label>
+        <input type="text" name="usuario" />
+
+        <label>Contraseña:</label>
+        <input type="password" name="password" />
+
+        <br />
+
+        <button class="btn-ingresar" type="submit">
+            Ingresa
+        </button>
+
+        @if (ViewBag.Error != null)
+        {
+            <p style="color:red; font-weight:bold; margin-top:15px;">
+                @ViewBag.Error
+            </p>
+        }
+
+    </form>
+
+</div>

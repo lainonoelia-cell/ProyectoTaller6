@@ -1,0 +1,156 @@
+@{
+    ViewData["Title"] = "Bienvenida";
+}
+
+<style>
+    body{
+        background-color:#d9c09c;
+        overflow:hidden;
+    }
+
+    .pantalla{
+        position:relative;
+        width:100%;
+        height:90vh;
+    }
+
+    .logo{
+        width:649px;
+        margin-left: 160px;
+    }
+
+    .logo-central{
+        text-align:center;
+        margin-top:20px;
+    }
+
+    .izquierda{
+        position:absolute;
+        left:80px;
+        top:70px;
+    }
+
+    .izquierda img{
+        width:180px;
+    }
+
+    .derecha{
+        position:absolute;
+        right:90px;
+        top:70px;
+    }
+
+    .derecha img{
+        width:130px;
+    }
+
+    .titulo{
+        text-align:center;
+        font-size:75px;
+        font-weight:bold;
+        color:#1d2430;
+        margin-top:10px;
+        margin-left: 182px;
+        text-shadow:4px 4px 6px rgba(0,0,0,0.30);
+    }
+
+    .subtitulo{
+        text-align:center;
+        font-size:45px;
+        font-weight:bold;
+        margin-top:-592px;
+        margin-left: 198px;
+        color:#1d2430;
+        text-shadow:3px 3px 5px rgba(0,0,0,0.25);
+    }
+
+   .redes{
+    position:absolute;
+    right:-300px;
+    top:689px;
+    text-align:center;
+}
+
+    .redes h2{
+        font-size:35px;
+        margin-bottom:2px;
+        color:#1d2430;
+        font-weight:bold;
+        text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.30);
+    }
+
+    .redes img{
+        width:45px;
+        margin:10px;
+        transition:0.3s;
+    }
+
+    .redes img:hover{
+        transform:scale(1.15);
+    }
+
+    .boton-admin{
+        position:absolute;
+        bottom:60px;
+        left:80px;
+    }
+
+    .btn-admin{
+        background-color:#9d8a1f;
+        color:white;
+        padding:15px 35px;
+        border-radius:20px;
+        text-decoration:none;
+        font-size:30px;
+        font-weight:bold;
+        box-shadow:3px 3px 8px rgba(0,0,0,0.30);
+        transition:0.3s;
+    }
+
+    .btn-admin:hover{
+        background-color:#7e6f18;
+        color:white;
+    }
+</style>
+
+<div class="pantalla">
+
+    <div class="izquierda">
+        <img src="~/images/mmmchalecos.png" />
+    </div>
+
+    <div class="derecha">
+        <img src="~/images/campbienv.png" />
+    </div>
+
+    <div class="logo-central">
+        <img class="logo" src="~/images/logommm.png" />
+    </div>
+
+    <h1 class="titulo">MM&M INDUMENTARIA</h1>
+
+    <h2 class="subtitulo">Bienvenidos a</h2>
+
+    <div class="redes">
+        <h2>Ingresá con tu Red Social</h2>
+
+        <a href="https://web.facebook.com/" target="_blank">
+        <img src="~/images/facebook.png" />
+        </a>
+
+        <a href="https://www.instagram.com/" target="_blank">
+        <img src="~/images/instagram.png" />
+        </a>
+
+        <a href="https://linkedin.com/" target="_blank">
+        <img src="~/images/linkedin.png" />
+        </a>
+    </div>
+
+    <div class="boton-admin">
+        <a class="btn-admin" href="/Home/Login">
+            Administrativa
+        </a>
+    </div>
+
+</div>

@@ -18,13 +18,42 @@ public class HomeController : Controller
     {
         return View();
     }
+ 
+    public IActionResult Bienvenida()
+    {
+    return View();
+    }
+
+    [HttpGet]
+    public IActionResult Login()
+    {
+    return View();
+    }
+
+    [HttpPost]
+    public IActionResult Login(string usuario, string password)
+    {
+    if(usuario == "Localropa" && password == "larioja2147")
+    {
+        return RedirectToAction("Inventario1");
+    }
+
+    ViewBag.Error = "Usuario o contraseña incorrectos";
+
+    return View();
+    }
 
     public IActionResult Inventario1()
     {
         var categorias = _context.Categorias.ToList();
 
     return View(categorias);
-}
+    }
+
+    public IActionResult Tienda()
+    {
+    return View();
+    }
     
 
 public IActionResult Categoria(string tipo, string filtro)
