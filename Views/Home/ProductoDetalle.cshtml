@@ -1,0 +1,229 @@
+@{
+    ViewData["Title"] = "Catálogo de Productos";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MM Indumentaria - Productos</title>
+    <link rel="stylesheet" href="~/css/productoDetalle.css" />
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header-detalle">
+            <button class="btn-volver" onclick="volver()">←</button>
+            <h1 class="categoria-titulo" id="categoriaTitulo">Cargando...</h1>
+        </div>
+
+        <!-- PRODUCTOS -->
+        <div id="productosContainer" class="productos-grid">
+            <div class="sin-productos">Cargando productos...</div>
+        </div>
+
+        <!-- CARRITO -->
+        <div class="carrito-lateral">
+    <h3>🛒 Productos seleccionados</h3>
+    <div id="listaCarrito" class="lista-carrito">
+        <div class="sin-productos">No hay productos en el carrito</div>
+    </div>
+    <div class="total-carrito">
+        Total: <span id="totalCarrito">$0</span>
+    </div>
+    <button class="btn-ver-carrito" onclick="irACarrito()" style="background: #c9901c; color: white; border: none; padding: 8px; border-radius: 4px; width: 100%; margin-bottom: 10px;">
+        🛒 Ver carrito completo
+    </button>
+    <button class="btn-confirmar" onclick="confirmarCompra()">Confirmar compra</button>
+</div>
+
+<script>
+    function irACarrito() {
+        window.location.href = '@Url.Action("Carrito", "Home")';
+    }
+</script>
+
+    <!-- MODAL NOTIFICACIÓN -->
+    <div id="modalNotificacion" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="cerrarModalNotificacion()">&times;</span>
+            <p id="mensajeNotificacion" style="padding: 20px;"></p>
+        </div>
+    </div>
+
+    <script>
+        // Obtener categoría seleccionada desde localStorage
+        let categoriaSeleccionada = localStorage.getItem('categoriaSeleccionada') || 'Remeras';
+        document.getElementById('categoriaTitulo').innerText = categoriaSeleccionada;
+
+        // Datos de ejemplo para cada categoría
+        const productosPorCategoria = {
+            'Remeras': [
+                { id: 1, nombre: 'Remera Gris Clásica', precio: 8000, stock: 5, talles: ['S', 'M', 'L', 'XL'], imagen: 'remeragris.jpeg' },
+                { id: 2, nombre: 'Remera Blanca Deportiva', precio: 7500, stock: 4, talles: ['S', 'M', 'L', 'XL'], imagen: 'remerablanca.jpeg' },
+                { id: 3, nombre: 'Remera Negra Premium', precio: 9000, stock: 2, talles: ['S', 'M', 'L', 'XL'], imagen: 'remeranegra.jpeg' },
+                { id: 4, nombre: 'Remera Azul', precio: 8500, stock: 3, talles: ['S', 'M', 'L', 'XL'], imagen: 'remeraazul.jpeg' },
+                { id: 5, nombre: 'Remera Oso', precio: 9500, stock: 1, talles: ['S', 'M', 'L', 'XL'], imagen: 'remeraoso.jpeg' }
+            ],
+            'Pantalones': [
+                { id: 6, nombre: 'Pantalón Baggy', precio: 22000, stock: 6, talles: ['28', '30', '32', '34'], imagen: 'pantalonBaggy.png' },
+                { id: 7, nombre: 'Cargo Camuflado', precio: 25000, stock: 4, talles: ['28', '30', '32', '34'], imagen: 'cargoCamuflado.png' },
+                { id: 8, nombre: 'Chupín Elastizado', precio: 20000, stock: 5, talles: ['28', '30', '32', '34'], imagen: 'chupinElastizado.png' },
+                { id: 9, nombre: 'Joggins', precio: 18000, stock: 7, talles: ['S', 'M', 'L', 'XL'], imagen: 'joggins.png' }
+            ],
+            'Abrigos': [
+                { id: 10, nombre: 'Campera de Cuero', precio: 65000, stock: 3, talles: ['S', 'M', 'L', 'XL'], imagen: 'campera1.jpeg' },
+                { id: 11, nombre: 'Campera Frisa', precio: 38000, stock: 4, talles: ['S', 'M', 'L', 'XL'], imagen: 'camperaFrisa.png' },
+                { id: 12, nombre: 'Chaleco', precio: 28000, stock: 2, talles: ['S', 'M', 'L', 'XL'], imagen: 'chaleco.jpeg' },
+                { id: 13, nombre: 'Gabardina', precio: 55000, stock: 2, talles: ['S', 'M', 'L', 'XL'], imagen: 'gabardina.png' }
+            ],
+            'Bermudas': [
+                { id: 14, nombre: 'Bermudas Camufladas', precio: 15000, stock: 6, talles: ['S', 'M', 'L', 'XL'], imagen: 'bermudasCamufladas.png' },
+                { id: 15, nombre: 'Short Deportivo', precio: 12000, stock: 8, talles: ['S', 'M', 'L', 'XL'], imagen: 'shortDeportivo.jpg' },
+                { id: 16, nombre: 'Short Lycra', precio: 14000, stock: 5, talles: ['S', 'M', 'L', 'XL'], imagen: 'shortDeportivoLycra.png' }
+            ],
+            'Accesorios': [
+                { id: 17, nombre: 'Gorra Deportiva', precio: 8000, stock: 10, talles: ['Único'], imagen: 'gorra.png' },
+                { id: 18, nombre: 'Riñonera', precio: 5000, stock: 15, talles: ['Único'], imagen: 'riñoneras.png' }
+            ],
+            'Calzado': [
+                { id: 19, nombre: 'Medias', precio: 2000, stock: 20, talles: ['Único'], imagen: 'mediashombre.png' }
+            ]
+        };
+
+        let carrito = [];
+
+        function cargarProductos() {
+            const productos = productosPorCategoria[categoriaSeleccionada] || [];
+            const container = document.getElementById('productosContainer');
+
+            if (productos.length === 0) {
+                container.innerHTML = '<div class="sin-productos">No hay productos disponibles en esta categoría</div>';
+                return;
+            }
+
+            container.innerHTML = productos.map(p => `
+                <div class="card-producto">
+                    <img src="/images/${p.imagen}" alt="${p.nombre}" onerror="this.src='https://via.placeholder.com/280x160?text=Producto'">
+                    <h3>${p.nombre}</h3>
+                    <div class="precio">$${p.precio.toLocaleString()}</div>
+                    <div class="stock">Stock: ${p.stock} unidades</div>
+                    ${p.stock === 1 ? '<div class="badge-ultimo">¡Última disponible!</div>' : ''}
+                    <select id="talle-${p.id}">
+                        ${p.talles.map(t => `<option value="${t}">Talle ${t}</option>`).join('')}
+                    </select>
+                    <select id="cantidad-${p.id}">
+                        ${[...Array(Math.min(p.stock, 10)).keys()].map(i => `<option value="${i+1}">${i+1} unidad(es)</option>`).join('')}
+                    </select>
+                    <button class="btn-agregar" onclick="agregarAlCarrito(${p.id}, '${p.nombre}', ${p.precio}, ${p.stock})">
+                        🛒 Agregar al carrito
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function agregarAlCarrito(id, nombre, precio, stock) {
+            const talleSelect = document.getElementById(`talle-${id}`);
+            const cantidadSelect = document.getElementById(`cantidad-${id}`);
+            const talle = talleSelect ? talleSelect.value : 'Único';
+            const cantidad = cantidadSelect ? parseInt(cantidadSelect.value) : 1;
+
+            const existe = carrito.find(item => item.id === id && item.talle === talle);
+            
+            if (existe) {
+                if (existe.cantidad + cantidad > stock) {
+                    mostrarNotificacion(`No hay suficiente stock de ${nombre}`);
+                    return;
+                }
+                existe.cantidad += cantidad;
+            } else {
+                carrito.push({ id, nombre, precio, talle, cantidad, stock });
+            }
+            
+            actualizarCarrito();
+            mostrarNotificacion(`${nombre} agregado al carrito`);
+        }
+
+        function actualizarCarrito() {
+            const container = document.getElementById('listaCarrito');
+            const totalSpan = document.getElementById('totalCarrito');
+            let total = 0;
+
+            if (carrito.length === 0) {
+                container.innerHTML = '<div class="sin-productos">No hay productos en el carrito</div>';
+                totalSpan.innerText = '$0';
+                return;
+            }
+
+            let html = '';
+            carrito.forEach((item, index) => {
+                const subtotal = item.precio * item.cantidad;
+                total += subtotal;
+                html += `
+                    <div class="item-carrito">
+                        <div class="item-info">
+                            <strong>${item.nombre}</strong><br>
+                            <small>Talle: ${item.talle} | Cant: ${item.cantidad}</small>
+                        </div>
+                        <div class="item-precio">$${subtotal.toLocaleString()}</div>
+                        <button class="btn-eliminar" onclick="eliminarDelCarrito(${index})">🗑️</button>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+            totalSpan.innerText = `$${total.toLocaleString()}`;
+            localStorage.setItem('carrito', JSON.stringify(carrito));
+        }
+
+        function eliminarDelCarrito(index) {
+            const producto = carrito[index];
+            carrito.splice(index, 1);
+            actualizarCarrito();
+            mostrarNotificacion(`${producto.nombre} eliminado del carrito`);
+        }
+
+        function confirmarCompra() {
+            if (carrito.length === 0) {
+                mostrarNotificacion('No hay productos en el carrito');
+                return;
+            }
+            const total = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
+            mostrarNotificacion(`✅ Compra confirmada por $${total.toLocaleString()}. ¡Gracias!`);
+            carrito = [];
+            actualizarCarrito();
+        }
+
+        function mostrarNotificacion(mensaje) {
+            const modal = document.getElementById('modalNotificacion');
+            const mensajeEl = document.getElementById('mensajeNotificacion');
+            mensajeEl.innerText = mensaje;
+            modal.style.display = 'block';
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 2000);
+        }
+
+        function cerrarModalNotificacion() {
+            document.getElementById('modalNotificacion').style.display = 'none';
+        }
+
+        function volver() {
+            window.location.href = '@Url.Action("GestionCliente", "Home")';
+        }
+
+        function cargarCarritoGuardado() {
+            const guardado = localStorage.getItem('carrito');
+            if (guardado) {
+                carrito = JSON.parse(guardado);
+                actualizarCarrito();
+            }
+        }
+
+        cargarProductos();
+        cargarCarritoGuardado();
+    </script>
+</body>
+</html>

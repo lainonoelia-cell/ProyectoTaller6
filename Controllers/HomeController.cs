@@ -16,7 +16,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return View();
+        return View("Bienvenida");
     }
  
     public IActionResult Bienvenida()
@@ -251,4 +251,19 @@ public JsonResult EliminarProducto(int id)
     {
         return View();
     }
+
+    public IActionResult GestionCliente()
+{
+    return View();
+}
+
+public IActionResult ProductoDetalle()
+{
+    return View();
+}
+
+public IActionResult Carrito()
+{
+    return View();
+}
 }

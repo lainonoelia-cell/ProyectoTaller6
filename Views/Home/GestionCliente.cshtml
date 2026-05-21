@@ -1,0 +1,156 @@
+@{
+    ViewData["Title"] = "Gestión de Menú Cliente";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MM Indumentaria</title>
+    <link rel="stylesheet" href="~/css/gestionCliente.css" />
+</head>
+<body>
+    <div class="container">
+        <!-- LOGO CENTRADO -->
+        <div class="logo-centrado">
+            <img src="~/images/logoMM.png" alt="Logo" onerror="this.style.display='none'">
+        </div>
+
+        <!-- MENÚ CENTRADO -->
+        <div class="menu-centrado">
+            <a href="#">Productos</a>
+            <a href="#">Contactos</a>
+            <a href="#" onclick="verGuiaTalles()">Guía de Talles</a>
+            <a href="#">Descuentos</a>
+        </div>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <div class="contenido">
+            <!-- CATEGORÍAS -->
+            <div class="categorias">
+                <div class="categorias-grid">
+                    <!-- Remeras -->
+                    <div class="card-categoria" onclick="irACatalogo('Remeras')">
+                        <img src="~/images/remeragris.jpeg" alt="Remeras" onerror="this.src='https://via.placeholder.com/120x85?text=Remeras'">
+                        <h3>Remeras</h3>
+                        <button class="btn-seleccionar" onclick="event.stopPropagation(); irACatalogo('Remeras')">Seleccionar</button>
+                    </div>
+
+                    <!-- Pantalones -->
+                    <div class="card-categoria" onclick="irACatalogo('Pantalones')">
+                        <img src="~/images/pantalonBaggy.png" alt="Pantalones" onerror="this.src='https://via.placeholder.com/120x85?text=Pantalones'">
+                        <h3>Pantalones</h3>
+                        <button class="btn-seleccionar" onclick="event.stopPropagation(); irACatalogo('Pantalones')">Seleccionar</button>
+                    </div>
+
+                    <!-- Abrigos -->
+                    <div class="card-categoria" onclick="irACatalogo('Abrigos')">
+                        <img src="~/images/campera1.jpeg" alt="Abrigos" onerror="this.src='https://via.placeholder.com/120x85?text=Abrigos'">
+                        <h3>Abrigos</h3>
+                        <button class="btn-seleccionar" onclick="event.stopPropagation(); irACatalogo('Abrigos')">Seleccionar</button>
+                    </div>
+
+                    <!-- Bermudas -->
+                    <div class="card-categoria" onclick="irACatalogo('Bermudas')">
+                        <img src="~/images/bermudasCamufladas.png" alt="Bermudas" onerror="this.src='https://via.placeholder.com/120x85?text=Bermudas'">
+                        <h3>Bermudas</h3>
+                        <button class="btn-seleccionar" onclick="event.stopPropagation(); irACatalogo('Bermudas')">Seleccionar</button>
+                    </div>
+                </div>
+
+                <!-- VER MÁS -->
+                <div class="ver-mas">
+                    <button onclick="mostrarMasCategorias()">Ver más...</button>
+                </div>
+
+                <!-- CATEGORÍAS EXTRA (ocultas) -->
+                <div id="categoriasExtra" class="categorias-extra">
+                    <div class="categorias-grid">
+                        <div class="card-categoria" onclick="irACatalogo('Accesorios')">
+                            <img src="~/images/gorra.png" alt="Accesorios" onerror="this.src='https://via.placeholder.com/120x85?text=Accesorios'">
+                            <h3>Accesorios</h3>
+                            <button class="btn-seleccionar" onclick="event.stopPropagation(); irACatalogo('Accesorios')">Seleccionar</button>
+                        </div>
+                        <div class="card-categoria" onclick="irACatalogo('Calzado')">
+                            <img src="~/images/mediashombre.png" alt="Calzado" onerror="this.src='https://via.placeholder.com/120x85?text=Calzado'">
+                            <h3>Calzado</h3>
+                            <button class="btn-seleccionar" onclick="event.stopPropagation(); irACatalogo('Calzado')">Seleccionar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PANEL DERECHO - SOLO BUSCADOR -->
+            <div class="panel-derecho">
+                <input type="text" class="buscador" placeholder="Buscar" id="buscador" onkeyup="buscarCategorias()">
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL GUÍA DE TALLES -->
+    <div id="modalTalles" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="cerrarModal()">&times;</span>
+            <h3>Guía de Talles</h3>
+            <table>
+                <thead>
+                    <tr><th>Talle</th><th>Pecho</th><th>Cintura</th><th>Cadera</th></tr>
+                </thead>
+                <tbody>
+                    <tr>。<S</td。<88-92</td。<70-74</td。<94-98</td</tr>
+                    <tr>。<M</td。<92-96</td。<74-78</td。<98-102</td</tr>
+                    <tr>。<L</td。<96-100</td。<78-82</td。<102-106</td</tr>
+                    <tr>。<XL</td。<100-104</td。<82-86</td。<106-110</td</td>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+
+    function mostrarMasCategorias() {
+        document.getElementById('categoriasExtra').classList.toggle('mostrar');
+    }
+
+    // ✅ FUNCIÓN CORREGIDA - Redirige a ProductoDetalle
+    function irACatalogo(categoria) {
+        localStorage.setItem('categoriaSeleccionada', categoria);
+        window.location.href = '@Url.Action("ProductoDetalle", "Home")';
+    }
+
+    function buscarCategorias() {
+        var busqueda = document.getElementById('buscador').value.toLowerCase();
+        var cards = document.querySelectorAll('.card-categoria');
+        cards.forEach(function(card) {
+            var titulo = card.querySelector('h3').innerText.toLowerCase();
+            card.style.display = titulo.includes(busqueda) ? '' : 'none';
+        });
+    }
+
+    function verGuiaTalles() {
+        document.getElementById('modalTalles').style.display = 'block';
+    }
+
+    function cerrarModal() {
+        document.getElementById('modalTalles').style.display = 'none';
+    }
+
+    function abrirRedSocial(red) {
+        var urls = {
+            'instagram': 'https://www.instagram.com/',
+            'facebook': 'https://www.facebook.com/',
+            'whatsapp': 'https://wa.me/'
+        };
+        if (urls[red]) window.open(urls[red], '_blank');
+    }
+
+    window.onclick = function(e) {
+        var modal = document.getElementById('modalTalles');
+        if (e.target === modal) modal.style.display = 'none';
+    }
+
+    </script>
+</body>
+</html>
