@@ -5,3 +5,7 @@ obj/
 *.user
 *.suo
 *.cache
+
+*.exe
+*.dll
+*.pdb

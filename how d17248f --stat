@@ -1,0 +1,13 @@
+* [33m054a3bd[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m Actualización de imágenes y categorías
+[31m|[m * [33md17248f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Actualización  y mejoras módulo cliente
+[31m|[m[31m/[m  
+*   [33mb900919[m Merge branch 'main' of https://github.com/lainonoelia-cell/ProyectoTaller6
+[33m|[m[34m\[m  
+[33m|[m * [33m8080938[m Agrego  mejoras en botones
+* [34m|[m [33m5735ba2[m Agrego bienvenida y login administrativo
+[34m|[m[34m/[m  
+* [33mcdf054a[m Actualizo script SQL con creación automática de base de datos
+* [33mbb53521[m Ultimo Noelia agrego validacion de categorias y subcategorias
+* [33mec01836[m Saco boton aplicar de inventario2s
+* [33m1bf464c[m Fix config remove passwords
+* [33m5600ba5[m Actualizar appsettings sin contraseña
