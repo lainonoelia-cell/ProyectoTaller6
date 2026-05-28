@@ -260,6 +260,21 @@ select {
     color: #999;
 }
 
+.btn-vaciar {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 4px;
+    width: 100%;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.btn-vaciar:hover {
+    background: #c0392b;
+}
+
 .close-modal:hover {
     color: #333;
 }

@@ -39,7 +39,12 @@
     <button class="btn-ver-carrito" onclick="irACarrito()" style="background: #c9901c; color: white; border: none; padding: 8px; border-radius: 4px; width: 100%; margin-bottom: 10px;">
         🛒 Ver carrito completo
     </button>
-    <button class="btn-confirmar" onclick="confirmarCompra()">Confirmar compra</button>
+    <button class="btn-vaciar" onclick="vaciarCarrito()">
+    🗑️ Vaciar carrito
+</button>
+    <button class="btn-confirmar" onclick="confirmarCompra()">
+    📲 Enviar pedido por WhatsApp
+</button>
 </div>
 
 <script>
@@ -187,16 +192,31 @@
             mostrarNotificacion(`${producto.nombre} eliminado del carrito`);
         }
 
-        function confirmarCompra() {
-            if (carrito.length === 0) {
-                mostrarNotificacion('No hay productos en el carrito');
-                return;
-            }
-            const total = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
-            mostrarNotificacion(`✅ Compra confirmada por $${total.toLocaleString()}. ¡Gracias!`);
-            carrito = [];
-            actualizarCarrito();
-        }
+       function confirmarCompra() {
+
+    if (carrito.length === 0) {
+        mostrarNotificacion('No hay productos en el carrito');
+        return;
+    }
+
+    let mensaje = "¡Hola! Quiero realizar el siguiente pedido:%0A%0A";
+
+    carrito.forEach(item => {
+        mensaje += `• ${item.nombre} - Talle: ${item.talle} - Cantidad: ${item.cantidad}%0A`;
+    });
+
+    const total = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
+
+    mensaje += `%0ATotal estimado: $${total.toLocaleString()}`;
+    mensaje += `%0A%0AGracias 😊`;
+
+    // CAMBIAR POR EL NÚMERO REAL DEL LOCAL
+    const numeroWhatsApp = "5491155555555";
+
+    const url = `https://wa.me/${numeroWhatsApp}?text=${mensaje}`;
+
+    window.open(url, '_blank');
+}
 
         function mostrarNotificacion(mensaje) {
             const modal = document.getElementById('modalNotificacion');
@@ -226,6 +246,13 @@
 
         cargarProductos();
         cargarCarritoGuardado();
+
+        function vaciarCarrito() {
+    carrito = [];
+    localStorage.removeItem('carrito');
+    actualizarCarrito();
+    mostrarNotificacion('Carrito vaciado');
+}
     </script>
 </body>
 </html>

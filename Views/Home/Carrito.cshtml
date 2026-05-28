@@ -1,0 +1,158 @@
+@{
+    ViewData["Title"] = "Carrito";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito - MM Indumentaria</title>
+    <link rel="stylesheet" href="~/css/carrito.css" />
+</head>
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="header-carrito">
+        <button class="btn-volver" onclick="volverCatalogo()">← Volver</button>
+        <h1>🛒 Mi Carrito</h1>
+    </div>
+
+    <!-- LISTA PRODUCTOS -->
+    <div id="carritoContainer" class="carrito-container">
+    </div>
+
+    <!-- TOTAL -->
+    <div class="total-section">
+        <h2>Total: <span id="totalCarrito">$0</span></h2>
+    </div>
+
+    <!-- BOTONES -->
+    <div class="botones-carrito">
+
+        <button class="btn-vaciar" onclick="vaciarCarrito()">
+            🗑️ Vaciar carrito
+        </button>
+
+        <button class="btn-whatsapp" onclick="enviarWhatsApp()">
+            📱 Enviar pedido a WhatsApp
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+function cargarCarrito() {
+
+    const container = document.getElementById('carritoContainer');
+    const totalSpan = document.getElementById('totalCarrito');
+
+    if (carrito.length === 0) {
+
+        container.innerHTML = `
+            <div class="carrito-vacio">
+                No hay productos en el carrito
+            </div>
+        `;
+
+        totalSpan.innerText = '$0';
+        return;
+    }
+
+    let total = 0;
+
+    container.innerHTML = carrito.map((item, index) => {
+
+        const subtotal = item.precio * item.cantidad;
+        total += subtotal;
+
+        return `
+            <div class="card-carrito">
+
+                <div class="info-producto">
+                    <h3>${item.nombre}</h3>
+
+                    <p>Talle: ${item.talle}</p>
+
+                    <p>Cantidad: ${item.cantidad}</p>
+
+                    <p class="precio">
+                        $${subtotal.toLocaleString()}
+                    </p>
+                </div>
+
+                <button class="btn-eliminar"
+                    onclick="eliminarProducto(${index})">
+                    🗑️
+                </button>
+
+            </div>
+        `;
+    }).join('');
+
+    totalSpan.innerText = `$${total.toLocaleString()}`;
+}
+
+function eliminarProducto(index) {
+
+    carrito.splice(index, 1);
+
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+
+    cargarCarrito();
+}
+
+function vaciarCarrito() {
+
+    carrito = [];
+
+    localStorage.removeItem('carrito');
+
+    cargarCarrito();
+}
+
+function enviarWhatsApp() {
+
+    if (carrito.length === 0) {
+        alert('No hay productos en el carrito');
+        return;
+    }
+
+    let mensaje = "Hola! Quiero realizar el siguiente pedido:%0A%0A";
+
+    carrito.forEach(item => {
+
+        mensaje += `• ${item.nombre} - Talle: ${item.talle} - Cantidad: ${item.cantidad}%0A`;
+
+    });
+
+    const total = carrito.reduce((sum, item) =>
+        sum + (item.precio * item.cantidad), 0);
+
+    mensaje += `%0ATotal estimado: $${total.toLocaleString()}`;
+
+    const numero = "5491155555555";
+
+    const url = `https://wa.me/${numero}?text=${mensaje}`;
+
+    window.open(url, '_blank');
+}
+
+function volverCatalogo() {
+
+    window.location.href = '@Url.Action("ProductoDetalle", "Home")';
+}
+
+cargarCarrito();
+
+</script>
+
+</body>
+</html>

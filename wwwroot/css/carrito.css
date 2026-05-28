@@ -1,0 +1,198 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f5f5;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+}
+
+/* CONTENEDOR */
+.container {
+    width: 95%;
+    max-width: 1100px;
+    background: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+/* HEADER */
+.header-carrito {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.header-carrito h1 {
+    color: #c9901c;
+    font-size: 28px;
+}
+
+/* BOTÓN VOLVER */
+.btn-volver {
+    background: #c9901c;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background 0.2s;
+}
+
+.btn-volver:hover {
+    background: #a07010;
+}
+
+/* PRODUCTOS */
+.carrito-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* CARD PRODUCTO */
+.card-carrito {
+    background: #EDD8D8;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.2s;
+}
+
+.card-carrito:hover {
+    transform: translateY(-2px);
+}
+
+.info-producto h3 {
+    color: #333;
+    margin-bottom: 8px;
+    font-size: 17px;
+}
+
+.info-producto p {
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 4px;
+}
+
+.precio {
+    color: #c9901c !important;
+    font-weight: bold;
+    font-size: 18px !important;
+    margin-top: 8px;
+}
+
+/* ELIMINAR */
+.btn-eliminar {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #e74c3c;
+}
+
+/* TOTAL */
+.total-section {
+    margin-top: 30px;
+    text-align: right;
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+}
+
+.total-section h2 {
+    color: #333;
+    font-size: 24px;
+}
+
+/* BOTONES */
+.botones-carrito {
+    margin-top: 25px;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+/* BOTÓN VACIAR */
+.btn-vaciar {
+    flex: 1;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-vaciar:hover {
+    background: #c0392b;
+}
+
+/* BOTÓN WHATSAPP */
+.btn-whatsapp {
+    flex: 1;
+    background: #27ae60;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-whatsapp:hover {
+    background: #1e8449;
+}
+
+/* CARRITO VACÍO */
+.carrito-vacio {
+    text-align: center;
+    padding: 40px;
+    color: #888;
+    font-size: 18px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 700px) {
+
+    .container {
+        padding: 20px;
+    }
+
+    .header-carrito {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .card-carrito {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .botones-carrito {
+        flex-direction: column;
+    }
+
+    .btn-vaciar,
+    .btn-whatsapp {
+        width: 100%;
+    }
+}
