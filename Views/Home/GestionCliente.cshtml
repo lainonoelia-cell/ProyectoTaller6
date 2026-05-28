@@ -4,7 +4,10 @@
 }
 
 <!DOCTYPE html>
+
 <html lang="es">
+
+    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,13 +21,31 @@
             <img src="~/images/logoMM.png" alt="Logo" onerror="this.style.display='none'">
         </div>
 
+
+<!-- BOTÓN VOLVER -->
+<div class="volver-container">
+    <button class="btn-volver" onclick="volverBienvenida()">← 
+    </button>
+</div>
+
         <!-- MENÚ CENTRADO -->
-        <div class="menu-centrado">
-            <a href="#">Productos</a>
-            <a href="#">Contactos</a>
-            <a href="#" onclick="verGuiaTalles()">Guía de Talles</a>
-            <a href="#">Descuentos</a>
-        </div>
+       <div class="menu-centrado">
+    <a href="@Url.Action("GestionCliente", "Home")">
+    Productos
+</a>
+
+    <a href="#" onclick="verContactos()">
+        Contactos
+    </a>
+
+    <a href="#" onclick="verGuiaTalles()">
+        Guía de Talles
+    </a>
+
+    <a href="#" onclick="verDescuentos()">
+        Descuentos
+    </a>
+</div>
 
         <!-- CONTENIDO PRINCIPAL -->
         <div class="contenido">
@@ -52,11 +73,11 @@
                         <button class="btn-seleccionar" onclick="event.stopPropagation(); irACatalogo('Abrigos')">Seleccionar</button>
                     </div>
 
-                    <!-- Bermudas -->
-                    <div class="card-categoria" onclick="irACatalogo('Bermudas')">
-                        <img src="~/images/bermudasCamufladas.png" alt="Bermudas" onerror="this.src='https://via.placeholder.com/120x85?text=Bermudas'">
-                        <h3>Bermudas</h3>
-                        <button class="btn-seleccionar" onclick="event.stopPropagation(); irACatalogo('Bermudas')">Seleccionar</button>
+                    <!-- Cortos -->
+                    <div class="card-categoria" onclick="irACatalogo('Cortos')">
+                        <img src="~/images/bermudasCamufladas.png" alt="Cortos" onerror="this.src='https://via.placeholder.com/120x85?text=Cortos'">
+                        <h3>Cortos</h3>
+                        <button class="btn-seleccionar" onclick="event.stopPropagation(); irACatalogo('Cortos')">Seleccionar</button>
                     </div>
                 </div>
 
@@ -73,10 +94,10 @@
                             <h3>Accesorios</h3>
                             <button class="btn-seleccionar" onclick="event.stopPropagation(); irACatalogo('Accesorios')">Seleccionar</button>
                         </div>
-                        <div class="card-categoria" onclick="irACatalogo('Calzado')">
-                            <img src="~/images/mediashombre.png" alt="Calzado" onerror="this.src='https://via.placeholder.com/120x85?text=Calzado'">
-                            <h3>Calzado</h3>
-                            <button class="btn-seleccionar" onclick="event.stopPropagation(); irACatalogo('Calzado')">Seleccionar</button>
+                        <div class="card-categoria" onclick="irACatalogo('Interiores')">
+                            <img src="~/images/mediasDeportivasHombre.png" alt="Interiores" onerror="this.src='https://via.placeholder.com/120x85?text=Interiores'">
+                            <h3>Interiores</h3>
+                            <button class="btn-seleccionar" onclick="event.stopPropagation(); irACatalogo('Interiores')">Seleccionar</button>
                         </div>
                     </div>
                 </div>
@@ -99,10 +120,33 @@
                     <tr><th>Talle</th><th>Pecho</th><th>Cintura</th><th>Cadera</th></tr>
                 </thead>
                 <tbody>
-                    <tr>。<S</td。<88-92</td。<70-74</td。<94-98</td</tr>
-                    <tr>。<M</td。<92-96</td。<74-78</td。<98-102</td</tr>
-                    <tr>。<L</td。<96-100</td。<78-82</td。<102-106</td</tr>
-                    <tr>。<XL</td。<100-104</td。<82-86</td。<106-110</td</td>
+                    <tr>
+    <td>S</td>
+    <td>88-92</td>
+    <td>70-74</td>
+    <td>94-98</td>
+</tr>
+
+<tr>
+    <td>M</td>
+    <td>92-96</td>
+    <td>74-78</td>
+    <td>98-102</td>
+</tr>
+
+<tr>
+    <td>L</td>
+    <td>96-100</td>
+    <td>78-82</td>
+    <td>102-106</td>
+</tr>
+
+<tr>
+    <td>XL</td>
+    <td>100-104</td>
+    <td>82-86</td>
+    <td>106-110</td>
+</tr>
                 </tbody>
             </table>
         </div>
@@ -120,14 +164,33 @@
         window.location.href = '@Url.Action("ProductoDetalle", "Home")';
     }
 
-    function buscarCategorias() {
-        var busqueda = document.getElementById('buscador').value.toLowerCase();
-        var cards = document.querySelectorAll('.card-categoria');
-        cards.forEach(function(card) {
-            var titulo = card.querySelector('h3').innerText.toLowerCase();
-            card.style.display = titulo.includes(busqueda) ? '' : 'none';
-        });
+   function buscarCategorias() {
+
+    var busqueda = document.getElementById('buscador').value.toLowerCase();
+
+    var cards = document.querySelectorAll('.card-categoria');
+
+    var categoriasExtra = document.getElementById('categoriasExtra');
+
+    // Si el usuario escribe algo, mostrar categorías extra
+    if (busqueda !== '') {
+        categoriasExtra.classList.add('mostrar');
+    } else {
+        categoriasExtra.classList.remove('mostrar');
     }
+
+    cards.forEach(function(card) {
+
+        var titulo = card.querySelector('h3').innerText.toLowerCase();
+
+        if (titulo.includes(busqueda)) {
+            card.style.display = '';
+        } else {
+            card.style.display = 'none';
+        }
+
+    });
+}
 
     function verGuiaTalles() {
         document.getElementById('modalTalles').style.display = 'block';
@@ -150,6 +213,28 @@
         var modal = document.getElementById('modalTalles');
         if (e.target === modal) modal.style.display = 'none';
     }
+
+    function verContactos() {
+    alert(
+        "MM&M Indumentaria\n\n" +
+        "Instagram: @@mmm_indumentaria\n" +
+        "WhatsApp: 11-5555-5555"
+    );
+}
+
+function verDescuentos() {
+
+    alert(
+        "Descuentos disponibles:\n\n" +
+        "• 20% OFF efectivo\n" +
+        "• 3 cuotas sin interés\n" +
+        "• 2x1 en accesorios"
+    );
+}
+
+function volverBienvenida() {
+    window.location.href = '@Url.Action("Bienvenida", "Home")';
+}
 
     </script>
 </body>

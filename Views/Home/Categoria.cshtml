@@ -116,10 +116,19 @@ function crearSub() {
         <div class="producto" data-tipo="@p.Tipo">
             <img src="~/images/@p.Imagen" />
 
-            <p>@p.Nombre</p>
-            <p style="color:@(p.Stock == 0 ? "red" : "black")">Stock: @p.Stock</p>
-            <p>Precio: $@p.Precio</p>
+<p class="nombre-producto">@p.Nombre</p>
+           
+            <p class="@(p.Stock == 0 ? "stock-agotado" :
+           p.Stock <= 5 ? "stock-bajo" :
+           "stock-ok")">
 
+    Stock: @p.Stock
+
+</p>
+            
+<p class="precio-producto">
+    Precio: $@p.Precio
+</p>
             <div class="acciones">
                 <a href="/Home/EditarProducto?id=@p.Id">
                     <button>Editar</button>

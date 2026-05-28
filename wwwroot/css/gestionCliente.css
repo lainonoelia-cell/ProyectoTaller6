@@ -15,8 +15,8 @@ body {
 }
 
 .container {
-    max-width: 850px;
-    width: 100%;
+    max-width: 1300px;
+    width: 95%;
     background: white;
     border-radius: 8px;
     padding: 25px 30px;
@@ -234,6 +234,26 @@ th {
     color: white;
 }
 
+ /* BOTÓN VOLVER */
+.volver-container {
+    margin-bottom: 15px;
+}
+
+.btn-volver {
+    background: #c9901c;
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background 0.2s;
+}
+
+.btn-volver:hover {
+    background: #a07010;
+}
+
 /* RESPONSIVE */
 @media (max-width: 650px) {
     body {
@@ -254,4 +274,7 @@ th {
     .menu-centrado {
         gap: 20px;
     }
+
+   
+
 }

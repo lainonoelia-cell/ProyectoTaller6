@@ -7,10 +7,12 @@ body {
 /* TITULO */
 .titulo {
     text-align: center;
-    font-size: 40px;
-    font-family: cursive;
-    margin: 20px;
-    
+    font-size: 42px;
+    font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #2d2d2d;
+    margin: 25px 0;
 }
 
 .producto img {
@@ -34,10 +36,37 @@ body {
 /* CARD PRODUCTO */
 .producto {
     background: #d8caca;
-    border: 2px solid black;
+    border: 2px solid #5f5f5f;
     padding: 20px;
     width: 350px;
     text-align: center;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 8px 20px rgba(0,0,0,0.12);
+
+    transition: all .3s ease;
+}
+
+.producto:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        0 12px 25px rgba(0,0,0,0.18);
+}
+
+.producto p {
+    font-size: 20px;
+    font-weight: 600;
+    color: #222;
+    line-height: 1.6;
+}
+
+
+.nombre-categoria {
+    font-size: 26px;
+    font-weight: 800;
+    color: #111827;
 }
 
 /* IMAGEN */
@@ -74,17 +103,23 @@ body {
     transform: scale(1.05);
 }
 
-.btn-crear-categoria{
+.btn-crear-categoria {
     background: #2563eb;
     color: white;
     border: none;
-    padding: 12px 20px;
-    border-radius: 10px;
+    padding: 12px 22px;
+
+    border-radius: 12px;
+
     font-size: 16px;
-    font-weight: bold;
+    font-weight: 700;
+
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+
+    transition: all .3s ease;
+
+    box-shadow:
+        0 6px 15px rgba(0,0,0,.15);
 }
 
 .btn-crear-categoria:hover{
@@ -93,9 +128,10 @@ body {
 }
 /* LOGO CENTRO ABAJO */
 .logo-centro {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
+    position: fixed;
+    top: 50%;
+    left: 40px;
+    transform: translateY(-50%);
 }
 
 .logo-centro img {
@@ -113,21 +149,7 @@ body {
     width: 98px;
 }
 
-/* CAMARA */
-.camara {
-    position: fixed; /* queda fija en pantalla */
-    right: 90px;     /* separación del borde derecho */
-    top: 50%;        /* mitad de pantalla */
-    transform: translateY(-50%); /* centra verticalmente */
-}
 
-.camara img {
-    width: 80px;
-    background: #d8caca;
-    border-radius: 50%;
-    padding: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-}
 
 .btn-volver {
     position: fixed;
@@ -147,6 +169,38 @@ body {
     transform: scale(1.1);
 }
 
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.4s ease;
+}
+
+.modal-content {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    width: 300px;
+    animation: pop 0.25s ease;
+}
+
+.modal.error .modal-content {
+    border: 3px solid red;
+}
+
+.modal.success .modal-content {
+    border: 3px solid green;
+}
+
+@keyframes pop {
+    from { transform: scale(0.6); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
 
 .navbar {
     display: none;

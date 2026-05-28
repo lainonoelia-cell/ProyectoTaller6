@@ -192,6 +192,7 @@ public JsonResult EliminarProducto(int id)
 
     public IActionResult EscaneoCodigo()
     {
+        
         return View();
     }
 
@@ -234,23 +235,35 @@ public JsonResult EliminarProducto(int id)
         return Json(new { ok = true });
     }
 
-    public IActionResult Inventario2(string codigo)
+ public IActionResult Inventario2(string codigo)
+{
+    // 🧼 LIMPIEZA DEL CÓDIGO (CLAVE)
+    codigo = codigo?.Trim();
+
+    if (string.IsNullOrEmpty(codigo))
     {
-        var producto = _context.Productos.FirstOrDefault(p => p.Codigo == codigo);
-
-        if (producto != null && producto.Stock > 0)
-        {
-            producto.Stock--;
-            _context.SaveChanges();
-        }
-
-        return View(producto);
+        return RedirectToAction("Inventario1", new { error = "1" });
     }
 
-    public IActionResult Error()
+    var producto = _context.Productos
+        .FirstOrDefault(p => p.Codigo != null && p.Codigo.Trim() == codigo);
+
+    if (producto == null)
     {
-        return View();
+        return RedirectToAction("Inventario1", new { error = "1" });
     }
+
+    // ✔ PRODUCTO OK
+    TempData["Success"] = $"Producto: {producto.Nombre}";
+
+    if (producto.Stock > 0)
+    {
+        producto.Stock--;
+        _context.SaveChanges();
+    }
+
+    return View(producto);
+}
 
     public IActionResult GestionCliente()
 {

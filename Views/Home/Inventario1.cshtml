@@ -2,6 +2,21 @@
 
 @{
     ViewData["Title"] = "Inventario1";
+    var error = Context.Request.Query["error"];
+}
+
+<!-- 🔴 MODAL ERROR (VA ARRIBA DE TODO) -->
+@if (!string.IsNullOrEmpty(error))
+{
+    <div id="modalError" class="modal error">
+        <div class="modal-content">
+            <h2>❌ Producto no encontrado</h2>
+            <p>El código escaneado no existe o no está registrado</p>
+        </div>
+    </div>
+}
+@{
+    ViewData["Title"] = "Inventario1";
 }
 
 <link rel="stylesheet" href="~/css/inventario1.css" />
@@ -68,4 +83,28 @@ function crearCategoria() {
         }
     });
 }
+
+function cerrarModal() {
+    document.getElementById("modalError").style.display = "none";
+    window.location.href = "/Home/Inventario1";
+}
+
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const errorModal = document.getElementById("modalError");
+
+    if (errorModal) {
+
+        if (navigator.vibrate) {
+            navigator.vibrate([200, 100, 200]);
+        }
+
+        new Audio("/sounds/error.mp3").play();
+
+        setTimeout(() => {
+            window.location.href = "/Home/Inventario1";
+        }, 3000);
+    }
+});
 </script>

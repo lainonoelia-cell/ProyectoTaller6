@@ -1,152 +1,254 @@
 body {
     background: rgba(216, 193, 193, 0.91);
-    font-family: Arial;
+    font-family: "Segoe UI", sans-serif;
     margin: 0;
+    padding: 0;
 }
 
 /* TITULO */
-.titulo {
-    text-align: center;
-    font-size: 40px;
-    margin: 20px;
-    font-family: cursive;
+.titulo{
+    text-align:center;
+    font-size:32px;
+    letter-spacing:2px;
+    color:#2d2d2d;
+    margin:25px 0;
+    font-family:'Trebuchet MS', sans-serif;
+    font-weight:700;
 }
 
-/* CONTENEDOR PRINCIPAL */
-.contenedor-inv2 {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-template-rows: auto auto;
-    gap: 30px;
-    padding: 40px;
-    align-items: start;
+/* GRID PRINCIPAL */
+.contenedor-inv2{
+    max-width:1000px;
+    margin:40px auto;
+    display:grid;
+    grid-template-columns:1.5fr 1fr;
+    gap:35px;
+    padding:30px;
 }
 
-/* IMAGEN PRODUCTO */
-.producto-img {
-    grid-column: 1;
-    grid-row: 1;
-    display: flex;
-    justify-content: center;
+/* IMAGEN */
+.producto-img{
+    display:flex;
+    justify-content:center;
 }
 
-.producto-img img {
-    width: 100%;
-    max-width: 500px;
-    height: auto;
-    object-fit: contain;
-    border: 2px solid black;
+.producto-img img{
+    width:100%;
+    max-width:350px;
+    border-radius:25px;
+    box-shadow:0 20px 40px rgba(0,0,0,.20);
+    transition:.3s;
 }
 
-/* PROMO */
-.promo {
-    grid-column: 2;
-    grid-row: 1;
-    background: #d8caca;
-    padding: 20px;
-    border: 2px solid black;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+.producto-img img:hover{
+    transform:scale(1.02);
 }
 
-.promo h2 {
-    text-align: center;
+/* TARJETA INFORMACION */
+.info-producto{
+    grid-column:1 / span 2;
+
+    background:white;
+    border-left:8px solid #9B6C05;
+
+    border-radius:25px;
+    padding:35px;
+
+    margin-top:10px;
+
+    box-shadow:
+        0 20px 40px rgba(0,0,0,.12);
 }
 
-/* DROPDOWN */
-.dropdown select {
-    width: 100%;
-    padding: 12px;
-    font-size: 16px;
-    border: 2px solid black;
-    cursor: pointer;
+/* TEXTO GENERAL */
+.info-producto p{
+    font-size:26px;
+    line-height:1.8;
+    color:#222;
+}
+
+.info-producto strong{
+    color:#111;
+    font-weight:800;
+}
+
+.info-producto hr{
+    border:none;
+    height:1px;
+    background:#d8caca;
+    margin:20px 0;
+}
+
+/* CODIGO */
+.codigo-producto{
+    font-size:30px !important;
+    font-weight:800 !important;
+    color:#6b7280 !important;
+}
+
+/* NOMBRE PRODUCTO */
+.nombre-producto{
+    font-size:38px !important;
+    font-weight:900 !important;
+    color:#111827 !important;
+    margin:15px 0;
+}
+
+/* PROMOCION */
+.promo{
+    background:rgba(255,255,255,.85);
+    border-radius:25px;
+    padding:25px;
+
+    min-height:150px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,.12);
+}
+
+.promo:hover{
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 12px 25px rgba(0,0,0,0.15);
+}
+
+.promo h2{
+    margin-top:0;
+    text-align:center;
+    font-size:30px;
+}
+
+/* SELECT */
+.dropdown select{
+
+    width:100%;
+    padding:18px;
+
+    border:none;
+    border-radius:15px;
+
+    background:white;
+
+    font-size:24px;
+    font-weight:800;
+
+    color:#111827;
+
+    box-shadow:
+        0 6px 15px rgba(0,0,0,.10);
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.dropdown select:hover{
+    transform:scale(1.02);
+}
+
+.dropdown select:focus{
+    outline:none;
+
+    box-shadow:
+        0 0 0 4px rgba(155,108,5,.25);
 }
 
 
-/* INFO IZQUIERDA */
-.resultado1 {
-    grid-column: 1;
-    grid-row: 2;
-    background: #d8caca;
-    padding: 20px;
-    border: 2px solid black;
+
+/* PRECIO ORIGINAL */
+#precio{
+    font-size:42px;
+    font-weight:900;
+    color:#111827;
 }
 
-/* INFO DERECHA */
-.resultado2 {
-    grid-column: 2;
-    grid-row: 2;
-    background: #d8caca;
-    padding: 20px;
-    border: 2px solid black;
+/* DESCUENTO */
+#descuento-texto{
+    font-size:34px !important;
+    font-weight:900 !important;
+    color:#9B6C05 !important;
 }
 
-.precio-final {
-    font-size: 22px;
-    font-weight: bold;
+/* PRECIO FINAL */
+.precio-final{
+    font-size:60px;
+    font-weight:900;
+    text-align:center;
+
+    margin-top:25px;
+
+    text-shadow:
+        2px 2px 5px rgba(0,0,0,.15);
+}
+
+/* STOCK */
+.stock-ok{
+    color:#1f7a1f !important;
+}
+
+.stock-bajo{
+    color:#d97706 !important;
+}
+
+.stock-agotado{
+    color:#dc2626 !important;
+}
+
+.stock-ok,
+.stock-bajo,
+.stock-agotado{
+    font-size:32px !important;
+    font-weight:900 !important;
 }
 
 /* BOTON VOLVER */
-.btn-volver {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    background: #9B6C05;
-    color: white;
-    padding: 10px 15px;
-    text-decoration: none;
-    border-radius: 8px;
-    font-size: 18px;
-    transition: all 0.2s;
+.btn-volver{
+    position:fixed;
+    top:20px;
+    left:20px;
+
+    background:#9B6C05;
+    color:white;
+
+    padding:12px 18px;
+
+    text-decoration:none;
+
+    border-radius:12px;
+
+    font-size:18px;
+
+    transition:.3s;
 }
 
-.btn-volver:hover {
-    background: #7a5304;
-    transform: scale(1.1);
+.btn-volver:hover{
+    transform:scale(1.1);
 }
 
-/* LOGO CENTRO */
-.logo-centro {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
+/* LOGO CDN */
+.logo-centro{
+    position:fixed;
+    top:50%;
+    left:40px;
+    transform:translateY(-50%);
 }
 
-.logo-centro img {
-    width: 180px;
+.logo-centro img{
+    width:200px;
 }
 
-/* LOGO ESQUINA DERECHA */
-.logo-derecha {
-    position: fixed;
-    bottom: 700px;
-    right: 10px;
+/* LOGO MM */
+.logo-derecha{
+    position:absolute;
+    top:160px;
+    right:30px;
 }
 
-.logo-derecha img {
-    width: 90px;
-}
-
-.navbar {
-    display: none;
-}
-
-/* RESPONSIVE */
-@media (max-width: 768px) {
-
-    .contenedor-inv2 {
-        grid-template-columns: 1fr;
-    }
-
-    .producto-img,
-    .promo,
-    .resultado1,
-    .resultado2 {
-        grid-column: 1;
-    }
-
-    .producto-img img {
-        max-width: 90%;
-    }
+.logo-derecha img{
+    width:80px;
 }

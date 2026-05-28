@@ -16,8 +16,8 @@ body {
 
 /* CONTENEDOR PRINCIPAL */
 .container {
-    max-width: 1000px;
-    width: 100%;
+    max-width:1400px;
+    width: 95%;
     background: white;
     border-radius: 8px;
     padding: 25px 30px;

@@ -1,10 +1,36 @@
 
 @model ProyectoTaller6.Models.Producto
+<link rel="stylesheet" href="~/css/inventario2.css" asp-append-version="true" />
+
+@if (TempData["Success"] != null)
+{
+    <div id="modalSuccess" class="modal success">
+        <div class="modal-content">
+            <h2>✅ Producto encontrado</h2>
+            <p>@TempData["Success"]</p>
+        </div>
+    </div>
+}
+
+@if (Model == null)
+{
+    <h2 style="color:red; text-align:center;">
+        Producto no encontrado
+    </h2>
+
+    <div style="text-align:center;">
+        <a href="/Home/Inventario1">⬅ Volver</a>
+    </div>
+
+    return;
+
+    
+}
 @{
     ViewData["Title"] = "Inventario2";
 }
 
-<link rel="stylesheet" href="~/css/inventario2.css" />
+
 
 <h1 class="titulo">GESTIÓN INVENTARIO 2</h1>
 
@@ -47,38 +73,98 @@
 <script>
     const select = document.getElementById("descuento");
 
-    let precioBase = @Model.Precio;
+let precioBase = @(Model?.Precio ?? 0);
 
-    select.addEventListener("change", function () {
-        let descuento = parseFloat(this.value);
+select.addEventListener("change", function () {
 
-        if (!isNaN(descuento)) {
-            let precioFinal = precioBase - (precioBase * descuento / 100);
+    let descuento = parseFloat(this.value);
 
-            document.getElementById("descuento-texto").innerText = "Descuento: " + descuento + "%";
-            document.getElementById("precio-final").innerText = "Precio final: $" + precioFinal;
+    if (!isNaN(descuento)) {
+
+        let precioFinal = precioBase - (precioBase * descuento / 100);
+
+        document.getElementById("descuento-texto").innerText =
+            "Descuento: " + descuento + "%";
+
+        let precioFinalElemento =
+            document.getElementById("precio-final");
+
+        precioFinalElemento.innerText =
+            "Precio final: $" + precioFinal;
+
+        // COLORES DINÁMICOS
+
+        if (descuento == 0) {
+
+            precioFinalElemento.style.color = "#111827";
+
         }
-    });
+        else if (descuento <= 20) {
+
+            precioFinalElemento.style.color = "#16a34a";
+
+        }
+        else if (descuento <= 50) {
+
+            precioFinalElemento.style.color = "#d97706";
+
+        }
+        else {
+
+            precioFinalElemento.style.color = "#dc2626";
+
+        }
+    }
+});
 </script>
 
 
     <!-- INFO FINAL 1 -->
-    <div class="resultado1">
-        <div class="resultado1">
-    <p>Código: @Model.Codigo</p>
-    <p>Nombre: @Model.Nombre</p>
-    <p style="color:@(Model.Stock == 0 ? "red" : "black")">Stock: @Model.Stock unidades</p>
-</div>
-    </div>
+  <div class="info-producto">
 
-    <!-- INFO FINAL 2 -->
-    <div class="resultado2">
-   <p id="precio">Precio: $@Model.Precio</p>
-    <p id="descuento-texto">Descuento: </p>
-    <p id="precio-final" class="precio-final">Precio final: </p>
-</div>
+<p class="codigo-producto">
+     <strong>Código:</strong> @Model.Codigo
+     </p>
+
+    <p class="nombre-producto">@Model.Nombre</p>
+
+
+@if (Model.Stock == 0)
+{
+    <p class="stock-agotado">
+        <strong>Stock:</strong> @Model.Stock unidades
+    </p>
+}
+else if (Model.Stock <= 5)
+{
+    <p class="stock-bajo">
+        <strong>Stock:</strong> @Model.Stock unidades
+    </p>
+}
+else
+{
+    <p class="stock-ok">
+        <strong>Stock:</strong> @Model.Stock unidades
+    </p>
+}
+
+    <hr>
+
+    <p id="precio">
+        <strong>Precio:</strong> $@Model.Precio
+    </p>
+
+    <p id="descuento-texto">
+        <strong>Descuento:</strong>
+    </p>
+
+    <p id="precio-final" class="precio-final">
+        Precio final:
+    </p>
 
 </div>
+
+</div> <!-- cierre de contenedor-inv2 -->
 
 <!-- LOGO CENTRO ABAJO -->
 <div class="logo-centro">

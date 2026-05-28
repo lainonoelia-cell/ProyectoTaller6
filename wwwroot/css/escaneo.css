@@ -1,16 +1,21 @@
 
 body {
     background: rgba(216, 193, 193, 0.91);
-    font-family: Arial;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
 }
 
 /* TITULO */
 .titulo {
     text-align: center;
-    font-size: 40px;
-    margin-top: 20px;
-    font-family: cursive;
+    font-size: 42px;
+    margin-top: 25px;
+
+    font-family: "Trebuchet MS", sans-serif;
+    font-weight: 700;
+    letter-spacing: 2px;
+
+    color: #2d2d2d;
 }
 
 .btn-volver {
@@ -42,16 +47,26 @@ body {
 
 /* MENSAJE */
 .mensaje {
-    font-size: 20px;
+    font-size: 22px;
     text-align: center;
+    font-weight: 600;
+    color: #374151;
 }
 
 /* CAMARA */
-.camara-grande img {
-    width: 200px;
-    background: #d8caca;
-    border-radius: 50%;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+.camara-grande img{
+    width:220px;
+
+    background:#d8caca;
+
+    border-radius:50%;
+
+    padding:20px;
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,.15);
+
+    transition:.3s;
 }
 
 .camara-grande img:hover {
@@ -61,8 +76,9 @@ body {
 
 /* RESULTADOS 1 */
 .resultado1 {
-    font-size: 20px;
-    font-family: cursive;
+    font-size:22px;
+    font-weight:700;
+    color:#111827;
 }
 
 .ok1 {
@@ -74,31 +90,70 @@ body {
 }
 
 /* INPUT MANUAL */
-.manual {
-    background: #D9D9D9;
-    padding: 20px;
-    border: 2px solid black;
-    display: flex;
-    gap: 10px;
+.manual{
+    background:white;
+
+    padding:25px;
+
+    border:none;
+
+    border-radius:20px;
+
+    display:flex;
+
+    gap:12px;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.12);
 }
 
-.manual input {
-    padding: 10px;
-    font-size: 18px;
+.manual input{
+    padding:14px;
+
+    font-size:18px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#f5f5f5;
+
+    box-shadow:
+        inset 0 2px 4px rgba(0,0,0,.08);
 }
 
-.manual button {
-    background: black;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    cursor: pointer;
+.manual button{
+    background:#9B6C05;
+
+    color:white;
+
+    padding:14px 20px;
+
+    border:none;
+
+    border-radius:12px;
+
+    font-size:16px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.manual button:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(0,0,0,.15);
 }
 
 /* RESULTADOS 2 */
 .resultado2 {
-    font-size: 20px;
-    font-family: cursive;
+    font-size:22px;
+    font-weight:700;
+    color:#111827;
 }
 
 .ok2 {
@@ -107,6 +162,57 @@ body {
 
 .error2 {
     color: red;
+}
+
+
+.scanner-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.laser {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    height: 3px;
+    background: red;
+    animation: scan 1.2s infinite linear;
+    box-shadow: 0 0 10px red;
+}
+
+@keyframes scan {
+    0% { transform: translateY(-200px); }
+    50% { transform: translateY(0); }
+    100% { transform: translateY(200px); }
+}
+
+/* FLASH OK */
+.flash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 80px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    z-index: 9999;
+}
+
+.flash.ok {
+    background: rgba(0,255,0,0.3);
+    color: white;
+}
+
+.flash.error {
+    background: rgba(255,0,0,0.3);
+    color: white;
 }
 
 /* LOGO CENTRO ABAJO */
@@ -130,6 +236,7 @@ body {
 .logo-derecha img {
     width: 98px;
 }
+
 
 .navbar {
     display: none;

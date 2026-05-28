@@ -1,15 +1,18 @@
 body {
     background: rgba(205, 183, 183, 0.91);
-    font-family: Arial;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
 }
 
 /* TITULO */
 .titulo {
     text-align: center;
-    font-size: 40px;
-    font-family: cursive;
-    margin: 20px;
+    font-size: 42px;
+    font-family: "Trebuchet MS", sans-serif;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #2d2d2d;
+    margin: 25px 0;
 }
 
 /* CONTENEDOR */
@@ -31,10 +34,29 @@ body {
     transition: 0.3s;
 }
 
+.producto p {
+    font-size: 22px;
+    font-weight: 700;
+    color: #111827;
+    line-height: 1.7;
+    font-family: "Segoe UI", sans-serif;
+}
+
+.nombre-producto{
+    font-size:30px;
+    font-weight:900;
+    color:#111827;
+    margin-bottom:15px;
+    letter-spacing:0.5px;
+}
+
+
 .producto:hover {
     transform: scale(1.02);
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
+
+
 
 /* IMAGEN */
 .producto img {
@@ -112,6 +134,8 @@ button {
     color: white;
     border-radius: 10px;
     transition: 0.3s;
+     font-size:16px;
+    font-weight:700;
 }
 
 .acciones button:hover {
@@ -121,9 +145,10 @@ button {
 
 /* LOGO CENTRO ABAJO */
 .logo-centro {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
+    position: fixed;
+    top: 50%;
+    left: 40px;
+    transform: translateY(-50%);
 }
 
 .logo-centro img {
@@ -185,7 +210,7 @@ button {
 /* SUBCATEGORIAS */
 .subcategorias {
     display: flex;
-    justify-content: center;
+    justify-content: left;
     gap: 15px;
     margin-bottom: 20px;
     flex-wrap: wrap;
@@ -200,6 +225,36 @@ button {
     background: #7a5304;
     transform: scale(1.05);
 }
+
+.producto .stock-ok{
+    color:#1f7a1f !important;
+}
+
+.producto .stock-bajo{
+    color:#d97706 !important;
+}
+
+.producto .stock-agotado{
+    color:#dc2626 !important;
+}
+
+
+.precio-producto{
+    font-size:26px;
+    font-weight:900;
+    color:#9B6C05;
+}
+
+
+
+.stock-ok,
+.stock-bajo,
+.stock-agotado{
+    font-size:24px;
+    font-weight:900;
+    letter-spacing:0.5px;
+}
+
 
 .navbar {
     display: none;

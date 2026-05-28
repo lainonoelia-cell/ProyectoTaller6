@@ -24,7 +24,10 @@
 <input type="text" name="Nombre" value="@Model.Nombre" />
 
 <label>Stock:</label>
-<input type="number" name="Stock" value="@Model.Stock" />
+<input type="number"
+       id="stock"
+       name="Stock"
+       value="@Model.Stock" />
 
 <label>Precio:</label>
 <input type="number" name="Precio" value="@Model.Precio" />
@@ -45,3 +48,38 @@
 
 <!-- VOLVER -->
 <a href="/Home/Categoria?tipo=@Model.Categoria" class="btn-volver">⬅</a>
+
+
+<script>
+
+const stockInput = document.getElementById("stock");
+
+function actualizarColorStock() {
+
+    let stock = parseInt(stockInput.value);
+
+    stockInput.classList.remove(
+        "stock-ok",
+        "stock-bajo",
+        "stock-agotado"
+    );
+
+    if(stock === 0){
+        stockInput.classList.add("stock-agotado");
+    }
+    else if(stock <= 5){
+        stockInput.classList.add("stock-bajo");
+    }
+    else{
+        stockInput.classList.add("stock-ok");
+    }
+}
+
+actualizarColorStock();
+
+stockInput.addEventListener(
+    "input",
+    actualizarColorStock
+);
+
+</script>

@@ -1,12 +1,10 @@
-
 <script src="https://unpkg.com/html5-qrcode"></script>
+
 @{
     ViewData["Title"] = "Escaneo Codigo";
 }
 
 <link rel="stylesheet" href="~/css/escaneo.css" />
-
-
 
 <h1 class="titulo">ESCANEO CÓDIGO PRODUCTO</h1>
 
@@ -16,143 +14,192 @@
         Por favor, apunte la cámara al código de la prenda
     </p>
 
-    <!-- CAMARA (TU IMAGEN) -->
+    <!-- 📷 CAMARA -->
     <div class="camara-grande">
         <img src="~/images/camara2.png" onclick="iniciarEscaneo()" style="cursor:pointer;" />
     </div>
 
     <div id="reader" style="width:300px; display:none;"></div>
 
-    <!-- RESULTADO ESCANEO -->
+    <!-- FLASH EFFECTS -->
+    <div id="flashOk" class="flash ok"></div>
+    <div id="flashError" class="flash error"></div>
+
+    <!-- RESULTADOS -->
     <p id="ok1" class="resultado1 ok1" style="display:none;">
         Producto encontrado ✅
     </p>
-<p id="nombreProducto" style="font-size:20px; font-weight:bold;"></p>
 
     <p id="error1" class="resultado1 error1" style="display:none;">
         Producto no encontrado ❌
     </p>
 
-    <!-- INGRESO MANUAL -->
+    <!-- MANUAL -->
     <div class="manual">
         <input type="text" id="codigoInput" placeholder="Ingresar código manual" />
         <button onclick="buscarCodigo()">Buscar 🔎</button>
     </div>
 
-    <!-- RESULTADO REGISTRO -->
-    <p id="ok2" class="resultado2 ok2" style="display:none;">
-        Código registrado exitosamente ✅
-    </p>
-
-    <p id="error2" class="resultado2 error2" style="display:none;">
-        Código no registrado ❌
-    </p>
-
 </div>
 
-
+<!-- 📷 SCANNER + LOGICA -->
 <script>
+
+let sonidoOk = new Audio("/sounds/success.mp3");
+let sonidoError = new Audio("/sounds/error.mp3");
+
+let scanner;
+
+
+// 🔊 VOZ
+function hablar(texto) {
+
+    const mensaje = new SpeechSynthesisUtterance(texto);
+
+    mensaje.lang = "es-AR";
+    mensaje.rate = 1;
+    mensaje.pitch = 1;
+
+    speechSynthesis.speak(mensaje);
+}
+
+
+// 📷 INICIAR ESCANEO
 function iniciarEscaneo() {
 
     document.getElementById("reader").style.display = "block";
 
-    let scanner = new Html5Qrcode("reader");
+    scanner = new Html5Qrcode("reader");
 
     Html5Qrcode.getCameras().then(cameras => {
-        if (cameras && cameras.length) {
 
-            let cameraId = cameras[0].id;
+        let cameraId = cameras[0].id;
 
-            scanner.start(
-                cameraId,
-                {
-                    fps: 10,
-                    qrbox: 250
-                },
-                (codigo) => {
+        scanner.start(
+            cameraId,
+            { fps: 10, qrbox: 250 },
+            (codigo) => {
 
-                    // 🔥 LIMPIAR CODIGO
-                    codigo = codigo.trim();
+                codigo = codigo.trim();
 
-                    console.log("CODIGO ESCANEADO:", codigo);
+                document.getElementById("codigoInput").value = codigo;
 
-                    // Mostrar en input
-                    document.getElementById("codigoInput").value = codigo;
+                validarCodigo(codigo);
 
-                    // UI
-                    document.getElementById("ok1").style.display = "block";
-                    document.getElementById("error1").style.display = "none";
+                scanner.stop();
+            }
+        );
 
-                    // 🚀 REDIRECCIONAR A INVENTARIO2
-                    window.location.href = '/Home/Inventario2?codigo=' + codigo;
-
-                    scanner.stop();
-                }
-            );
-
-        } else {
-            alert("No se encontró cámara");
-        }
-    }).catch(err => {
-        alert("Error al acceder a la cámara");
-        console.log(err);
     });
 }
-</script>
 
-<script>
 
-    
-function buscarCodigo() {
-
-    let codigo = document.getElementById("codigoInput").value.trim();
-
-    // ✅ VALIDACIÓN
-    if (codigo === "") {
-        alert("Ingresá un código");
-        return;
-    }
+// 🟢 VALIDAR CODIGO
+function validarCodigo(codigo) {
 
     fetch('/Home/BuscarPorCodigo?codigo=' + codigo)
-    .then(res => res.json())
-    .then(data => {
+        .then(res => res.json())
+        .then(data => {
 
-        if (data.encontrado || data.creado) {
+            if (!data.encontrado) {
 
-            // 🚀 REDIRECCIÓN A INVENTARIO2
-            window.location.href = '/Home/Inventario2?codigo=' + codigo;
+                feedbackError();
 
-        } else {
-            document.getElementById("error2").style.display = "block";
-        }
+                setTimeout(() => {
+                    window.location.href = "/Home/Inventario1?error=1";
+                }, 800);
 
-    })
-    .catch(err => {
-        console.log("Error:", err);
-        alert("Error al buscar el código");
-    });
+                return;
+            }
+
+            feedbackOk();
+
+            setTimeout(() => {
+                window.location.href =
+                "/Home/Inventario2?codigo=" + codigo;
+            }, 3000);
+        });
 }
 
 
-(codigo) => {
+// 🟢 BUSQUEDA MANUAL
+function buscarCodigo() {
 
-    // LIMPIAR EL CODIGO 👇
-    codigo = codigo.trim();
+    let codigo =
+        document.getElementById("codigoInput").value.trim();
 
-    document.getElementById("codigoInput").value = codigo;
+    if (!codigo) return;
+
+    validarCodigo(codigo);
+}
+
+
+// ✅ OK
+function feedbackOk() {
 
     document.getElementById("ok1").style.display = "block";
     document.getElementById("error1").style.display = "none";
 
-    window.location.href = '/Home/Inventario2?codigo=' + codigo;
+    const flash = document.getElementById("flashOk");
 
-    scanner.stop();
+    flash.style.display = "flex";
+
+    try {
+
+        sonidoOk.currentTime = 0;
+        sonidoOk.play();
+
+        // Espera a que termine el sonido
+        setTimeout(() => {
+            hablar("Producto encontrado");
+        }, 600);
+
+    }
+    catch (e) {}
+
+    setTimeout(() => {
+        flash.style.display = "none";
+    }, 1000);
 }
+
+
+// ❌ ERROR
+function feedbackError() {
+
+    document.getElementById("error1").style.display = "block";
+    document.getElementById("ok1").style.display = "none";
+
+    const flash = document.getElementById("flashError");
+
+    flash.style.display = "flex";
+
+    if (navigator.vibrate) {
+        navigator.vibrate(200);
+    }
+
+    try {
+
+        sonidoError.currentTime = 0;
+        sonidoError.play();
+
+        // ⏳ ESPERA PARA LA VOZ
+        setTimeout(() => {
+            hablar("Producto no encontrado");
+        }, 700);
+
+    }
+    catch (e) {}
+
+    setTimeout(() => {
+        flash.style.display = "none";
+    }, 900);
+}
+
 </script>
 
 
 
-<!-- LOGOS -->
+<!-- 🔥 LOGOS -->
 <div class="logo-centro">
     <img src="~/images/logoCDNsis.png" />
 </div>
@@ -161,6 +208,5 @@ function buscarCodigo() {
     <img src="~/images/logoMM.png" />
 </div>
 
-
-<!-- VOLVER -->
+<!-- 🔙 VOLVER -->
 <a href="/Home/Inventario1" class="btn-volver">⬅</a>
