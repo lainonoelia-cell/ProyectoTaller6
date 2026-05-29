@@ -38,7 +38,8 @@ body {
 
 .header-carrito h1 {
     color: #c9901c;
-    font-size: 28px;
+    font-size: 36px;
+    font-weight: bold;
 }
 
 /* BOTÓN VOLVER */
@@ -46,11 +47,12 @@ body {
     background: #c9901c;
     color: white;
     border: none;
-    padding: 10px 18px;
+    padding: 12px 22px;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 13px;
+    font-size: 18px;
     transition: background 0.2s;
+    font-weight: bold;
 }
 
 .btn-volver:hover {
@@ -82,28 +84,30 @@ body {
 
 .info-producto h3 {
     color: #333;
-    margin-bottom: 8px;
-    font-size: 17px;
+    margin-bottom: 10px;
+    font-size: 24px;
+    font-weight: bold;
 }
 
 .info-producto p {
-    font-size: 13px;
+    font-size: 17px;
     color: #555;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
+    font-weight: 500;
 }
 
 .precio {
     color: #c9901c !important;
     font-weight: bold;
-    font-size: 18px !important;
-    margin-top: 8px;
+    font-size: 28px !important;
+    margin-top: 10px;
 }
 
 /* ELIMINAR */
 .btn-eliminar {
     background: none;
     border: none;
-    font-size: 20px;
+    font-size: 28px;
     cursor: pointer;
     color: #e74c3c;
 }
@@ -118,7 +122,8 @@ body {
 
 .total-section h2 {
     color: #333;
-    font-size: 24px;
+    font-size: 32px;
+    font-weight: bold;
 }
 
 /* BOTONES */
@@ -135,10 +140,11 @@ body {
     background: #e74c3c;
     color: white;
     border: none;
-    padding: 12px;
+    padding: 16px;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .btn-vaciar:hover {
@@ -151,10 +157,11 @@ body {
     background: #27ae60;
     color: white;
     border: none;
-    padding: 12px;
+    padding: 16px;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .btn-whatsapp:hover {

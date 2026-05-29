@@ -15,11 +15,12 @@ body {
 }
 
 .container {
-    max-width: 1300px;
+    max-width: 1400px;
     width: 95%;
+    min-height: 90vh;
     background: white;
     border-radius: 8px;
-    padding: 25px 30px;
+    padding: 40px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
@@ -48,8 +49,10 @@ body {
 .menu-centrado a {
     color: #333;
     text-decoration: none;
-    font-size: 13px;
+    font-size: 20px;
     font-weight: 500;
+     text-decoration: none;
+    font-weight: bold;
 }
 
 .menu-centrado a:hover {
@@ -79,12 +82,15 @@ body {
 .card-categoria {
     background: #EDD8D8;
     border-radius: 6px;
-    padding: 12px;
+   padding: 8px;
     text-align: center;
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
     border: 1px solid #CCCCCC;
+    font-size: 18px;
+    font-weight: bold;
 }
+
 
 .card-categoria:hover {
     transform: translateY(-2px);
@@ -93,7 +99,7 @@ body {
 
 .card-categoria img {
     width: 100%;
-    height: 85px;
+   height: 140px;
     object-fit: cover;
     border-radius: 4px;
     margin-bottom: 8px;
@@ -102,8 +108,10 @@ body {
 .card-categoria h3 {
     font-size: 13px;
     color: #333;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     font-weight: 600;
+     font-size: 22px;
+    font-weight: bold;
 }
 
 /* BOTÓN SELECCIONAR */
@@ -117,6 +125,8 @@ body {
     border-radius: 3px;
     width: 100%;
     transition: background 0.2s;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 .btn-seleccionar:hover {
@@ -133,10 +143,11 @@ body {
     background: #CEB6B6;
     color: #555;
     border: 1px solid #aaa;
-    padding: 5px 22px;
-    font-size: 11px;
+    padding: 8px 24px;
+    font-size: 18px;
     cursor: pointer;
     border-radius: 3px;
+    font-weight: bold;
 }
 
 .ver-mas button:hover {
@@ -155,7 +166,7 @@ body {
 
 /* PANEL DERECHO */
 .panel-derecho {
-    width: 210px;
+    width: 280px;
     background: #EDD8D8;
     border-radius: 6px;
     padding: 15px;
@@ -164,11 +175,16 @@ body {
 
 .buscador {
     width: 100%;
-    padding: 8px 12px;
+   
     border: 1px solid #CCCCCC;
     border-radius: 4px;
-    font-size: 12px;
+    font-size: 18px;
     background: white;
+    
+    padding: 12px;
+    
+    
+    
 }
 
 .buscador:focus {
@@ -243,11 +259,13 @@ th {
     background: #c9901c;
     color: white;
     border: none;
-    padding: 8px 18px;
+    padding: 10px 22px;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 18px;
     transition: background 0.2s;
+    font-weight: bold;
+    
 }
 
 .btn-volver:hover {
