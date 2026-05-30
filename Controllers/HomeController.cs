@@ -30,6 +30,21 @@ public class HomeController : Controller
     return View();
     }
 
+    public IActionResult RegistroRedSocial(string red)
+    {
+    ViewBag.Red = red;
+    return View();
+    }
+
+[HttpPost]
+public IActionResult RegistroRedSocial(string red, string usuarioRed)
+{
+    TempData["UsuarioRed"] = usuarioRed;
+    TempData["RedSocial"] = red;
+
+    return RedirectToAction("GestionCliente");
+}
+
     [HttpPost]
     public IActionResult Login(string usuario, string password)
     {
