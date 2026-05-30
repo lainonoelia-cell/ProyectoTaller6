@@ -117,7 +117,7 @@
                     <h3>${p.nombre}</h3>
                     <div class="precio">$${p.precio.toLocaleString()}</div>
                     <div class="stock">Stock: ${p.stock} unidades</div>
-                    ${p.stock === 1 ? '<div class="badge-ultimo">¡Última disponible!</div>' : ''}
+                   ${p.stock === 1 ? '<div class="badge-ultimo">¡Última disponible!</div>' : ''}
                     <select id="talle-${p.id}">
                         ${p.talles.map(t => `<option value="${t}">Talle ${t}</option>`).join('')}
                     </select>

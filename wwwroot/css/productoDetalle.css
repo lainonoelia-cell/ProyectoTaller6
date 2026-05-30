@@ -123,8 +123,9 @@ body {
     color: white;
     padding: 3px 8px;
     border-radius: 4px;
-    font-size: 10px;
-    margin-bottom: 8px;
+    font-size: 18px;
+     font-weight: bold;
+       margin-bottom: 8px;
 }
 
 select {
