@@ -125,7 +125,7 @@ function enviarWhatsApp() {
         return;
     }
 
-    let mensaje = "Hola! Quiero realizar el siguiente pedido:%0A%0A";
+    let mensaje = "¡Hola! Quiero realizar el siguiente pedido:%0A%0A";
 
     carrito.forEach(item => {
 
@@ -134,15 +134,17 @@ function enviarWhatsApp() {
     });
 
     const total = carrito.reduce((sum, item) =>
-        sum + (item.precio * item.cantidad), 0);
+    sum + (item.precio * item.cantidad), 0);
 
-    mensaje += `%0ATotal estimado: $${total.toLocaleString()}`;
+mensaje += `%0ATotal estimado: $${total.toLocaleString()}`;
+mensaje += `%0A%0A¡Gracias por su compra`;
+mensaje += `%0AEquipo MM Indumentaria!`;
 
-    const numero = "5491155555555";
+const numero = "5491155555555";
 
-    const url = `https://wa.me/${numero}?text=${mensaje}`;
+const url = `https://wa.me/${numero}?text=${mensaje}`;
 
-    window.open(url, '_blank');
+window.open(url, '_blank');
 }
 
 function volverCatalogo() {

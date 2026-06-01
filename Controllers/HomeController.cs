@@ -39,8 +39,8 @@ public class HomeController : Controller
 [HttpPost]
 public IActionResult RegistroRedSocial(string red, string usuarioRed)
 {
-    TempData["UsuarioRed"] = usuarioRed;
-    TempData["RedSocial"] = red;
+    HttpContext.Session.SetString("UsuarioRed", usuarioRed);
+    HttpContext.Session.SetString("RedSocial", red);
 
     return RedirectToAction("GestionCliente");
 }
@@ -280,8 +280,11 @@ public JsonResult EliminarProducto(int id)
     return View(producto);
 }
 
-    public IActionResult GestionCliente()
+   public IActionResult GestionCliente()
 {
+    ViewBag.Usuario = HttpContext.Session.GetString("UsuarioRed");
+    ViewBag.Red = HttpContext.Session.GetString("RedSocial");
+
     return View();
 }
 
