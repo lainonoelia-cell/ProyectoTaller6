@@ -2,52 +2,502 @@
 
 @{
     ViewData["Title"] = "Editar Producto";
+
+    var variantes = ViewBag.Variantes
+        as List<ProyectoTaller6.Models.ProductoVariante>
+        ?? new List<ProyectoTaller6.Models.ProductoVariante>();
+
+            var coloresGuardados = variantes
+    .Select(v => v.Color)
+    .Where(c => !string.IsNullOrWhiteSpace(c))
+    .Distinct()
+    .ToList();
+
+    var variantesJson = System.Text.Json.JsonSerializer.Serialize(
+    variantes.Select(v => new
+    {
+        color = v.Color,
+        talle = v.Talle,
+        stock = v.Stock
+    })
+);
 }
 
+
 <link rel="stylesheet" href="~/css/editarProducto.css" />
+<link rel="stylesheet" href="~/css/badges.css" />
+
+<link rel="stylesheet" href="~/css/escaneo.css" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap"
+      rel="stylesheet"/>
 
 <form method="post" action="/Home/GuardarProducto">
 
-<h1 class="titulo">EDITAR PRODUCTO</h1>
+    <h1 class="titulo">EDITAR PRODUCTO</h1>
 
-<input type="hidden" name="Id" value="@Model.Id" />
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <input type="hidden" name="Categoria" value="@Model.Categoria" />
+    <input type="hidden" name="Tipo" value="@Model.Tipo" />
+    <input type="hidden" id="colorFinal" name="Color" value="@Model.Color" />
 
-<!-- 🔥 ESTO ES LA CLAVE -->
-<input type="hidden" name="Categoria" value="@Model.Categoria" />
-<input type="hidden" name="Tipo" value="@Model.Tipo" />
+    <div class="editor">
 
-<div class="producto">
-    <img src="~/images/@Model.Imagen" />
+        <!-- IZQUIERDA -->
+        <div class="formulario">
+
+            <div class="producto">
+
+                <img src="/images/@Model.Imagen" />
+            </div>
+
+            <label>Nombre:</label>
+            <input type="text" id="nombreInput" name="Nombre" value="@Model.Nombre" />
+
+            <label>🎨 Color:</label>
+
+<div class="paleta-colores-producto">
+
+    <label class="color-producto-opcion">
+      <input type="checkbox"
+      name="ColoresSeleccionados"
+       class="color-checkbox"
+       value="Negro">
+
+<span class="color-circulo negro"></span>
+<span>Negro</span>
+    </label>
+
+    <label class="color-producto-opcion">
+        <input type="checkbox"
+        name="ColoresSeleccionados"
+       class="color-checkbox"
+       value="Blanco">
+
+<span class="color-circulo blanco"></span>
+<span>Blanco</span>
+    </label>
+
+    <label class="color-producto-opcion">
+         <input type="checkbox"
+         name="ColoresSeleccionados"
+       class="color-checkbox"
+       value="Mostaza">
+
+<span class="color-circulo mostaza"></span>
+<span>Mostaza</span>
+    </label>
+
+    <label class="color-producto-opcion">
+       <input type="checkbox"
+       name="ColoresSeleccionados"
+       class="color-checkbox"
+       value="Azul">
+
+<span class="color-circulo azul"></span>
+<span>Azul</span>
+    </label>
+
+    <label class="color-producto-opcion">
+         <input type="checkbox"
+         name="ColoresSeleccionados"
+       class="color-checkbox"
+       value="Rojo">
+
+<span class="color-circulo rojo"></span>
+<span>Rojo</span>
+    </label>
+
+    <label class="color-producto-opcion">
+         <input type="checkbox"
+         name="ColoresSeleccionados"
+       class="color-checkbox"
+       value="Verde">
+
+<span class="color-circulo verde"></span>
+<span>Verde</span>
+    </label>
+
+    <label class="color-producto-opcion">
+         <input type="checkbox"
+         name="ColoresSeleccionados"
+       class="color-checkbox"
+       value="Rosa">
+
+<span class="color-circulo rosa"></span>
+<span>Rosa</span>
+    </label>
+
+    <label class="color-producto-opcion">
+        <input type="checkbox"
+        name="ColoresSeleccionados"
+       class="color-checkbox"
+       value="Gris">
+
+<span class="color-circulo gris"></span>
+<span>Gris</span>
+    </label>
+
+    <label class="color-producto-opcion">
+         <input type="checkbox"
+         name="ColoresSeleccionados"
+       class="color-checkbox"
+       value="Celeste">
+
+<span class="color-circulo celeste"></span>
+<span>Celeste</span>
+    </label>
+
+    <label class="color-producto-opcion">
+        <input type="checkbox"
+        name="ColoresSeleccionados"
+       class="color-checkbox"
+       value="Naranja">
+
+<span class="color-circulo naranja"></span>
+<span>Naranja</span>
+    </label>
+
+    <label class="color-producto-opcion">
+        <input type="checkbox"
+        name="ColoresSeleccionados"
+       class="color-checkbox"
+       value="Lila">
+
+<span class="color-circulo lila"></span>
+<span>Lila</span>
+    </label>
+
+    <label class="color-producto-opcion">
+         <input type="checkbox"
+         name="ColoresSeleccionados"
+       class="color-checkbox"
+       value="Crema">
+
+<span class="color-circulo crema"></span>
+<span>Crema</span>
+    </label>
+
+    <label class="color-producto-opcion">
+         <input type="checkbox"
+         name="ColoresSeleccionados"
+       class="color-checkbox"
+       value="Bordo">
+
+<span class="color-circulo bordo"></span>
+<span>Bordó</span>
+    </label>
+
+
+    <label class="color-producto-opcion">
+        <input type="checkbox"
+        name="ColoresSeleccionados"
+       class="color-checkbox"
+       value="Cemento">
+
+<span class="color-circulo cemento"></span>
+<span>Cemento</span>
+    </label>
+
+    <label class="color-producto-opcion">
+         <input type="checkbox"
+         name="ColoresSeleccionados"
+       class="color-checkbox"
+       value="Marron">
+
+<span class="color-circulo marron"></span>
+<span>Marrón</span>
+    </label>
+
+    
+    <label class="color-producto-opcion">
+         <input type="checkbox"
+         name="ColoresSeleccionados"
+       class="color-checkbox"
+       value="Beige">
+
+<span class="color-circulo beige"></span>
+<span>Beige</span>
+    </label>
+
+
+<label class="color-producto-opcion">
+         <input type="checkbox"
+         name="ColoresSeleccionados"
+       class="color-checkbox"
+       value="Amarillo">
+
+<span class="color-circulo amarillo"></span>
+<span>Amarillo</span>
+    </label>
+
+      <div class="combinacion-colores">
+
+    <label>
+        🎨 ¿Producto con colores combinados?
+    </label>
+
+    <label class="switch-combinacion">
+        <input type="checkbox" id="usarCombinacion">
+        <span>Combinar colores</span>
+    </label>
+
+    <div id="selectorCombinacion" style="display:none;">
+
+        <div class="nueva-combinacion">
+
+            <label>Color 1:</label>
+
+            <select id="color1">
+                <option value="">Seleccionar color</option>
+                <option value="Negro">Negro</option>
+                <option value="Blanco">Blanco</option>
+                <option value="Mostaza">Mostaza</option>
+                <option value="Azul">Azul</option>
+                <option value="Rojo">Rojo</option>
+                <option value="Verde">Verde</option>
+                <option value="Rosa">Rosa</option>
+                <option value="Gris">Gris</option>
+                <option value="Celeste">Celeste</option>
+                <option value="Naranja">Naranja</option>
+                <option value="Lila">Lila</option>
+                <option value="Crema">Crema</option>
+                <option value="Bordo">Bordó</option>
+                <option value="Cemento">Cemento</option>
+                <option value="Marron">Marrón</option>
+                <option value="Beige">Beige</option>
+                <option value="Amarillo">Amarillo</option>
+            </select>
+
+            <label>Color 2:</label>
+
+            <select id="color2">
+                <option value="">Seleccionar color</option>
+                <option value="Negro">Negro</option>
+                <option value="Blanco">Blanco</option>
+                <option value="Mostaza">Mostaza</option>
+                <option value="Azul">Azul</option>
+                <option value="Rojo">Rojo</option>
+                <option value="Verde">Verde</option>
+                <option value="Rosa">Rosa</option>
+                <option value="Gris">Gris</option>
+                <option value="Celeste">Celeste</option>
+                <option value="Naranja">Naranja</option>
+                <option value="Lila">Lila</option>
+                <option value="Crema">Crema</option>
+                <option value="Bordo">Bordó</option>
+                <option value="Cemento">Cemento</option>
+                <option value="Marron">Marrón</option>
+                <option value="Beige">Beige</option>
+                <option value="Amarillo">Amarillo</option>
+            </select>
+
+            <label>Color 3:</label>
+
+            <select id="color3">
+                <option value="">Opcional</option>
+                <option value="Negro">Negro</option>
+                <option value="Blanco">Blanco</option>
+                <option value="Mostaza">Mostaza</option>
+                <option value="Azul">Azul</option>
+                <option value="Rojo">Rojo</option>
+                <option value="Verde">Verde</option>
+                <option value="Rosa">Rosa</option>
+                <option value="Gris">Gris</option>
+                <option value="Celeste">Celeste</option>
+                <option value="Naranja">Naranja</option>
+                <option value="Lila">Lila</option>
+                <option value="Crema">Crema</option>
+                <option value="Bordo">Bordó</option>
+                <option value="Cemento">Cemento</option>
+                <option value="Marron">Marrón</option>
+                <option value="Beige">Beige</option>
+                <option value="Amarillo">Amarillo</option>
+            </select>
+
+            <button
+                type="button"
+                id="btnAgregarCombinacion"
+                class="btn-agregar-combinacion">
+                ➕ Agregar combinación
+            </button>
+
+            <div id="vistaCombinacion"></div>
+
+        </div>
+
+        <div id="combinacionesContainer"></div>
+
+    </div>
+
 </div>
 
-<label>Nombre:</label>
-<input type="text" name="Nombre" value="@Model.Nombre" />
 
-<label>Stock:</label>
-<input type="number"
-       id="stock"
-       name="Stock"
-       value="@Model.Stock" />
 
-<label>Precio:</label>
-<input type="number" name="Precio" value="@Model.Precio" />
+</div>
 
-<button type="submit">Guardar</button>
+            <label>📏 Talles disponibles:</label>
+
+<div id="tallesContainer" class="talles-container">
+</div>
+
+            <label>Stock:</label>
+            <input type="number" id="stock" name="Stock" value="@Model.Stock" />
+
+            <label>Precio:</label>
+            <input type="number" id="precioInput" name="Precio" value="@Model.Precio" />
+
+            <label>Imagen:</label>
+            <input type="text" id="imagenInput" name="Imagen" value="@Model.Imagen" />
+
+            <label>🏷️ Badge</label>
+
+            <div class="catalogo-badges">
+
+
+                <label class="badge-opcion">
+                    <input type="radio" name="Badge" value="🔥 Más vendido" @(Model.Badge=="🔥 Más vendido" ? "checked" : "") />
+                    <span class="badge badge-celeste">🔥 Más vendido</span>
+                </label>
+
+                <label class="badge-opcion">
+                    <input type="radio" name="Badge" value="⭐ Recomendado" @(Model.Badge=="⭐ Recomendado" ? "checked" : "") />
+                    <span class="badge badge-amarillo">⭐ Recomendado</span>
+                </label>
+
+                <label class="badge-opcion">
+                    <input type="radio" name="Badge" value="💰 Oferta" @(Model.Badge=="💰 Oferta" ? "checked" : "") />
+                    <span class="badge badge-azul">💰 Oferta</span>
+                </label>
+
+                <label class="badge-opcion">
+                    <input type="radio" name="Badge" value="🆕 Nuevo" @(Model.Badge=="🆕 Nuevo" ? "checked" : "") />
+                    <span class="badge badge-fuccia">🆕 Nuevo</span>
+                </label>
+
+                <label class="badge-opcion">
+                    <input type="radio" name="Badge" value="👑 Premium" @(Model.Badge=="👑 Premium" ? "checked" : "") />
+                    <span class="badge badge-violeta">👑 Premium</span>
+                </label>
+
+
+                <label class="badge-opcion">
+                    <input type="radio" name="Badge" value="❄️ Temporada" @(Model.Badge=="❄️ Temporada" ? "checked" : "") />
+                    <span class="badge badge-rojo">❄️ Temporada</span>
+                </label>
+
+                
+
+                <label class="badge-opcion">
+                    <input type="radio" name="Badge" value="☀️ Verano" @(Model.Badge=="☀️  Verano" ? "checked" : "") />
+                    <span class="badge badge-verde">☀️ Verano</span>
+                </label>
+
+                <label class="badge-opcion">
+                    <input type="radio" name="Badge" value="🚚 Envío Gratis" @(Model.Badge=="🚚 Envío Gratis" ? "checked" : "") />
+                    <span class="badge badge-lavanda">🚚 Envío Gratis</span>
+                </label>
+
+            </div>
+
+            <label>🎨 Color del badge</label>
+
+            <div class="paleta-colores">
+
+                <label class="color-opcion">
+                    <input type="radio" name="ColorBadge" value="badge-rojo" @(Model.ColorBadge=="badge-rojo" ? "checked" : "") />
+                    <span class="color rojo"></span>
+                </label>
+
+                <label class="color-opcion">
+                    <input type="radio" name="ColorBadge" value="badge-verde" @(Model.ColorBadge=="badge-verde" ? "checked" : "") />
+                    <span class="color verde"></span>
+                </label>
+
+                <label class="color-opcion">
+                    <input type="radio" name="ColorBadge" value="badge-amarillo" @(Model.ColorBadge=="badge-amarillo" ? "checked" : "") />
+                    <span class="color amarillo"></span>
+                </label>
+
+                <label class="color-opcion">
+                    <input type="radio" name="ColorBadge" value="badge-celeste" @(Model.ColorBadge=="badge-celeste" ? "checked" : "") />
+                    <span class="color celeste"></span>
+                </label>
+
+                <label class="color-opcion">
+                    <input type="radio" name="ColorBadge" value="badge-violeta" @(Model.ColorBadge=="badge-violeta" ? "checked" : "") />
+                    <span class="color violeta"></span>
+                </label>
+
+                <label class="color-opcion">
+                    <input type="radio" name="ColorBadge" value="badge-azul" @(Model.ColorBadge=="badge-azul" ? "checked" : "") />
+                    <span class="color azul"></span>
+                </label>
+
+                <label class="color-opcion">
+                    <input type="radio" name="ColorBadge" value="badge-fuccia" @(Model.ColorBadge=="badge-fuccia" ? "checked" : "") />
+                    <span class="color fuccia"></span>
+                </label>
+
+                <label class="color-opcion">
+                    <input type="radio" name="ColorBadge" value="badge-lavanda" @(Model.ColorBadge=="badge-lavanda" ? "checked" : "") />
+                    <span class="color lavanda"></span>
+                </label>
+
+            </div>
+
+            <label>Orden del catálogo</label>
+            <input type="number" name="OrdenCatalogo" value="@Model.OrdenCatalogo" />
+
+            <label>Orden del badge</label>
+<input type="number" name="OrdenBadge" value="@Model.OrdenBadge" min="1" />
+
+<div id="variantesHidden"></div>
+
+             <button type="submit" class="btn-guardar">
+    💾 Guardar cambios
+</button>
+            
+
+        </div>
+
+        <!-- DERECHA -->
+        <div class="preview">
+
+            <h2> Vista previa</h2>
+
+            <div class="preview-card">
+
+                <span id="badgePreview" class="badge @(Model.ColorBadge)">
+                    @Model.Badge
+                </span>
+
+                <div class="preview-imagen">
+                    <img id="imagenPreview" src="/images/@Model.Imagen" />
+                </div>
+
+                <h3 id="nombrePreview">@Model.Nombre</h3>
+
+                <p class="precio-preview">$ @Model.Precio</p>
+
+                
+
+              <p class="texto-preview">
+    👀 Así verá el producto el cliente
+</p>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </form>
 
-    <!-- LOGO CENTRO ABAJO -->
-<div class="logo-centro">
-    <img src="~/images/logoCDNsis.png" />
-</div>
 
-<!-- LOGO DERECHA -->
-<div class="logo-derecha">
-    <img src="~/images/logoMM.png" />
-</div>
-
-<!-- VOLVER -->
-<a href="/Home/Categoria?tipo=@Model.Categoria" class="btn-volver">⬅</a>
 
 
 <script>
@@ -80,6 +530,1478 @@ actualizarColorStock();
 stockInput.addEventListener(
     "input",
     actualizarColorStock
+);
+
+
+// ----------------------------
+// VISTA PREVIA
+// ----------------------------
+
+const nombreInput = document.getElementById("nombreInput");
+const imagenInput = document.getElementById("imagenInput");
+
+const nombrePreview = document.getElementById("nombrePreview");
+const imagenPreview = document.getElementById("imagenPreview");
+const badgePreview = document.getElementById("badgePreview");
+
+const precioInput = document.getElementById("precioInput");
+
+const precioPreview = document.querySelector(".precio-preview");
+const stockPreview = document.querySelector(".stock-preview");
+
+// Nombre
+nombreInput.addEventListener("input", () => {
+
+    nombrePreview.textContent = nombreInput.value;
+
+});
+
+// Imagen
+imagenInput.addEventListener("input", () => {
+
+    imagenPreview.src = "/images/" + imagenInput.value;
+
+});
+
+// Precio
+precioInput.addEventListener("input", () => {
+
+    precioPreview.textContent = "$ " + precioInput.value;
+
+});
+
+// Stock
+stockInput.addEventListener("input", () => {
+
+    stockPreview.textContent = "📦 Stock: " + stockInput.value;
+
+});
+
+// Badge
+document.querySelectorAll("input[name='Badge']").forEach(b => {
+
+    b.addEventListener("change", () => {
+
+        badgePreview.textContent = b.value;
+
+    });
+
+});
+
+// Color
+document.querySelectorAll("input[name='ColorBadge']").forEach(c => {
+
+    c.addEventListener("change", () => {
+
+        badgePreview.className = "badge " + c.value;
+
+    });
+
+});
+
+
+              const categoria = '@Model.Categoria';
+const tipo = '@Model.Tipo';
+
+const tallesContainer =
+    document.getElementById("tallesContainer");
+
+const variantesGuardadas =
+    @Html.Raw(variantesJson);
+
+// =====================================================
+// ELEMENTOS
+// =====================================================
+
+const usarCombinacion =
+    document.getElementById("usarCombinacion");
+
+const selectorCombinacion =
+    document.getElementById("selectorCombinacion");
+
+const color1 =
+    document.getElementById("color1");
+
+const color2 =
+    document.getElementById("color2");
+
+const color3 =
+    document.getElementById("color3");
+
+const vistaCombinacion =
+    document.getElementById("vistaCombinacion");
+
+const colorFinal =
+    document.getElementById("colorFinal");
+
+const variantesHidden =
+    document.getElementById("variantesHidden");
+
+const btnAgregarCombinacion =
+    document.getElementById("btnAgregarCombinacion");
+
+// =====================================================
+// TAMAÑOS DISPONIBLES
+// =====================================================
+
+function obtenerTallesDisponibles() {
+
+    const categoriaNormalizada =
+        categoria.toLowerCase().trim();
+
+    const tipoNormalizado =
+        tipo.toLowerCase().trim();
+
+    if (categoriaNormalizada === "pantalones") {
+
+        return [
+            "38",
+            "40",
+            "42",
+            "44",
+            "46",
+            "48",
+            "50"
+        ];
+    }
+
+    if (
+        categoriaNormalizada === "remeras/camisetas" ||
+        categoriaNormalizada === "chombas" ||
+        categoriaNormalizada === "abrigos"
+    ) {
+
+        return [
+            "S",
+            "M",
+            "L",
+            "XL",
+            "XXL",
+            "XXXL"
+        ];
+    }
+
+    if (categoriaNormalizada === "cortos") {
+
+        if (tipoNormalizado.includes("bermuda")) {
+
+            return [
+                "38",
+                "40",
+                "42",
+                "44",
+                "46",
+                "48",
+                "50"
+            ];
+        }
+
+        return [
+            "S",
+            "M",
+            "L",
+            "XL",
+            "XXL",
+            "XXXL"
+        ];
+    }
+
+    if (categoriaNormalizada === "interiores") {
+
+        if (
+            tipoNormalizado.includes("calzoncillos")
+        ) {
+
+            return [
+                "S",
+                "M",
+                "L",
+                "XL",
+                "XXL",
+                "XXXL"
+            ];
+        }
+
+        return ["Único"];
+    }
+
+    if (categoriaNormalizada === "accesorios") {
+
+        return ["Único"];
+    }
+
+    return [];
+}
+
+// =====================================================
+// COLORES INDIVIDUALES SELECCIONADOS
+// =====================================================
+
+function obtenerColoresSeleccionados() {
+
+    return Array.from(
+        document.querySelectorAll(
+            ".color-checkbox:checked"
+        )
+    ).map(input => input.value);
+}
+
+// =====================================================
+// COLORES DE COMBINACIÓN
+// =====================================================
+
+function obtenerCombinacion() {
+
+    return [
+        color1.value,
+        color2.value,
+        color3.value
+    ].filter(c => c !== "");
+}
+
+// =====================================================
+// COLOR CSS
+// =====================================================
+
+function obtenerColorCSS(color) {
+
+    const colores = {
+
+        "Negro": "#000000",
+        "Blanco": "#ffffff",
+        "Mostaza": "#e5b800",
+        "Azul": "#2563eb",
+        "Rojo": "#dc2626",
+        "Verde": "#4d7c3a",
+        "Rosa": "#ec8ab8",
+        "Gris": "#808080",
+        "Celeste": "#6ec6e8",
+        "Naranja": "#f97316",
+        "Lila": "#b794d6",
+        "Crema": "#f3e6c8",
+        "Bordo": "#7f1d1d",
+        "Cemento": "#8c8c8c",
+        "Marron": "#795548",
+        "Beige": "#d8c3a5",
+        "Amarillo": "#ffd900"
+    };
+
+    return colores[color] || "#cccccc";
+}
+
+// =====================================================
+// CLASE CSS COLOR
+// =====================================================
+
+function obtenerClaseColor(color) {
+
+    const clases = {
+
+        "Negro": "negro",
+        "Blanco": "blanco",
+        "Mostaza": "mostaza",
+        "Azul": "azul",
+        "Rojo": "rojo",
+        "Verde": "verde",
+        "Rosa": "rosa",
+        "Gris": "gris",
+        "Celeste": "celeste",
+        "Naranja": "naranja",
+        "Lila": "lila",
+        "Crema": "crema",
+        "Bordo": "bordo",
+        "Cemento": "cemento",
+        "Marron": "marron",
+        "Beige": "beige",
+        "Amarillo": "amarillo"
+    };
+
+    return clases[color] || "";
+}
+
+// =====================================================
+// GRADIENTE DE COMBINACIÓN
+// =====================================================
+
+function obtenerGradienteCombinacion(combinacion) {
+
+    const colores =
+        combinacion
+            .split("/")
+            .map(c => c.trim())
+            .filter(c => c !== "");
+
+    if (colores.length === 2) {
+
+        return `
+            linear-gradient(
+                135deg,
+                ${obtenerColorCSS(colores[0])} 0%,
+                ${obtenerColorCSS(colores[0])} 50%,
+                ${obtenerColorCSS(colores[1])} 50%,
+                ${obtenerColorCSS(colores[1])} 100%
+            )
+        `;
+    }
+
+    if (colores.length === 3) {
+
+        return `
+            linear-gradient(
+                135deg,
+                ${obtenerColorCSS(colores[0])} 0%,
+                ${obtenerColorCSS(colores[0])} 33.33%,
+                ${obtenerColorCSS(colores[1])} 33.33%,
+                ${obtenerColorCSS(colores[1])} 66.66%,
+                ${obtenerColorCSS(colores[2])} 66.66%,
+                ${obtenerColorCSS(colores[2])} 100%
+            )
+        `;
+    }
+
+    return obtenerColorCSS(colores[0]);
+}
+
+// =====================================================
+// BUSCAR VARIANTE GUARDADA
+// =====================================================
+
+function buscarVariante(color, talle) {
+
+    return variantesGuardadas.find(v =>
+
+        v.color &&
+        v.color.trim().toLowerCase() ===
+            color.trim().toLowerCase() &&
+
+        v.talle &&
+        v.talle.trim().toLowerCase() ===
+            talle.trim().toLowerCase()
+    );
+}
+
+// =====================================================
+// CREAR BLOQUE DE COLOR
+// =====================================================
+
+function crearBloqueColor(
+    color,
+    cargarDatos = true
+) {
+
+    // -----------------------------------------------
+    // EVITAR DUPLICADOS
+    // -----------------------------------------------
+
+    const bloquesExistentes =
+        tallesContainer.querySelectorAll(
+            ".bloque-color-talles"
+        );
+
+    const yaExiste =
+        Array.from(bloquesExistentes).some(
+            bloque =>
+                bloque.dataset.color
+                    .trim()
+                    .toLowerCase() ===
+                color
+                    .trim()
+                    .toLowerCase()
+        );
+
+    if (yaExiste) {
+        return;
+    }
+
+    // -----------------------------------------------
+    // BLOQUE
+    // -----------------------------------------------
+
+    const bloque =
+        document.createElement("div");
+
+    bloque.className =
+        "bloque-color-talles";
+
+    bloque.dataset.color =
+        color;
+
+    // -----------------------------------------------
+    // CABECERA
+    // -----------------------------------------------
+
+    const cabecera =
+        document.createElement("div");
+
+    cabecera.className =
+        "cabecera-combinacion";
+
+    const titulo =
+        document.createElement("h4");
+
+    if (color.includes("/")) {
+
+        const circulo =
+            document.createElement("span");
+
+        circulo.className =
+            "color-circulo combinado";
+
+        circulo.style.background =
+            obtenerGradienteCombinacion(color);
+
+        titulo.appendChild(circulo);
+    }
+    else {
+
+        const circulo =
+            document.createElement("span");
+
+        circulo.className =
+            "color-circulo " +
+            obtenerClaseColor(color);
+
+        titulo.appendChild(circulo);
+    }
+
+    const texto =
+        document.createElement("span");
+
+    texto.textContent =
+        " 🎨 " + color;
+
+    titulo.appendChild(texto);
+
+    cabecera.appendChild(titulo);
+
+    // -----------------------------------------------
+    // BOTÓN ELIMINAR
+    // -----------------------------------------------
+
+    const btnEliminar =
+        document.createElement("button");
+
+    btnEliminar.type =
+        "button";
+
+    btnEliminar.className =
+        "btn-eliminar-combinacion";
+
+    btnEliminar.innerHTML =
+        "🗑 Eliminar";
+
+    btnEliminar.addEventListener(
+        "click",
+        function () {
+
+            bloque.remove();
+
+            generarInputsVariantes();
+
+            actualizarVistaPreviaVariantes();
+        }
+    );
+
+    cabecera.appendChild(btnEliminar);
+
+    bloque.appendChild(cabecera);
+
+    // -----------------------------------------------
+    // TALLES
+    // -----------------------------------------------
+
+    const contenedor =
+        document.createElement("div");
+
+    contenedor.className =
+        "talles-color";
+
+    const talles =
+        obtenerTallesDisponibles();
+
+    talles.forEach(talle => {
+
+        // -------------------------------------------
+        // BUSCAR VARIANTE EXISTENTE
+        // -------------------------------------------
+
+        const variante =
+            cargarDatos
+                ? buscarVariante(
+                    color,
+                    talle
+                )
+                : null;
+
+        const marcado =
+            variante != null;
+
+        const stockGuardado =
+            variante
+                ? variante.stock
+                : 0;
+
+        // -------------------------------------------
+        // FILA
+        // -------------------------------------------
+
+        const fila =
+            document.createElement("div");
+
+        fila.className =
+            "fila-talle";
+
+        // -------------------------------------------
+        // LABEL
+        // -------------------------------------------
+
+        const label =
+            document.createElement("label");
+
+        label.className =
+            "talle-opcion";
+
+        // -------------------------------------------
+        // CHECKBOX
+        // -------------------------------------------
+
+        const checkbox =
+            document.createElement("input");
+
+        checkbox.type =
+            "checkbox";
+
+        checkbox.className =
+            "talle-checkbox";
+
+        checkbox.value =
+            talle;
+
+        checkbox.checked =
+            marcado;
+
+        // -------------------------------------------
+        // TEXTO
+        // -------------------------------------------
+
+        const textoTalle =
+            document.createElement("span");
+
+        textoTalle.textContent =
+            talle;
+
+        label.appendChild(
+            checkbox
+        );
+
+        label.appendChild(
+            textoTalle
+        );
+
+        // -------------------------------------------
+        // STOCK
+        // -------------------------------------------
+
+        const stock =
+            document.createElement("input");
+
+        stock.type =
+            "number";
+
+        stock.className =
+            "stock-variante";
+
+        stock.dataset.color =
+            color;
+
+        stock.dataset.talle =
+            talle;
+
+        stock.min =
+            "0";
+
+        stock.value =
+            stockGuardado;
+
+        stock.disabled =
+            !marcado;
+
+        stock.placeholder =
+            "Stock";
+
+        // -------------------------------------------
+        // EVENTO CHECKBOX
+        // -------------------------------------------
+
+        checkbox.addEventListener(
+            "change",
+            function () {
+
+                stock.disabled =
+                    !checkbox.checked;
+
+                if (!checkbox.checked) {
+
+                    stock.value = 0;
+                }
+
+                generarInputsVariantes();
+
+                actualizarVistaPreviaVariantes();
+            }
+        );
+
+        // -------------------------------------------
+        // EVENTO STOCK
+        // -------------------------------------------
+
+        stock.addEventListener(
+            "input",
+            function () {
+
+                generarInputsVariantes();
+
+                actualizarVistaPreviaVariantes();
+            }
+        );
+
+        fila.appendChild(label);
+
+        fila.appendChild(stock);
+
+        contenedor.appendChild(fila);
+    });
+
+    bloque.appendChild(
+        contenedor
+    );
+
+    tallesContainer.appendChild(
+        bloque
+    );
+}
+
+// =====================================================
+// CARGAR TALLES
+// =====================================================
+
+function cargarTalles() {
+
+    tallesContainer.innerHTML = "";
+
+    // =================================================
+    // COMBINACIÓN
+    // =================================================
+
+    if (usarCombinacion.checked) {
+
+        const colores =
+            obtenerCombinacion();
+
+        if (colores.length < 2) {
+
+            tallesContainer.innerHTML = `
+                <p class="sin-talles">
+                    Seleccioná al menos 2 colores
+                    para combinar.
+                </p>
+            `;
+
+            generarInputsVariantes();
+
+            return;
+        }
+
+        const combinacion =
+            colores.join(" / ");
+
+        crearBloqueColor(
+            combinacion,
+            true
+        );
+
+    }
+
+    // =================================================
+    // COLORES INDIVIDUALES
+    // =================================================
+
+    else {
+
+        const colores =
+            obtenerColoresSeleccionados();
+
+        if (colores.length === 0) {
+
+            tallesContainer.innerHTML = `
+                <p class="sin-talles">
+                    Seleccioná un color para ver
+                    sus talles.
+                </p>
+            `;
+
+            generarInputsVariantes();
+
+            return;
+        }
+
+        colores.forEach(color => {
+
+            crearBloqueColor(
+                color,
+                true
+            );
+        });
+    }
+
+    generarInputsVariantes();
+
+    actualizarVistaPreviaVariantes();
+}
+
+// =====================================================
+// GENERAR INPUTS HIDDEN
+// =====================================================
+
+function generarInputsVariantes() {
+
+    variantesHidden.innerHTML = "";
+
+    const bloques =
+        tallesContainer.querySelectorAll(
+            ".bloque-color-talles"
+        );
+
+    bloques.forEach(bloque => {
+
+        const color =
+            bloque.dataset.color;
+
+        const checks =
+            bloque.querySelectorAll(
+                ".talle-checkbox:checked"
+            );
+
+        checks.forEach(check => {
+
+            const talle =
+                check.value;
+
+            const stockInput =
+                bloque.querySelector(
+                    `.stock-variante[data-talle="${CSS.escape(talle)}"]`
+                );
+
+            const stock =
+                stockInput
+                    ? parseInt(stockInput.value) || 0
+                    : 0;
+
+            // ---------------------------------------
+            // COLOR
+            // ---------------------------------------
+
+            const inputColor =
+                document.createElement("input");
+
+            inputColor.type =
+                "hidden";
+
+            inputColor.name =
+                "VariantesColor";
+
+            inputColor.value =
+                color;
+
+            // ---------------------------------------
+            // TALLE
+            // ---------------------------------------
+
+            const inputTalle =
+                document.createElement("input");
+
+            inputTalle.type =
+                "hidden";
+
+            inputTalle.name =
+                "VariantesTalle";
+
+            inputTalle.value =
+                talle;
+
+            // ---------------------------------------
+            // STOCK
+            // ---------------------------------------
+
+            const inputStock =
+                document.createElement("input");
+
+            inputStock.type =
+                "hidden";
+
+            inputStock.name =
+                "VariantesStock";
+
+            inputStock.value =
+                stock;
+
+            variantesHidden.appendChild(
+                inputColor
+            );
+
+            variantesHidden.appendChild(
+                inputTalle
+            );
+
+            variantesHidden.appendChild(
+                inputStock
+            );
+        });
+    });
+}
+
+// =====================================================
+// PREVIEW
+// =====================================================
+
+function actualizarVistaPreviaVariantes() {
+
+    let previewExistente =
+        document.getElementById(
+            "previewVariantes"
+        );
+
+    if (!previewExistente) {
+
+        previewExistente =
+            document.createElement("div");
+
+        previewExistente.id =
+            "previewVariantes";
+
+        const previewCard =
+            document.querySelector(
+                ".preview-card"
+            );
+
+        if (previewCard) {
+
+            previewCard.appendChild(
+                previewExistente
+            );
+        }
+    }
+
+    if (!previewExistente) {
+        return;
+    }
+
+    let html = `
+        <div class="preview-variantes">
+
+            <strong>
+                🎨 Colores y talles
+            </strong>
+    `;
+
+    const bloques =
+        tallesContainer.querySelectorAll(
+            ".bloque-color-talles"
+        );
+
+    if (bloques.length === 0) {
+
+        html += `
+            <p class="sin-talles-preview">
+                No hay colores ni combinaciones seleccionadas.
+            </p>
+        `;
+    }
+
+    bloques.forEach(bloque => {
+
+        const color =
+            bloque.dataset.color;
+
+        const checks =
+            bloque.querySelectorAll(
+                ".talle-checkbox:checked"
+            );
+
+        html += `
+            <div class="preview-color-talles">
+
+                <div class="preview-color-nombre">
+        `;
+
+        // -------------------------------------------
+        // COLOR
+        // -------------------------------------------
+
+        if (color.includes("/")) {
+
+            html += `
+                <span
+                    class="color-circulo combinado"
+                    style="
+                        background:
+                        ${obtenerGradienteCombinacion(color)};
+                    ">
+                </span>
+            `;
+        }
+        else {
+
+            html += `
+                <span
+                    class="color-circulo
+                    ${obtenerClaseColor(color)}">
+                </span>
+            `;
+        }
+
+        html += `
+                    <strong>
+                        ${color}
+                    </strong>
+
+                </div>
+
+                <div class="preview-talles">
+        `;
+
+        // -------------------------------------------
+        // TALLES
+        // -------------------------------------------
+
+        if (checks.length === 0) {
+
+            html += `
+                <span class="sin-talles-preview">
+                    Sin talles seleccionados
+                </span>
+            `;
+        }
+        else {
+
+            checks.forEach(check => {
+
+                const talle =
+                    check.value;
+
+                const stockInput =
+                    bloque.querySelector(
+                        `.stock-variante[data-talle="${CSS.escape(talle)}"]`
+                    );
+
+                const stock =
+                    stockInput
+                        ? parseInt(stockInput.value) || 0
+                        : 0;
+
+                html += `
+                    <span class="talle-preview">
+
+                        ${talle}
+
+                        <small>
+                            (Stock: ${stock})
+                        </small>
+
+                    </span>
+                `;
+            });
+        }
+
+        html += `
+                </div>
+            </div>
+        `;
+    });
+
+    html += `
+        </div>
+    `;
+
+    previewExistente.innerHTML =
+        html;
+}
+
+// =====================================================
+// ACTUALIZAR COMBINACIÓN
+// =====================================================
+
+function actualizarCombinacion() {
+
+    const colores =
+        obtenerCombinacion();
+
+    vistaCombinacion.innerHTML =
+        "";
+
+    if (colores.length < 2) {
+
+        colorFinal.value =
+            "";
+
+        return;
+    }
+
+    // -----------------------------------------------
+    // NO REPETIR COLORES
+    // -----------------------------------------------
+
+    if (
+        new Set(colores).size !==
+        colores.length
+    ) {
+
+        vistaCombinacion.innerHTML = `
+            <p>
+                ⚠️ No podés repetir un color.
+            </p>
+        `;
+
+        colorFinal.value =
+            "";
+
+        return;
+    }
+
+    const combinacion =
+        colores.join(" / ");
+
+    colorFinal.value =
+        combinacion;
+
+    const gradiente =
+        obtenerGradienteCombinacion(
+            combinacion
+        );
+
+    vistaCombinacion.innerHTML = `
+        <div class="preview-combinacion">
+
+            <span
+                class="color-circulo combinado"
+                style="
+                    background:
+                    ${gradiente};
+                ">
+            </span>
+
+            <strong>
+                ${combinacion}
+            </strong>
+
+        </div>
+    `;
+}
+
+// =====================================================
+// AGREGAR COMBINACIÓN
+// =====================================================
+
+btnAgregarCombinacion.addEventListener(
+    "click",
+    function () {
+
+        const colores =
+            obtenerCombinacion();
+
+        if (colores.length < 2) {
+
+            alert(
+                "⚠️ Seleccioná al menos 2 colores."
+            );
+
+            return;
+        }
+
+        if (
+            new Set(colores).size !==
+            colores.length
+        ) {
+
+            alert(
+                "⚠️ No podés repetir un color."
+            );
+
+            return;
+        }
+
+        const combinacion =
+            colores.join(" / ");
+
+        // -------------------------------------------
+        // CREAR BLOQUE SIN DATOS ANTERIORES
+        // -------------------------------------------
+
+        crearBloqueColor(
+            combinacion,
+            false
+        );
+
+        // -------------------------------------------
+        // LIMPIAR SELECTORES
+        // -------------------------------------------
+
+        color1.value =
+            "";
+
+        color2.value =
+            "";
+
+        color3.value =
+            "";
+
+        vistaCombinacion.innerHTML =
+            "";
+
+        generarInputsVariantes();
+
+        actualizarVistaPreviaVariantes();
+    }
+);
+
+// =====================================================
+// CAMBIO DE SELECTORES DE COMBINACIÓN
+// =====================================================
+
+color1.addEventListener(
+    "change",
+    actualizarCombinacion
+);
+
+color2.addEventListener(
+    "change",
+    actualizarCombinacion
+);
+
+color3.addEventListener(
+    "change",
+    actualizarCombinacion
+);
+
+// =====================================================
+// ACTIVAR / DESACTIVAR COMBINACIONES
+// =====================================================
+
+usarCombinacion.addEventListener(
+    "change",
+    function () {
+
+        if (usarCombinacion.checked) {
+
+            selectorCombinacion.style.display =
+                "block";
+
+            // Desmarcar individuales
+
+            document
+                .querySelectorAll(
+                    ".color-checkbox"
+                )
+                .forEach(c => {
+
+                    c.checked =
+                        false;
+                });
+
+            colorFinal.value =
+                "";
+
+            vistaCombinacion.innerHTML =
+                "";
+
+            cargarTalles();
+        }
+
+        else {
+
+            selectorCombinacion.style.display =
+                "none";
+
+            color1.value =
+                "";
+
+            color2.value =
+                "";
+
+            color3.value =
+                "";
+
+            colorFinal.value =
+                "";
+
+            vistaCombinacion.innerHTML =
+                "";
+
+            cargarTalles();
+        }
+    }
+);
+
+// =====================================================
+// CAMBIO DE COLOR INDIVIDUAL
+// =====================================================
+
+document
+    .querySelectorAll(
+        ".color-checkbox"
+    )
+    .forEach(input => {
+
+        input.addEventListener(
+            "change",
+            function () {
+
+                if (
+                    usarCombinacion.checked
+                ) {
+                    return;
+                }
+
+                cargarTalles();
+            }
+        );
+    });
+
+// =====================================================
+// CARGAR DATOS EXISTENTES AL EDITAR
+// =====================================================
+
+function cargarDatosExistentes() {
+
+    if (
+        !variantesGuardadas ||
+        variantesGuardadas.length === 0
+    ) {
+
+        // Si no hay variantes pero existe Color
+        // dejamos preparado el selector.
+
+        const colorGuardado =
+            '@Model.Color'.trim();
+
+        if (
+            colorGuardado.includes("/")
+        ) {
+
+            usarCombinacion.checked =
+                true;
+
+            selectorCombinacion.style.display =
+                "block";
+
+            const partes =
+                colorGuardado
+                    .split("/")
+                    .map(c => c.trim())
+                    .filter(c => c !== "");
+
+            color1.value =
+                partes[0] || "";
+
+            color2.value =
+                partes[1] || "";
+
+            color3.value =
+                partes[2] || "";
+
+            actualizarCombinacion();
+        }
+
+        return;
+    }
+
+    // =================================================
+    // OBTENER COLORES GUARDADOS
+    // =================================================
+
+    const coloresGuardados =
+        [
+            ...new Set(
+                variantesGuardadas
+                    .map(v =>
+                        v.color
+                            ? v.color.trim()
+                            : ""
+                    )
+                    .filter(c => c !== "")
+            )
+        ];
+
+    // =================================================
+    // ¿ES COMBINACIÓN?
+    // =================================================
+
+          // =================================================
+// ¿ES COMBINACIÓN?
+// =================================================
+
+const combinaciones =
+    coloresGuardados.filter(
+        color => color.includes("/")
+    );
+
+if (combinaciones.length > 0) {
+
+    // ---------------------------------------------
+    // MODO COMBINACIÓN
+    // ---------------------------------------------
+
+    usarCombinacion.checked =
+        true;
+
+    selectorCombinacion.style.display =
+        "block";
+
+    // ---------------------------------------------
+    // LIMPIAR TAMAÑOS ANTERIORES
+    // ---------------------------------------------
+
+    tallesContainer.innerHTML = "";
+
+    // ---------------------------------------------
+    // CREAR TODAS LAS COMBINACIONES GUARDADAS
+    // ---------------------------------------------
+
+    combinaciones.forEach(combinacion => {
+
+        crearBloqueColor(
+            combinacion,
+            true
+        );
+
+    });
+
+    // ---------------------------------------------
+    // MOSTRAR LA PRIMERA COMBINACIÓN
+    // EN LOS SELECTORES
+    // ---------------------------------------------
+
+    const primeraCombinacion =
+        combinaciones[0];
+
+    const partes =
+        primeraCombinacion
+            .split("/")
+            .map(c => c.trim())
+            .filter(c => c !== "");
+
+    color1.value =
+        partes[0] || "";
+
+    color2.value =
+        partes[1] || "";
+
+    color3.value =
+        partes[2] || "";
+
+    actualizarCombinacion();
+
+    // ---------------------------------------------
+    // GENERAR HIDDEN + PREVIEW
+    // ---------------------------------------------
+
+    generarInputsVariantes();
+
+    actualizarVistaPreviaVariantes();
+}
+
+    else {
+
+        // ---------------------------------------------
+        // MODO COLOR INDIVIDUAL
+        // ---------------------------------------------
+
+        usarCombinacion.checked =
+            false;
+
+        selectorCombinacion.style.display =
+            "none";
+
+        // ---------------------------------------------
+        // MARCAR LOS COLORES GUARDADOS
+        // ---------------------------------------------
+
+        document
+            .querySelectorAll(
+                ".color-checkbox"
+            )
+            .forEach(input => {
+
+                const valor =
+                    input.value
+                        .trim()
+                        .toLowerCase();
+
+                input.checked =
+                    coloresGuardados.some(
+                        color =>
+                            color
+                                .trim()
+                                .toLowerCase() ===
+                            valor
+                    );
+            });
+
+        // =================================================
+        // MUY IMPORTANTE
+        // =================================================
+        // Esto es lo que hacía funcionar tu segundo código.
+        // Ahora vuelve a ejecutarse al editar.
+
+        cargarTalles();
+    }
+
+    generarInputsVariantes();
+
+    actualizarVistaPreviaVariantes();
+}
+
+// =====================================================
+// INICIALIZAR
+// =====================================================
+
+cargarDatosExistentes();
+
+actualizarVistaPreviaVariantes();
+
+// =====================================================
+// ANTES DE ENVIAR
+// =====================================================
+
+const formulario =
+    document.querySelector("form");
+
+if (formulario) {
+
+    formulario.addEventListener(
+        "submit",
+        function () {
+
+            generarInputsVariantes();
+        }
+    );
+}
+
+// =====================================================
+// DEBUG
+// =====================================================
+
+console.log(
+    "======================================"
+);
+
+console.log(
+    "VARIANTES GUARDADAS:",
+    variantesGuardadas
+);
+
+console.log(
+    "======================================"
 );
 
 </script>

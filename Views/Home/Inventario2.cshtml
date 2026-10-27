@@ -2,6 +2,12 @@
 @model ProyectoTaller6.Models.Producto
 <link rel="stylesheet" href="~/css/inventario2.css" asp-append-version="true" />
 
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap"
+      rel="stylesheet"/>
+
 @if (TempData["Success"] != null)
 {
     <div id="modalSuccess" class="modal success">
@@ -18,9 +24,7 @@
         Producto no encontrado
     </h2>
 
-    <div style="text-align:center;">
-        <a href="/Home/Inventario1">⬅ Volver</a>
-    </div>
+    
 
     return;
 
@@ -166,15 +170,5 @@ else
 
 </div> <!-- cierre de contenedor-inv2 -->
 
-<!-- LOGO CENTRO ABAJO -->
-<div class="logo-centro">
-    <img src="~/images/logoCDNsis.png" />
-</div>
 
-<!-- LOGO DERECHA -->
-<div class="logo-derecha">
-    <img src="~/images/logoMM.png" />
-</div>
 
-<!-- VOLVER -->
-<a href="/Home/Inventario1" class="btn-volver">⬅</a>

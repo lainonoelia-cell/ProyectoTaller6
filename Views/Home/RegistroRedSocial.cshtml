@@ -3,60 +3,518 @@
     string red = ViewBag.Red ?? "Red Social";
 }
 
-<style>
-    body{
-        background-color:#d9c09c;
+@section Styles {
+    <link rel="stylesheet" href="~/css/registroRedSocial.css" asp-append-version="true" />
+}
+
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Registro Red Social</title>
+
+  
+
+</head>
+
+
+<body>
+
+
+    <div class="registro-pagina">
+
+    <div class="registro-formulario">
+
+    <h1 class="titulo-registro">
+        <span class="estrella estrella-izquierda">✨</span>
+        Registro de acceso
+        <span class="estrella estrella-derecha">✨</span>
+    </h1>
+
+    <p class="texto-registro">
+        Escribí tu nombre de usuario para continuar
+        <br />
+        con <strong>@red</strong>
+    </p>
+
+    @if (ViewBag.Error != null)
+    {
+        <div id="mensajeError" class="mensaje-error">
+            ❌ @ViewBag.Error
+        </div>
     }
 
-    .registro-box{
-        width:400px;
-        margin:100px auto;
-        padding:35px;
-        background-color:#f3e6cf;
-        border-radius:25px;
-        text-align:center;
-        box-shadow:0 4px 15px rgba(0,0,0,0.3);
-    }
+    <form method="post" action="/Home/RegistroRedSocial" id="formRegistro">
 
-    .registro-box h1{
-        font-size:32px;
-        margin-bottom:15px;
-    }
-
-    .registro-box input{
-        width:90%;
-        padding:12px;
-        margin-top:20px;
-        border-radius:15px;
-        border:1px solid #777;
-        font-size:16px;
-    }
-
-    .registro-box button{
-        margin-top:25px;
-        padding:12px 35px;
-        border:none;
-        border-radius:20px;
-        background-color:#8a7a2f;
-        color:white;
-        font-weight:bold;
-        font-size:17px;
-        cursor:pointer;
-    }
-</style>
-
-<div class="registro-box">
-    <h1>Ingresar con @red</h1>
-
-    <p>Escribí tu nombre de usuario para continuar</p>
-
-    <form method="post" action="/Home/RegistroRedSocial">
         <input type="hidden" name="red" value="@red" />
 
-        <input type="text" name="usuarioRed" placeholder="Tu usuario de @red" required />
+        <div class="campo-registro">
+            <input
+                type="text"
+                name="usuarioRed"
+                id="usuarioRed"
+                placeholder="Tu usuario de @red"
+                autocomplete="off"
+                required />
+        </div>
 
-        <br />
+        <button type="submit" class="btn-continuar" id="btnContinuar">
+            ✨ Continuar ✨
+        </button>
 
-        <button type="submit">Continuar</button>
     </form>
+
+    <div class="estrellas-finales">
+        <span>✦</span>
+        <span>✦</span>
+        <span>✦</span>
+    </div>
+
 </div>
+
+</div>
+
+
+
+
+
+
+<audio id="sonidoEstrella"src="/sounds/redes-estrella.wav"preload="auto"></audio>
+<audio id="sonidoCorrecto" src="/sounds/login-success.wav" preload="auto"></audio>
+
+<audio id="sonidoError" src="/sounds/login-error.wav" preload="auto"></audio>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const formulario = document.getElementById("formRegistro");
+    const usuario = document.getElementById("usuarioRed");
+    const tarjeta = document.querySelector(".registro-formulario");
+    const boton = document.getElementById("btnContinuar");
+
+    const sonidoEstrella =
+    document.getElementById("sonidoEstrella");
+
+const sonidoCorrecto =
+    document.getElementById("sonidoCorrecto");
+
+const sonidoError =
+    document.getElementById("sonidoError");
+
+    const red = "@red";
+
+    if (!formulario || !usuario) {
+        return;
+    }
+
+
+    formulario.addEventListener("submit", function (event) {
+
+    event.preventDefault();
+
+    // ✨ Primero suena la estrella
+    sonidoEstrella.currentTime = 0;
+    sonidoEstrella.play().catch(function () {});
+
+    const valor = usuario.value.trim();
+
+    // VALIDAR VACÍO
+    if (valor === "") {
+
+        setTimeout(function () {
+
+            mostrarError(
+                "Por favor, ingresá tu nombre de usuario."
+            );
+
+        }, 300);
+
+        return;
+    }
+
+    // VALIDAR CARACTERES
+    const patron = /^[a-zA-Z0-9._]+$/;
+
+    if (!patron.test(valor)) {
+
+        setTimeout(function () {
+
+            mostrarError(
+                "Usuario inválido. Usá solamente letras, números, puntos o guiones bajos."
+            );
+
+        }, 300);
+
+        return;
+    }
+
+    // USUARIO CORRECTO
+    setTimeout(function () {
+
+        mostrarCorrecto();
+
+        sonidoCorrecto.currentTime = 0;
+
+        sonidoCorrecto.play().catch(function () {});
+
+        setTimeout(function () {
+
+            formulario.submit();
+
+        }, 900);
+
+    }, 300);
+
+});
+
+
+    // ==============================
+    // ERROR
+    // ==============================
+
+    function mostrarError(mensaje) {
+
+        const anterior =
+            document.getElementById("errorJavascript");
+
+        if (anterior) {
+            anterior.remove();
+        }
+
+
+        const mensajeError =
+            document.createElement("div");
+
+        mensajeError.id = "errorJavascript";
+
+        mensajeError.className =
+            "mensaje-error";
+
+        mensajeError.innerText =
+            "❌ " + mensaje;
+
+
+        formulario.parentNode.insertBefore(
+            mensajeError,
+            formulario
+        );
+
+
+        tarjeta.classList.remove("form-ok");
+
+        tarjeta.classList.add("form-error");
+
+
+        const flash =
+            document.createElement("div");
+
+        flash.className =
+            "flash-rojo";
+
+        document.body.appendChild(flash);
+
+
+        sonidoError.currentTime = 0;
+
+        sonidoError.play().catch(function () {});
+
+
+        setTimeout(function () {
+
+            flash.remove();
+
+        }, 800);
+
+
+        setTimeout(function () {
+
+            tarjeta.classList.remove("form-error");
+
+        }, 600);
+
+    }
+
+
+    // ==============================
+    // CORRECTO
+    // ==============================
+
+    function mostrarCorrecto() {
+
+        const flash =
+            document.createElement("div");
+
+        flash.className =
+            "flash-verde";
+
+        document.body.appendChild(flash);
+
+
+        tarjeta.classList.add("form-ok");
+
+
+        boton.style.transform =
+            "scale(1.08)";
+
+        boton.style.boxShadow =
+            "0 0 10px rgba(255,255,255,0.9), " +
+            "0 0 20px rgba(22,163,74,0.9), " +
+            "0 0 40px rgba(22,163,74,0.6)";
+
+
+        setTimeout(function () {
+
+            flash.remove();
+
+        }, 900);
+
+    }
+
+});
+
+</script>
+</body>
+
+</html>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const texto =
+        document.querySelector("p");
+
+    const formulario =
+        document.querySelector("form");
+
+    const usuario =
+        document.querySelector("input[name='usuarioRed']");
+
+    const boton =
+        document.querySelector("button");
+
+    const red =
+        "@red";
+
+
+    // ==========================================
+    // ✨ FORMULARIO
+    // ==========================================
+
+    if (formulario) {
+
+        formulario.style.transition =
+            "transform 0.4s ease, box-shadow 0.4s ease";
+
+        formulario.style.borderRadius =
+            "20px";
+
+
+        formulario.addEventListener("mouseenter", function () {
+
+            formulario.style.transform =
+                "translateY(-3px)";
+
+            formulario.style.boxShadow =
+                "0 0 15px rgba(255,255,255,0.7), 0 0 30px rgba(155,108,5,0.35)";
+
+        });
+
+
+        formulario.addEventListener("mouseleave", function () {
+
+            formulario.style.transform =
+                "translateY(0)";
+
+            formulario.style.boxShadow =
+                "none";
+
+        });
+
+    }
+
+
+    // ==========================================
+    // 💫 TEXTO
+    // ==========================================
+
+    if (texto) {
+
+        texto.style.transition =
+            "transform 0.3s ease, text-shadow 0.3s ease";
+
+
+        texto.addEventListener("mouseenter", function () {
+
+            texto.style.transform =
+                "scale(1.04)";
+
+            texto.style.textShadow =
+                "0 0 10px rgba(255,255,255,0.9)";
+
+        });
+
+
+        texto.addEventListener("mouseleave", function () {
+
+            texto.style.transform =
+                "scale(1)";
+
+            texto.style.textShadow =
+                "none";
+
+        });
+
+    }
+
+
+    // ==========================================
+    // 📝 CAMPO USUARIO
+    // ==========================================
+
+    if (usuario) {
+
+        usuario.style.transition =
+            "transform 0.3s ease, box-shadow 0.3s ease";
+
+
+        usuario.addEventListener("focus", function () {
+
+            usuario.style.transform =
+                "scale(1.03)";
+
+            usuario.style.boxShadow =
+                "0 0 8px rgba(255,255,255,0.8), 0 0 18px rgba(155,108,5,0.5)";
+
+        });
+
+
+        usuario.addEventListener("blur", function () {
+
+            usuario.style.transform =
+                "scale(1)";
+
+            usuario.style.boxShadow =
+                "none";
+
+        });
+
+    }
+
+
+    // ==========================================
+    // 🌟 BOTÓN CONTINUAR
+    // ==========================================
+
+    if (boton) {
+
+        boton.style.transition =
+            "transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease";
+
+
+        boton.addEventListener("mouseenter", function () {
+
+            boton.style.transform =
+                "scale(1.08) translateY(-3px)";
+
+            boton.style.filter =
+                "brightness(1.15)";
+
+            boton.style.boxShadow =
+                "0 0 10px rgba(255,255,255,0.9), 0 0 20px rgba(255,215,0,0.8), 0 0 35px rgba(255,215,0,0.4)";
+
+        });
+
+
+        boton.addEventListener("mouseleave", function () {
+
+            boton.style.transform =
+                "scale(1) translateY(0)";
+
+            boton.style.filter =
+                "brightness(1)";
+
+            boton.style.boxShadow =
+                "none";
+
+        });
+
+    }
+
+
+    // ==========================================
+    // 🌈 EFECTO SEGÚN LA RED
+    // ==========================================
+
+    if (formulario) {
+
+        if (red === "Facebook") {
+
+            formulario.style.border =
+                "2px solid rgba(24,119,242,0.7)";
+
+        }
+
+        else if (red === "Instagram") {
+
+            formulario.style.border =
+                "2px solid rgba(225,48,108,0.7)";
+
+        }
+
+        else if (red === "LinkedIn") {
+
+            formulario.style.border =
+                "2px solid rgba(10,102,194,0.7)";
+
+        }
+
+    }
+
+
+    // ==========================================
+    // ✨ ENTRADA DE LA PÁGINA
+    // ==========================================
+
+    const elementos = [
+        texto,
+        formulario
+    ];
+
+
+    elementos.forEach(function (elemento, index) {
+
+        if (!elemento) return;
+
+        elemento.style.opacity =
+            "0";
+
+        elemento.style.transform =
+            "translateY(20px)";
+
+        elemento.style.transition =
+            "opacity 0.7s ease, transform 0.7s ease";
+
+
+        setTimeout(function () {
+
+            elemento.style.opacity =
+                "1";
+
+            elemento.style.transform =
+                "translateY(0)";
+
+        }, 200 + (index * 250));
+
+    });
+
+});
+
+</script>

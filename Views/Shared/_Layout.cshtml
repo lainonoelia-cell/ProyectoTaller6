@@ -1,26 +1,143 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ProyectoTaller6</title>
+
+    <title>@ViewData["Title"] - MM Indumentaria</title>
+
     <script type="importmap"></script>
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/ProyectoTaller6.styles.css" asp-append-version="true" />
+     @await RenderSectionAsync("Styles", required: false)
+
 </head>
+
 <body>
-   
-    <div class="container">
+    
+    @{
+    var accionActual = ViewContext.RouteData.Values["action"]?.ToString();
+    var ocultarHeaderFooter =
+        accionActual == "Index" ||
+        accionActual == "Bienvenida" ||
+        accionActual == "Login" ||
+        accionActual == "RegistroRedSocial";
+}
+
+@if (!ocultarHeaderFooter)
+{
+    <header class="encabezado-mm">
+        <div class="encabezado-mm__contenido">
+
+            <a class="marca" asp-controller="Home" asp-action="Bienvenida">
+                <img class="marca__logo"
+                     src="~/images/logoMM.png"
+                     alt="Logo de MM Indumentaria" />
+
+                <span class="marca__texto">
+                    <strong>MM&M Indumentaria</strong>
+                    <small>Moda y estilo para vos</small>
+                </span>
+            </a>
+
+            <button class="menu-toggle"
+                    type="button"
+                    aria-label="Abrir menú"
+                    aria-expanded="false"
+                    aria-controls="menuPrincipal">
+                <span aria-hidden="true">⋯</span>
+            </button>
+
+            <nav class="menu" id="menuPrincipal">
+                <ul>
+                    @if (Context.Session.GetString("Rol") == "Admin")
+                    {
+                        <li>
+                            <a asp-controller="Home" asp-action="Inventario1">Inventario</a>
+                        </li>
+
+                        <li>
+                            <a asp-controller="Home" asp-action="EscaneoCodigo">Escanear código</a>
+                        </li>
+
+                        
+                    }
+                    else if (Context.Session.GetString("Rol") == "Cliente")
+                    {
+                        <li>
+                           <a asp-controller="Home" asp-action="GestionCliente">Elegir productos</a>
+                        </li>
+                        <li>
+                            <a asp-controller="Home" asp-action="Carrito">Carrito</a>
+                        </li>
+                    }
+                    <li>
+    <button type="button" id="botonTema">🌙 Modo oscuro</button>
+</li>
+                </ul>
+            </nav>
+
+        </div>
+    </header>
+}
+    
+
+
+    <div class="container contenido-mm">
         <main role="main">
-    @RenderBody()
-</main>
+            @RenderBody()
+        </main>
     </div>
 
     
+    @if (ViewContext.RouteData.Values["action"]?.ToString() != "Bienvenida"
+        && ViewContext.RouteData.Values["action"]?.ToString() != "Login"
+        && ViewContext.RouteData.Values["action"]?.ToString() != "RegistroRedSocial")
+    {
+    
+    @if (!ocultarHeaderFooter)
+{
+        <footer class="footer-mm">
+            <div class="pie-marca">
+                <span>Desarrollado por</span>
+                <img src="~/images/logoCDNsis.png" alt="Logo de CDN SIS" />
+                <strong>CDN SIS</strong>
+                <small>Soluciones tecnológicas</small>
+            </div>
+        </footer>
+    }
+    }
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+    const botonTema = document.getElementById("botonTema");
+    const temaOscuroActivo = sessionStorage.getItem("tema") === "oscuro";
+
+    document.body.classList.toggle("tema-oscuro", temaOscuroActivo);
+
+    if (botonTema) {
+        botonTema.textContent = temaOscuroActivo
+            ? "☀️ Modo claro"
+            : "🌙 Modo oscuro";
+
+        botonTema.addEventListener("click", () => {
+            const activar = !document.body.classList.contains("tema-oscuro");
+
+            document.body.classList.toggle("tema-oscuro", activar);
+            sessionStorage.setItem("tema", activar ? "oscuro" : "claro");
+            botonTema.textContent = activar
+                ? "☀️ Modo claro"
+                : "🌙 Modo oscuro";
+        });
+    }
+</script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>

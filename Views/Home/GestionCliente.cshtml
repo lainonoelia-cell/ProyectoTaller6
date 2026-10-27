@@ -1,42 +1,66 @@
 @{
-    Layout = null;
-
+    Layout = "_Layout";
+    ViewData["Title"] = "Gestión Cliente";
+    
     var usuario = ViewBag.Usuario;
     var red = ViewBag.Red;
 }
 
-<!DOCTYPE html>
-
-<html lang="es">
-
-    
-<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MM Indumentaria</title>
     <link rel="stylesheet" href="~/css/gestionCliente.css" />
-</head>
-<body>
+
+    @section Styles {
+    <link rel="stylesheet" href="~/css/gestionCliente.css" asp-append-version="true" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap"
+          rel="stylesheet" />
+}
+
+
    
-    <div class="container">
+   <div class="gestion-cliente">
+
+<!-- ============================================
+     HEADER
+============================================ -->
+
+    <div class="header-detalle">
+
+       
         
-        <!-- LOGO CENTRADO -->
-        <div class="logo-centrado">
-            <img src="~/images/logoMM.png" alt="Logo" onerror="this.style.display='none'">
-        </div>
+       
+    <div class="tituloCentro">
+
+        <h1>Sistema de Gestión Comercial</h1>
+
+        <p>Plataforma CDN SIS</p>
+
+    </div>
+
+
 @if(usuario != null)
 {
     <div class="usuario-red">
-        <h2>Bienvenida @usuario</h2>
-        <p>Ingresaste con @red</p>
-    </div>
+
+<h2>
+
+<span>👋</span> ¡Bienvenido/a @usuario!
+
+</h2>
+
+<p>
+
+Conectado/a mediante <strong>@red</strong>
+
+</p>
+
+</div>
 }
 
-<!-- BOTÓN VOLVER -->
-<div class="volver-container">
-    <button class="btn-volver" onclick="volverBienvenida()">← 
-    </button>
-</div>
+
 
         <!-- MENÚ CENTRADO -->
        <div class="menu-centrado">
@@ -44,81 +68,263 @@
     Productos
 </a>
 
-    <a href="#" onclick="verContactos()">
-        Contactos
-    </a>
+    <a href="#" onclick="verContactos(); return false;">Contactos</a>
 
     <a href="#" onclick="verGuiaTalles()">
         Guía de Talles
     </a>
 
-    <a href="#" onclick="verDescuentos()">
-        Descuentos
-    </a>
+    <a href="#" onclick="verDescuentos(); return false;">Descuentos</a>
 </div>
 
+<h2 class="titulo-categorias">
+    🛍 Explorá nuestras categorías
+</h2>
+
         <!-- CONTENIDO PRINCIPAL -->
-        <div class="contenido">
-            <!-- CATEGORÍAS -->
-            <div class="categorias">
-                <div class="categorias-grid">
-                    <!-- Remeras -->
-                    <div class="card-categoria" onclick="irACatalogo('Remeras')">
-                        <img src="~/images/remeragris.jpeg" alt="Remeras" onerror="this.src='https://via.placeholder.com/120x85?text=Remeras'">
-                        <h3>Remeras</h3>
-                        <button class="btn-seleccionar" onclick="event.stopPropagation(); irACatalogo('Remeras')">Seleccionar</button>
-                    </div>
+<div class="contenido">
 
-                    <!-- Pantalones -->
-                    <div class="card-categoria" onclick="irACatalogo('Pantalones')">
-                        <img src="~/images/pantalonBaggy.png" alt="Pantalones" onerror="this.src='https://via.placeholder.com/120x85?text=Pantalones'">
-                        <h3>Pantalones</h3>
-                        <button class="btn-seleccionar" onclick="event.stopPropagation(); irACatalogo('Pantalones')">Seleccionar</button>
-                    </div>
+    <!-- ============================= -->
+    <!-- CATEGORÍAS -->
+    <!-- ============================= -->
 
-                    <!-- Abrigos -->
-                    <div class="card-categoria" onclick="irACatalogo('Abrigos')">
-                        <img src="~/images/campera1.jpeg" alt="Abrigos" onerror="this.src='https://via.placeholder.com/120x85?text=Abrigos'">
-                        <h3>Abrigos</h3>
-                        <button class="btn-seleccionar" onclick="event.stopPropagation(); irACatalogo('Abrigos')">Seleccionar</button>
-                    </div>
+    <div class="categorias">
 
-                    <!-- Cortos -->
-                    <div class="card-categoria" onclick="irACatalogo('Cortos')">
-                        <img src="~/images/bermudasCamufladas.png" alt="Cortos" onerror="this.src='https://via.placeholder.com/120x85?text=Cortos'">
-                        <h3>Cortos</h3>
-                        <button class="btn-seleccionar" onclick="event.stopPropagation(); irACatalogo('Cortos')">Seleccionar</button>
-                    </div>
+        <div class="categorias-grid">
+
+            <!-- REMERAS -->
+            <div class="card-categoria" onclick="irACatalogo('Remeras/Camisetas')">
+
+                <div class="badge badge-celeste"
+                     onclick="event.stopPropagation(); irABadge('Más vendido')">
+                    🔥 Más vendido
                 </div>
 
-                <!-- VER MÁS -->
-                <div class="ver-mas">
-                    <button onclick="mostrarMasCategorias()">Ver más...</button>
+                <div class="imagenCategoria">
+                    <img src="~/images/camisetasvarias.jpeg"
+                         alt="Remeras">
                 </div>
 
-                <!-- CATEGORÍAS EXTRA (ocultas) -->
-                <div id="categoriasExtra" class="categorias-extra">
-                    <div class="categorias-grid">
-                        <div class="card-categoria" onclick="irACatalogo('Accesorios')">
-                            <img src="~/images/gorra.png" alt="Accesorios" onerror="this.src='https://via.placeholder.com/120x85?text=Accesorios'">
-                            <h3>Accesorios</h3>
-                            <button class="btn-seleccionar" onclick="event.stopPropagation(); irACatalogo('Accesorios')">Seleccionar</button>
-                        </div>
-                        <div class="card-categoria" onclick="irACatalogo('Interiores')">
-                            <img src="~/images/mediasDeportivasHombre.png" alt="Interiores" onerror="this.src='https://via.placeholder.com/120x85?text=Interiores'">
-                            <h3>Interiores</h3>
-                            <button class="btn-seleccionar" onclick="event.stopPropagation(); irACatalogo('Interiores')">Seleccionar</button>
-                        </div>
-                    </div>
-                </div>
+                <h3>Remeras/Camisetas</h3>
+
+                <p class="descripcionCategoria">
+                    Modelos urbanos y deportivos
+                </p>
+
+                <button class="btn-seleccionar"
+                        onclick="event.stopPropagation(); irACatalogo('Remeras/Camisetas')">
+                    Seleccionar
+                </button>
+
             </div>
 
-            <!-- PANEL DERECHO - SOLO BUSCADOR -->
-            <div class="panel-derecho">
-                <input type="text" class="buscador" placeholder="Buscar" id="buscador" onkeyup="buscarCategorias()">
+
+            <!-- PANTALONES -->
+            <div class="card-categoria" onclick="irACatalogo('Pantalones')">
+
+                <div class="badge badge-amarillo"
+                     onclick="event.stopPropagation(); irABadge('Recomendado')">
+                    ⭐ Recomendado
+                </div>
+
+                <div class="imagenCategoria">
+                    <img src="~/images/pantalonBaggy.png"
+                         alt="Pantalones">
+                </div>
+
+                <h3>Pantalones</h3>
+
+                <p class="descripcionCategoria">
+                    Jeans, cargo, joggins, etc
+                </p>
+
+                <button class="btn-seleccionar"
+                        onclick="event.stopPropagation(); irACatalogo('Pantalones')">
+                    Seleccionar
+                </button>
+
             </div>
+
+
+            <!-- ABRIGOS -->
+            <div class="card-categoria" onclick="irACatalogo('Abrigos')">
+
+                <div class="badge badge-rojo"
+                     onclick="event.stopPropagation(); irABadge('Temporada')">
+                    ❄️ Temporada
+                </div>
+
+                <div class="imagenCategoria">
+                    <img src="~/images/campera1.jpeg"
+                         alt="Abrigos">
+                </div>
+
+                <h3>Abrigos</h3>
+
+                <p class="descripcionCategoria">
+                    Ideal para días fríos
+                </p>
+
+                <button class="btn-seleccionar"
+                        onclick="event.stopPropagation(); irACatalogo('Abrigos')">
+                    Seleccionar
+                </button>
+
+            </div>
+
+
+            <!-- CORTOS -->
+            <div class="card-categoria" onclick="irACatalogo('Cortos')">
+
+                <div class="badge badge-verde"
+                     onclick="event.stopPropagation(); irABadge('Verano')">
+                    ☀️ Verano
+                </div>
+
+                <div class="imagenCategoria">
+                    <img src="~/images/bermudasCamufladas.png"
+                         alt="Cortos">
+                </div>
+
+                <h3>Cortos</h3>
+
+                <p class="descripcionCategoria">
+                    Shorts y bermudas
+                </p>
+
+                <button class="btn-seleccionar"
+                        onclick="event.stopPropagation(); irACatalogo('Cortos')">
+                    Seleccionar
+                </button>
+
+            </div>
+
+
+            <!-- ================================= -->
+            <!-- CATEGORÍAS EXTRA -->
+            <!-- ================================= -->
+
+            <div id="categoriasExtra" class="categorias-extra">
+
+                <!-- ACCESORIOS -->
+                <div class="card-categoria"
+                     onclick="irACatalogo('Accesorios')">
+
+                    <div class="badge badge-fuccia"
+                         onclick="event.stopPropagation(); irABadge('Nuevo')">
+                        🆕 Nuevo
+                    </div>
+
+                    <div class="imagenCategoria">
+                        <img src="~/images/gorra.png"
+                             alt="Accesorios">
+                    </div>
+
+                    <h3>Accesorios</h3>
+
+                    <p class="descripcionCategoria">
+                        Todo lo que necesitás para tu outfit
+                    </p>
+
+                    <button class="btn-seleccionar"
+                            onclick="event.stopPropagation(); irACatalogo('Accesorios')">
+                        Seleccionar
+                    </button>
+
+                </div>
+
+
+                <!-- INTERIORES -->
+                <div class="card-categoria"
+                     onclick="irACatalogo('Interiores')">
+
+                    <div class="badge badge-violeta"
+                         onclick="event.stopPropagation(); irABadge('Premium')">
+                        💎 Premium
+                    </div>
+
+                    <div class="imagenCategoria">
+                        <img src="~/images/mediasDeportivasHombre.png"
+                             alt="Interiores">
+                    </div>
+
+                    <h3>Interiores</h3>
+
+                    <p class="descripcionCategoria">
+                        Comodidad para todos los días
+                    </p>
+
+                    <button class="btn-seleccionar"
+                            onclick="event.stopPropagation(); irACatalogo('Interiores')">
+                        Seleccionar
+                    </button>
+
+                </div>
+
+            </div>
+
         </div>
+
+
+        <!-- ============================= -->
+        <!-- VER MÁS -->
+        <!-- ============================= -->
+
+        <div class="ver-mas" id="contenedorVerMas">
+
+            <button id="btnVerMas"
+                    onclick="mostrarMasCategorias()">
+                Ver más...
+            </button>
+
+        </div>
+
     </div>
+
+
+    <!-- ============================= -->
+    <!-- PANEL DERECHO - BUSCADOR -->
+    <!-- ============================= -->
+
+    <div class="panel-derecho">
+
+        <h2 class="tituloBuscador">
+            🔎 Buscar categoría
+        </h2>
+
+        <p class="textoBuscador">
+            Encontrá rápidamente tu prenda favorita.
+        </p>
+
+        <input
+            type="text"
+            class="buscador"
+            placeholder="Ej.: Remeras"
+            id="buscador"
+            onkeyup="buscarCategorias()">
+
+    </div>
+
+</div>
+ <!-- ============================= -->
+            <!-- BADGES EXTRA -->
+            <!-- ============================= -->
+
+            <div class="badges-extra">
+
+                <!-- OFERTA -->
+                <div class="badge badge-azul"
+                     onclick="irABadge('Oferta')">
+                    🏷️ Oferta
+                </div>
+
+                <!-- ENVÍO GRATIS -->
+                <div class="badge badge-lavanda"
+                     onclick="irABadge('Envío')">
+                    🚚 Envío Gratis
+                </div>
+
+            </div>
 
     <!-- MODAL GUÍA DE TALLES -->
     <div id="modalTalles" class="modal">
@@ -127,79 +333,143 @@
             <h3>Guía de Talles</h3>
             <table>
                 <thead>
-                    <tr><th>Talle</th><th>Pecho</th><th>Cintura</th><th>Cadera</th></tr>
+                    <tr><th>Talle</th><th>Equivalencia</th><th>Pecho</th><th>Cintura</th><th>Cadera</th></tr>
                 </thead>
                 <tbody>
-                    <tr>
-    <td>S</td>
-    <td>88-92</td>
-    <td>70-74</td>
-    <td>94-98</td>
-</tr>
-
-<tr>
-    <td>M</td>
-    <td>92-96</td>
-    <td>74-78</td>
-    <td>98-102</td>
-</tr>
-
-<tr>
-    <td>L</td>
-    <td>96-100</td>
-    <td>78-82</td>
-    <td>102-106</td>
-</tr>
-
-<tr>
-    <td>XL</td>
-    <td>100-104</td>
-    <td>82-86</td>
-    <td>106-110</td>
-</tr>
+                    <tr><td>S</td><td>1</td><td>88-92</td><td>70-74</td><td>94-98</td></tr>
+<tr><td>M</td><td>2</td><td>92-96</td><td>74-78</td><td>98-102</td></tr>
+<tr><td>L</td><td>3</td><td>96-100</td><td>78-82</td><td>102-106</td></tr>
+<tr><td>XL</td><td>4</td><td>100-104</td><td>82-86</td><td>106-110</td></tr>
                 </tbody>
             </table>
         </div>
+     </div>
+
+     <div id="modalContactos" class="modal"
+     onclick="if (event.target === this) cerrarTarjeta('modalContactos')">
+    <div class="modal-content">
+        <span class="close-modal" onclick="cerrarTarjeta('modalContactos')">&times;</span>
+        <h3>Contactos</h3>
+        <p>Instagram: @@mmm_indumentaria</p>
+        <p>WhatsApp: 11-5555-5555</p>
     </div>
+</div>
+
+<div id="modalDescuentos" class="modal"
+     onclick="if (event.target === this) cerrarTarjeta('modalDescuentos')">
+    <div class="modal-content">
+        <span class="close-modal" onclick="cerrarTarjeta('modalDescuentos')">&times;</span>
+        <h3>Descuentos</h3>
+        <p>20% OFF en efectivo</p>
+        <p>3 cuotas sin interés</p>
+        <p>2x1 en accesorios</p>
+    </div>
+</div>
+</div> <!-- ✅ AHORA SÍ: CIERRE DE .container -->
+ 
+
+            
 
     <script>
 
-    function mostrarMasCategorias() {
-        document.getElementById('categoriasExtra').classList.toggle('mostrar');
+   function mostrarMasCategorias() {
+
+    const categoriasExtra =
+        document.getElementById('categoriasExtra');
+
+    const boton =
+        document.getElementById('btnVerMas');
+
+    categoriasExtra.classList.toggle('mostrar');
+
+    if (categoriasExtra.classList.contains('mostrar')) {
+
+        boton.textContent = "Ver menos";
+
+    } else {
+
+        boton.textContent = "Ver más...";
+
     }
+}
 
     // ✅ FUNCIÓN CORREGIDA - Redirige a ProductoDetalle
-    function irACatalogo(categoria) {
-        localStorage.setItem('categoriaSeleccionada', categoria);
-        window.location.href = '@Url.Action("ProductoDetalle", "Home")';
-    }
+   function irACatalogo(categoria) {
+
+    window.location.href ='@Url.Action("ProductoDetalle", "Home")?categoria=' + encodeURIComponent(categoria);
+
+}
 
    function buscarCategorias() {
 
-    var busqueda = document.getElementById('buscador').value.toLowerCase();
+    const buscador =
+        document.getElementById('buscador');
 
-    var cards = document.querySelectorAll('.card-categoria');
+    const busqueda =
+        buscador.value.trim().toLowerCase();
 
-    var categoriasExtra = document.getElementById('categoriasExtra');
+    const cards =
+        document.querySelectorAll('.card-categoria');
 
-    // Si el usuario escribe algo, mostrar categorías extra
-    if (busqueda !== '') {
-        categoriasExtra.classList.add('mostrar');
-    } else {
+    const categoriasExtra =
+        document.getElementById('categoriasExtra');
+
+    const contenedorVerMas =
+        document.getElementById('contenedorVerMas');
+
+
+    /* ==========================================
+       SI NO HAY BÚSQUEDA
+       ========================================== */
+
+    if (busqueda === '') {
+
+        cards.forEach(function(card) {
+            card.style.display = '';
+        });
+
         categoriasExtra.classList.remove('mostrar');
+
+        contenedorVerMas.style.display = '';
+
+        document.getElementById('btnVerMas').textContent =
+            'Ver más...';
+
+        return;
     }
+
+
+    /* ==========================================
+       SI ESTÁ BUSCANDO
+       ========================================== */
+
+    categoriasExtra.classList.add('mostrar');
+
+    /* Ocultamos VER MÁS mientras busca */
+
+    contenedorVerMas.style.display = 'none';
+
 
     cards.forEach(function(card) {
 
-        var titulo = card.querySelector('h3').innerText.toLowerCase();
+        const titulo =
+            card.querySelector('h3')
+                .innerText
+                .toLowerCase();
+
 
         if (titulo.includes(busqueda)) {
+
             card.style.display = '';
+
         } else {
+
             card.style.display = 'none';
+
         }
 
     });
+
 }
 
     function verGuiaTalles() {
@@ -224,28 +494,27 @@
         if (e.target === modal) modal.style.display = 'none';
     }
 
-    function verContactos() {
-    alert(
-        "MM&M Indumentaria\n\n" +
-        "Instagram: @@mmm_indumentaria\n" +
-        "WhatsApp: 11-5555-5555"
-    );
+ function verContactos() {
+    document.getElementById("modalContactos").style.display = "block";
 }
 
 function verDescuentos() {
-
-    alert(
-        "Descuentos disponibles:\n\n" +
-        "• 20% OFF efectivo\n" +
-        "• 3 cuotas sin interés\n" +
-        "• 2x1 en accesorios"
-    );
+    document.getElementById("modalDescuentos").style.display = "block";
 }
 
+
+function cerrarTarjeta(id) {
+    document.getElementById(id).style.display = "none";
+}
 function volverBienvenida() {
     window.location.href = '@Url.Action("Bienvenida", "Home")';
 }
 
+function irABadge(badge) {
+    window.location.href = '/Home/ProductoDetalle?badge=' + encodeURIComponent(badge);
+}
+
     </script>
-</body>
-</html>
+
+
+

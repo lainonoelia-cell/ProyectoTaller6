@@ -1,19 +1,41 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     background: rgba(205, 183, 183, 0.91);
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+   font-family: "Fredoka", sans-serif;
     margin: 0;
 }
 
-/* TITULO */
+
+/* =====================================================
+   TÍTULO
+   ===================================================== */
+
 .titulo {
     text-align: center;
-    font-size: 42px;
-    font-family: "Trebuchet MS", sans-serif;
+    font-size: 28px;
+   font-family: "Fredoka", sans-serif;
     font-weight: 700;
     letter-spacing: 2px;
-    color: #2d2d2d;
+    color: #9B6C05;
     margin: 25px 0;
 }
+
+
+.titulo:hover {
+
+    color: #b8860b;
+
+    transform: translateY(-3px);
+
+    letter-spacing: .5px;
+
+}
+
 
 /* CONTENEDOR */
 .contenedor {
@@ -65,12 +87,6 @@ body {
     object-fit: contain;
 }
 
-/* CELULAR */
-@media (max-width: 600px) {
-    .producto img {
-        height: 180px;
-    }
-}
 
 /* INPUTS Y SELECT */
 input,
@@ -143,28 +159,6 @@ button {
     transform: scale(1.05);
 }
 
-/* LOGO CENTRO ABAJO */
-.logo-centro {
-    position: fixed;
-    top: 50%;
-    left: 40px;
-    transform: translateY(-50%);
-}
-
-.logo-centro img {
-    width: 200px;
-}
-
-/* LOGO ESQUINA DERECHA */
-.logo-derecha {
-    position: fixed;
-    bottom: 700px;
-    right: 10px;
-}
-
-.logo-derecha img {
-    width: 98px;
-}
 
 /* CAMARA */
 .camara {
@@ -188,24 +182,6 @@ button {
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
-/* BOTON VOLVER */
-.btn-volver {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    background: #9B6C05;
-    color: white;
-    padding: 10px 15px;
-    text-decoration: none;
-    border-radius: 8px;
-    font-size: 18px;
-    transition: all 0.2s;
-}
-
-.btn-volver:hover {
-    background: #7a5304;
-    transform: scale(1.1);
-}
 
 /* SUBCATEGORIAS */
 .subcategorias {
@@ -255,7 +231,650 @@ button {
     letter-spacing:0.5px;
 }
 
+/* =====================================================
+   EFECTOS VISUALES - CATEGORÍA
+   ===================================================== */
 
+
+/* =====================================================
+   APARICIÓN DE LA PÁGINA
+   ===================================================== */
+
+body {
+
+    animation:
+        aparecerCategoria 0.6s ease;
+
+}
+
+@keyframes aparecerCategoria {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateY(12px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+    }
+
+}
+
+
+
+
+
+/* =====================================================
+   TARJETAS DE PRODUCTOS
+   ===================================================== */
+
+.producto {
+
+    animation:
+        aparecerProductoCategoria 0.5s ease both;
+
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
+
+}
+
+
+/* Entrada de las tarjetas */
+
+@keyframes aparecerProductoCategoria {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(20px)
+            scale(0.97);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+/* Hover */
+
+.producto:hover {
+
+    transform:
+        translateY(-7px)
+        scale(1.02);
+
+    box-shadow:
+        0 16px 30px rgba(0,0,0,0.20);
+
+}
+
+
+/* =====================================================
+   IMAGEN DEL PRODUCTO
+   ===================================================== */
+
+.producto img {
+
+    transition:
+        transform 0.4s ease,
+        filter 0.4s ease;
+
+}
+
+.producto:hover img {
+
+    transform: scale(1.07);
+
+}
+
+
+/* =====================================================
+   NOMBRE DEL PRODUCTO
+   ===================================================== */
+
+.nombre-producto {
+
+    transition:
+        color 0.3s ease,
+        transform 0.3s ease;
+
+}
+
+.producto:hover .nombre-producto {
+
+    color: #9B6C05;
+
+    transform: translateY(-2px);
+
+}
+
+
+/* =====================================================
+   PRECIO
+   ===================================================== */
+
+.precio-producto {
+
+    transition:
+        transform 0.3s ease;
+
+}
+
+.producto:hover .precio-producto {
+
+    transform: scale(1.04);
+
+}
+
+
+/* =====================================================
+   STOCK
+   ===================================================== */
+
+.stock-ok,
+.stock-bajo,
+.stock-agotado {
+
+    transition:
+        transform 0.3s ease;
+
+}
+
+.producto:hover .stock-ok,
+.producto:hover .stock-bajo,
+.producto:hover .stock-agotado {
+
+    transform: scale(1.04);
+
+}
+
+
+/* =====================================================
+   INPUTS Y SELECT
+   ===================================================== */
+
+input,
+select {
+
+    transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease,
+        transform 0.2s ease;
+
+}
+
+input:focus,
+select:focus {
+
+    outline: none;
+
+    border-color: #c9901c;
+
+    box-shadow:
+        0 0 0 3px rgba(201,144,28,0.18);
+
+    transform: translateY(-1px);
+
+}
+
+
+/* =====================================================
+   BOTONES GENERALES
+   ===================================================== */
+
+button {
+
+    position: relative;
+
+    overflow: hidden;
+
+}
+
+
+/* BRILLO */
+
+button::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+
+    left: -120px;
+
+    width: 60px;
+
+    height: 100%;
+
+    background:
+        rgba(255,255,255,0.40);
+
+    transform:
+        skewX(-25deg);
+
+    transition:
+        left 0.6s ease;
+
+}
+
+
+/* PASA EL BRILLO */
+
+button:hover::before {
+
+    left: 120%;
+
+}
+
+
+/* =====================================================
+   BOTÓN NUEVO PRODUCTO
+   ===================================================== */
+
+.btn-nuevo {
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        background 0.3s ease;
+
+}
+
+.btn-nuevo:hover {
+
+    transform:
+        translateY(-3px)
+        scale(1.03);
+
+    box-shadow:
+        0 9px 20px rgba(0,0,0,0.20);
+
+}
+
+
+/* =====================================================
+   BOTÓN GUARDAR
+   ===================================================== */
+
+.btn-guardar {
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+
+}
+
+.btn-guardar:hover {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 8px 18px rgba(0,0,0,0.18);
+
+}
+
+
+/* =====================================================
+   BOTÓN SUBCATEGORÍA
+   ===================================================== */
+
+.btn-subcategoria {
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+
+}
+
+.btn-subcategoria:hover {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 8px 18px rgba(0,0,0,0.18);
+
+}
+
+
+/* =====================================================
+   BOTONES DE PRODUCTOS
+   ===================================================== */
+
+.acciones button {
+
+    transition:
+        background 0.3s ease,
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+
+}
+
+.acciones button:hover {
+
+    transform:
+        translateY(-2px)
+        scale(1.04);
+
+    box-shadow:
+        0 8px 18px rgba(0,0,0,0.20);
+
+}
+
+
+/* =====================================================
+   SUBCATEGORÍAS
+   ===================================================== */
+
+.subcategorias button {
+
+    transition:
+        background 0.3s ease,
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+
+}
+
+.subcategorias button:hover {
+
+    transform:
+        translateY(-3px)
+        scale(1.04);
+
+    box-shadow:
+        0 8px 18px rgba(0,0,0,0.18);
+
+}
+
+
+/* =====================================================
+   CÁMARA
+   ===================================================== */
+
+.camara img {
+    transition:
+        transform 0.4s ease,
+        box-shadow 0.4s ease;
+
+}
+
+.camara img:hover {
+    transform:
+        scale(1.10)
+        rotate(3deg);
+    box-shadow:
+        0 8px 20px rgba(0,0,0,0.25);
+
+}
+
+
+/* ==========================================
+   NAVBAR  ENLACE 
+========================================== */
 .navbar {
-    display: none;
+    width: 100%;
+    padding: 1rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+
+    margin: 0;
+    padding: 0;
+}
+
+.navbar li {
+    list-style: none;
+}
+
+.navbar li a {
+    display: inline-flex;
+    padding: 0.8rem 1rem;
+
+    color: #756a77;
+    font-size: clamp(1.3rem, 2.5vw, 2rem);
+    font-weight: bold;
+    text-decoration: none;
+
+    border-radius: 1rem;
+
+    transition:
+        color 0.2s ease,
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.navbar li a:hover,
+.navbar li a:focus-visible {
+    color: #756a77;
+    background-color: #f2c66d;
+    transform: translateY(-2px);
+}
+
+/* =====================================================
+   LOGOS
+   ===================================================== */
+
+.logos-pie {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+    width: 100%;
+    margin-top: 2rem;
+    padding: 1.5rem;
+}
+
+.logos-pie img {
+    width: clamp(65px, 10vw, 125px);
+    height: auto;
+    object-fit: contain;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.logos-pie img:hover {
+    transform: scale(1.08);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.25));
+}
+
+body.tema-oscuro .producto {
+    background: #2b2035;
+    color: #f5eef7;
+    border-color: #594765;
+}
+
+body.tema-oscuro .producto .precio-producto {
+    color: #f2c66d;
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 600px) {
+    .titulo {
+        font-size: clamp(1.6rem, 7vw, 2.2rem);
+        letter-spacing: 1px;
+        margin: 1rem 0.5rem;
+    }
+
+    .contenedor {
+        width: 100%;
+        padding: 0 12px;
+        gap: 1rem;
+    }
+
+    .producto {
+        width: min(100%, 350px);
+        padding: 1rem;
+    }
+
+    .producto p {
+        font-size: 1rem;
+    }
+
+    .nombre-producto {
+        font-size: 1.4rem;
+    }
+
+    .subcategorias {
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .camara {
+        position: static;
+        transform: none;
+        display: flex;
+        justify-content: center;
+        margin: 1rem auto;
+    }
+
+    .camara img {
+        width: 65px;
+    }
+}
+
+/* Tablet */
+@media (min-width: 601px) and (max-width: 900px) {
+    .contenedor {
+        gap: 24px;
+        padding: 0 16px;
+    }
+
+    .producto {
+        width: min(100%, 320px);
+        padding: 16px;
+    }
+
+    .producto img {
+        height: 220px;
+    }
+
+    .camara {
+        right: 20px;
+    }
+
+    .camara img {
+        width: 65px;
+    }
+}
+
+/* Celular */
+@media (max-width: 600px) {
+    .titulo {
+        font-size: clamp(1.4rem, 6vw, 1.8rem);
+        letter-spacing: 1px;
+        margin: 18px 10px;
+    }
+
+    .contenedor {
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        gap: 18px;
+        padding: 0 12px;
+    }
+
+    .producto {
+        width: 100%;
+        max-width: 380px;
+        padding: 14px;
+    }
+
+    .producto img {
+        height: auto;
+        max-height: 260px;
+    }
+
+    .producto p {
+        font-size: 1rem;
+    }
+
+    .nombre-producto {
+        font-size: 1.4rem;
+    }
+
+    .precio-producto,
+    .stock-ok,
+    .stock-bajo,
+    .stock-agotado {
+        font-size: 1.2rem;
+    }
+
+    input,
+    select {
+        max-width: calc(100% - 10px);
+    }
+
+    .subcategorias {
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .camara {
+        position: static;
+        display: flex;
+        justify-content: center;
+        margin: 16px auto;
+        transform: none;
+    }
+
+    .camara img {
+        width: 60px;
+    }
+
+    .acciones {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px;
+    }
+
+    .acciones button {
+        margin: 3px;
+        font-size: 0.9rem;
+    }
+
+    .navbar ul {
+        gap: 8px;
+    }
+
+    .navbar li a {
+        padding: 8px 10px;
+        font-size: 1.1rem;
+    }
+
+    .logos-pie {
+        gap: 16px;
+        padding: 16px;
+    }
 }

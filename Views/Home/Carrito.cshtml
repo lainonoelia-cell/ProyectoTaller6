@@ -1,25 +1,24 @@
 @{
     ViewData["Title"] = "Carrito";
-    Layout = null;
+    Layout = "_Layout";
+
+    var usuarioRed = ViewBag.Usuario as string ?? "";
+    var redSocial = ViewBag.Red as string ?? "";
 }
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrito - MM Indumentaria</title>
     <link rel="stylesheet" href="~/css/carrito.css" />
-</head>
-<body>
 
-<div class="container">
+
+<div class="carrito-panel">
 
     <!-- HEADER -->
     <div class="header-carrito">
-        <button class="btn-volver" onclick="volverCatalogo()">←</button>
-        <h1>🛒 Mi Carrito</h1>
-    </div>
+    <h1><span id="iconoCarrito">🛒</span> Mi Carrito</h1>
+</div>
 
     <!-- LISTA PRODUCTOS -->
     <div id="carritoContainer" class="carrito-container">
@@ -30,24 +29,45 @@
         <h2>Total: <span id="totalCarrito">$0</span></h2>
     </div>
 
+    <!-- CLIENTE REGISTRADO -->
+<div class="datos-cliente">
+    <span>👤 Cliente:</span>
+
+    <strong>
+        @usuarioRed
+    </strong>
+
+    @if (!string.IsNullOrWhiteSpace(redSocial))
+    {
+        <span class="red-cliente">
+            — Registrado mediante @redSocial
+        </span>
+    }
+</div>
+
+
     <!-- BOTONES -->
     <div class="botones-carrito">
 
-        <button class="btn-vaciar" onclick="vaciarCarrito()">
-            🗑️ Vaciar carrito
-        </button>
+    <button class="btn-vaciar" onclick="vaciarCarrito()">
+        🗑 Vaciar carrito
+    </button>
 
-        <button class="btn-whatsapp" onclick="enviarWhatsApp()">
-            📱 Enviar pedido a WhatsApp
-        </button>
+    <button class="btn-ticket" onclick="generarTicket()">
+        🧾 Generar ticket
+    </button>
 
-    </div>
+    <button class="btn-whatsapp" onclick="enviarWhatsApp()">
+    📱 Enviar pedido a WhatsApp
+</button>
+
+</div>
 
 </div>
 
 <script>
 
-let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+let carrito = [];
 
 function cargarCarrito() {
 
@@ -71,12 +91,20 @@ function cargarCarrito() {
     container.innerHTML = carrito.map((item, index) => {
 
         const subtotal = item.precio * item.cantidad;
+
         total += subtotal;
+
+        // Si el producto todavía no tiene forma de pago,
+        // la dejamos vacía.
+        if (!item.formaPago) {
+            item.formaPago = "";
+        }
 
         return `
             <div class="card-carrito">
 
                 <div class="info-producto">
+
                     <h3>${item.nombre}</h3>
 
                     <p>Talle: ${item.talle}</p>
@@ -86,75 +114,842 @@ function cargarCarrito() {
                     <p class="precio">
                         $${subtotal.toLocaleString()}
                     </p>
+
+                    <div class="pago-producto">
+
+                        <label>
+                            💳 Forma de pago:
+                        </label>
+
+                        <select
+                            onchange="cambiarFormaPago(${index}, this.value)"
+                        >
+
+                            <option value="">
+                                Seleccioná cómo abonás
+                            </option>
+
+                            <option value="Efectivo"
+                                ${item.formaPago === "Efectivo" ? "selected" : ""}>
+                                💵 Efectivo
+                            </option>
+
+                            <option value="Transferencia bancaria"
+                                ${item.formaPago === "Transferencia bancaria" ? "selected" : ""}>
+                                🏦 Transferencia bancaria
+                            </option>
+
+                            <option value="Mercado Pago"
+                                ${item.formaPago === "Mercado Pago" ? "selected" : ""}>
+                                📱 Mercado Pago
+                            </option>
+
+                            <option value="Tarjeta de débito"
+                                ${item.formaPago === "Tarjeta de débito" ? "selected" : ""}>
+                                💳 Tarjeta de débito
+                            </option>
+
+                            <option value="Tarjeta de crédito"
+                                ${item.formaPago === "Tarjeta de crédito" ? "selected" : ""}>
+                                💳 Tarjeta de crédito
+                            </option>
+
+                        </select>
+
+                    </div>
+
                 </div>
 
-                <button class="btn-eliminar"
-                    onclick="eliminarProducto(${index})">
+                <button
+                    class="btn-eliminar"
+                   onclick="eliminarProducto(${index}, this)">
                     🗑️
                 </button>
 
             </div>
         `;
+
     }).join('');
 
     totalSpan.innerText = `$${total.toLocaleString()}`;
 }
 
-function eliminarProducto(index) {
+function cambiarFormaPago(index, formaPago) {
 
-    carrito.splice(index, 1);
+    const item = carrito[index];
 
-    localStorage.setItem('carrito', JSON.stringify(carrito));
+    item.formaPago = formaPago;
+    
+    // Guardar también en MySQL
+    fetch('/Home/ActualizarFormaPago', {
 
-    cargarCarrito();
+        method: 'POST',
+
+        headers: {
+            'Content-Type': 'application/json'
+        },
+
+        body: JSON.stringify({
+
+            productoId: item.id,
+
+            talle: item.talle,
+
+            formaPago: formaPago
+
+        })
+
+    })
+    .then(response => response.json())
+    .then(data => {
+
+        if (!data.exito) {
+
+            console.error(
+                "No se pudo actualizar la forma de pago:",
+                data.mensaje
+            );
+
+            return;
+        }
+
+        console.log(
+            "Forma de pago guardada en MySQL:",
+            formaPago
+        );
+
+    })
+    .catch(error => {
+
+        console.error(
+            "Error al guardar forma de pago:",
+            error
+        );
+
+    });
+}
+ // ============================================
+        // ELIMINAR
+        // ============================================
+
+  async function eliminarProducto(index, boton) {
+    const producto = carrito[index];
+
+    if (!producto) return;
+
+    boton.classList.remove("tacho-animado");
+    void boton.offsetWidth;
+    boton.classList.add("tacho-animado");
+
+    await new Promise(resolve =>
+        boton.addEventListener("animationend", resolve, { once: true })
+    );
+
+    const parametros = new URLSearchParams({
+        productoId: producto.id,
+        color: producto.color || "",
+        talle: producto.talle || ""
+    });
+
+    try {
+        const respuesta = await fetch(
+            `/Home/EliminarDelCarrito?${parametros}`,
+            { method: "POST" }
+        );
+
+        const resultado = await respuesta.json();
+
+        if (!resultado.exito) {
+            Swal.fire({
+                icon: "error",
+                text: resultado.mensaje || "No se pudo eliminar el producto."
+            });
+            return;
+        }
+
+        carrito.splice(index, 1);
+        cargarCarrito();
+        sonidoEliminar();
+        animarCarrito();
+    } catch (error) {
+        console.error("Error al eliminar el producto:", error);
+    }
 }
 
-function vaciarCarrito() {
+function sonidoEliminar() {
 
-    carrito = [];
+    const audioContext =
+        new Audio('/sounds/carrito-eliminar.wav').play();
 
-    localStorage.removeItem('carrito');
+    const oscilador =
+        audioContext.createOscillator();
 
-    cargarCarrito();
+    const volumen =
+        audioContext.createGain();
+
+    oscilador.type = "sine";
+
+    oscilador.frequency.setValueAtTime(
+        500,
+        audioContext.currentTime
+    );
+
+    oscilador.frequency.exponentialRampToValueAtTime(
+        250,
+        audioContext.currentTime + 0.15
+    );
+
+    volumen.gain.setValueAtTime(
+        0.15,
+        audioContext.currentTime
+    );
+
+    volumen.gain.exponentialRampToValueAtTime(
+        0.001,
+        audioContext.currentTime + 0.15
+    );
+
+    oscilador.connect(volumen);
+
+    volumen.connect(audioContext.destination);
+
+    oscilador.start();
+
+    oscilador.stop(
+        audioContext.currentTime + 0.15
+    );
+}
+
+// ============================================
+// ANIMACIÓN DEL CARRITO
+// ============================================
+
+function animarCarrito() {
+    const carritoIcono = document.getElementById("iconoCarrito");
+
+    if (!carritoIcono) return;
+
+    carritoIcono.classList.remove("mover");
+    void carritoIcono.offsetWidth;
+    carritoIcono.classList.add("mover");
+}
+
+async function vaciarCarrito() {
+    try {
+        const respuesta = await fetch('/Home/VaciarCarrito', {
+            method: 'POST'
+        });
+
+        const resultado = await respuesta.json();
+
+        if (!resultado.exito) {
+            Swal.fire({
+                icon: "error",
+                text: resultado.mensaje || "No se pudo vaciar el carrito."
+            });
+            return;
+        }
+
+        carrito = [];
+        cargarCarrito();
+
+        const sonido = new Audio('/sounds/carrito-vaciar.wav');
+        sonido.play().catch(() => {});
+
+        animarCarrito();
+
+        Swal.fire({
+            toast: true,
+            position: "top-end",
+            icon: "success",
+            title: "Carrito vaciado",
+            showConfirmButton: false,
+            timer: 1500
+        });
+    } catch (error) {
+        console.error("Error al vaciar el carrito:", error);
+    }
 }
 
 function enviarWhatsApp() {
 
     if (carrito.length === 0) {
-        alert('No hay productos en el carrito');
+
+        Swal.fire({
+    icon: "warning",
+    text: "No hay productos en el carrito",
+    confirmButtonText: "Entendido"
+});
+
+
+
         return;
     }
 
-    let mensaje = "¡Hola! Quiero realizar el siguiente pedido:%0A%0A";
+    const nombreCliente =
+    @Html.Raw(System.Text.Json.JsonSerializer.Serialize(usuarioRed));
+
+    if (!nombreCliente) {
+
+       Swal.fire({
+    icon: "warning",
+    text: "Por favor seleccioná la forma de pago para todos los productos.",
+    confirmButtonText: "Entendido"
+});
+
+        
+
+        return;
+    }
+
+    // 🔊 SONIDO
+    sonidoWhatsApp();
+
+    // 📳 VIBRACIÓN
+    if (navigator.vibrate) {
+        navigator.vibrate([150, 80, 150]);
+    }
+
+    let mensaje =
+        `¡Hola! Quiero realizar el siguiente pedido:%0A%0A`;
+
+    mensaje +=
+        `Cliente: ${nombreCliente}%0A%0A`;
 
     carrito.forEach(item => {
 
-        mensaje += `• ${item.nombre} - Talle: ${item.talle} - Cantidad: ${item.cantidad}%0A`;
+    mensaje +=
+        `• ${item.nombre}` +
+        ` - Color: ${item.color}` +
+        ` - Talle: ${item.talle}` +
+        ` - Cantidad: ${item.cantidad}%0A`;
 
+});
+
+    const total =
+        carrito.reduce(
+            (sum, item) =>
+                sum + (item.precio * item.cantidad),
+            0
+        );
+
+    mensaje +=
+        `%0ATotal estimado: $${total.toLocaleString()}`;
+
+    mensaje +=
+        `%0A%0A¡Gracias por su compra!`;
+
+    mensaje +=
+        `%0AAtentamente,`;
+
+    mensaje +=
+        `%0AEquipo MMyM Indumentaria`;
+
+    const numero = "5491155555555";
+
+    const url =
+        `https://wa.me/${numero}?text=${mensaje}`;
+
+    window.open(url, '_blank');
+}
+
+function sonidoWhatsApp() {
+
+    const audio =
+        new Audio('/sounds/boton-whatsapp.wav');
+
+    audio.volume = 1.0;
+
+    audio.play().catch(error => {
+        console.log("No se pudo reproducir el sonido:", error);
     });
 
-    const total = carrito.reduce((sum, item) =>
-    sum + (item.precio * item.cantidad), 0);
-
-mensaje += `%0ATotal estimado: $${total.toLocaleString()}`;
-mensaje += `%0A%0A¡Gracias por su compra`;
-mensaje += `%0AEquipo MM Indumentaria!`;
-
-const numero = "5491155555555";
-
-const url = `https://wa.me/${numero}?text=${mensaje}`;
-
-window.open(url, '_blank');
+    if (navigator.vibrate) {
+    navigator.vibrate([150, 80, 150]);
 }
+
+}
+
+function sonidoTicket() {
+
+    const audio =
+        new Audio('/sounds/generar-ticket.wav');
+
+    audio.volume = 1.0;
+
+    audio.play().catch(error => {
+        console.log("No se pudo reproducir el sonido:", error);
+    });
+
+    if (navigator.vibrate) {
+    navigator.vibrate([150, 80, 150]);
+}
+
+}
+
+function generarTicket() {
+    if (carrito.length === 0) {
+        Swal.fire({
+            icon: "warning",
+            text: "No hay productos en el carrito",
+            confirmButtonText: "Entendido"
+        });
+
+        return;
+    }
+
+   const nombreCliente =
+    @Html.Raw(System.Text.Json.JsonSerializer.Serialize(usuarioRed));
+
+if (!nombreCliente) {
+
+    Swal.fire({
+    icon: "warning",
+    text: "No se pudo obtener el nombre del cliente registrado",
+    confirmButtonText: "Entendido"
+});
+
+    return;
+}
+
+    // ============================================
+// VERIFICAR FORMAS DE PAGO
+// ============================================
+
+const productosSinPago = carrito.filter(
+    item => !item.formaPago
+);
+
+if (productosSinPago.length > 0) {
+
+    Swal.fire({
+    icon: "warning",
+    text: "Por favor seleccioná la forma de pago para todos los productos.",
+    confirmButtonText: "Entendido"
+});
+
+    return;
+}
+
+    // 🔊 SONIDO TICKET
+    sonidoTicket();
+
+    
+
+   let total = 0;
+
+// 📅 FECHA Y HORA
+const ahora = new Date();
+
+const fecha =
+    ahora.toLocaleDateString('es-AR');
+
+const hora =
+    ahora.toLocaleTimeString('es-AR', {
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+
+// 🧾 NÚMERO DE TICKET
+const numeroTicket =
+    "MM-" +
+    ahora.getFullYear() +
+    String(ahora.getMonth() + 1).padStart(2, '0') +
+    String(ahora.getDate()).padStart(2, '0') +
+    "-" +
+    String(ahora.getHours()).padStart(2, '0') +
+    String(ahora.getMinutes()).padStart(2, '0') +
+    String(ahora.getSeconds()).padStart(2, '0');
+
+    const detallesVenta = carrito.map(item => ({
+    productoId: item.id,
+    nombreProducto: item.nombre,
+    color: item.color,
+    talle: item.talle,
+    cantidad: item.cantidad,
+    precioUnitario: item.precio,
+    subtotal: item.precio * item.cantidad,
+    formaPago: item.formaPago
+}));
+
+const totalVenta = carrito.reduce(
+    (sum, item) =>
+        sum + (item.precio * item.cantidad),
+    0
+);
+
+fetch('/Home/RegistrarVenta', {
+
+    method: 'POST',
+
+    headers: {
+        'Content-Type': 'application/json'
+    },
+
+    body: JSON.stringify({
+
+        numeroTicket: numeroTicket,
+
+        total: totalVenta,
+
+        detalles: detallesVenta
+
+    })
+
+})
+.then(response => response.json())
+.then(data => {
+
+    if (!data.exito) {
+
+        console.error(
+            "No se pudo registrar la venta:",
+            data.mensaje
+        );
+
+        return;
+    }
+
+    console.log(
+        "Venta registrada correctamente en MySQL.",
+        data
+    );
+
+})
+.catch(error => {
+
+    console.error(
+        "Error al registrar la venta:",
+        error
+    );
+
+});
+
+let contenido = `
+        <html>
+        <head>
+
+            <title>Ticket de compra</title>
+
+            <style>
+
+    body {
+        font-family: Arial, sans-serif;
+        padding: 30px;
+        max-width: 700px;
+        margin: auto;
+        color: #333;
+    }
+
+    .ticket {
+        border: 2px solid #c9901c;
+        border-radius: 15px;
+        padding: 25px;
+    }
+
+    h1 {
+        text-align: center;
+        color: #9B6C05;
+        margin-bottom: 5px;
+    }
+
+    .subtitulo {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #666;
+    }
+
+    .datos-ticket {
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.datos-ticket strong {
+    color: #9B6C05;
+}
+
+.formas-pago {
+    margin-top: 20px;
+    padding: 15px;
+    background: #faf7ef;
+    border-radius: 10px;
+    border: 1px solid #e3d5b5;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.titulo-pago {
+    font-weight: bold;
+    color: #9B6C05;
+    margin-bottom: 5px;
+}
+
+    .linea {
+        border-top: 1px solid #ddd;
+        margin: 15px 0;
+    }
+
+    .producto {
+        margin-bottom: 15px;
+    }
+
+    .producto-nombre {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    .detalle {
+        color: #666;
+        margin-top: 5px;
+    }
+
+    .subtotal {
+        text-align: right;
+        font-weight: bold;
+    }
+
+    .total {
+        text-align: right;
+        font-size: 24px;
+        font-weight: bold;
+        color: #9B6C05;
+        margin-top: 20px;
+    }
+
+    .gracias {
+        text-align: center;
+        margin-top: 30px;
+        color: #666;
+    }
+
+    .boton-imprimir {
+        display: block;
+        margin: 25px auto 0;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 10px;
+        background: #9B6C05;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    @@media print {
+
+        .boton-imprimir {
+            display: none;
+        }
+
+        body {
+            padding: 0;
+        }
+
+    }
+
+</style>
+
+        </head>
+
+        <body>
+
+            <div class="ticket">
+
+                <h1>MM&M Indumentaria</h1>
+
+<div class="subtitulo">
+    TICKET DE COMPRA
+</div>
+
+<div class="datos-ticket">
+
+    <div>
+        <strong>N° Ticket:</strong>
+        ${numeroTicket}
+    </div>
+
+    <div>
+        <strong>Cliente:</strong>
+        ${nombreCliente}
+    </div>
+
+    <div>
+        <strong>Fecha:</strong>
+        ${fecha}
+    </div>
+
+    <div>
+        <strong>Hora:</strong>
+        ${hora}
+    </div>
+
+</div>
+
+<div class="linea"></div>
+    `;
+
+    // ============================================
+// VERIFICAR SI TODOS PAGAN DE LA MISMA FORMA
+// ============================================
+
+const formasPago = carrito.map(
+    item => item.formaPago
+);
+
+const todosMismaFormaPago =
+    formasPago.every(
+        pago => pago === formasPago[0]
+    );
+
+   carrito.forEach(item => {
+
+    const subtotal =
+        item.precio * item.cantidad;
+
+    total += subtotal;
+
+    contenido += `
+
+        <div class="producto">
+
+            <div class="producto-nombre">
+                ${item.nombre}
+            </div>
+
+          <div class="detalle"> 
+    Color: ${item.color}
+    <br>
+    Talle: ${item.talle} 
+    <br> 
+    Cantidad: ${item.cantidad} 
+    <br> 
+    Precio unitario: 
+    $${item.precio.toLocaleString()} 
+</div>
+
+            <div class="subtotal">
+                Subtotal:
+                $${subtotal.toLocaleString()}
+            </div>
+
+            ${
+                !todosMismaFormaPago
+                ?
+                `
+                <div class="formas-pago">
+
+                    <div class="titulo-pago">
+                        FORMA DE PAGO
+                    </div>
+
+                    <div class="pago-seleccionado">
+                        ${item.formaPago}
+                    </div>
+
+                </div>
+                `
+                :
+                ''
+            }
+
+        </div>
+
+        <div class="linea"></div>
+
+    `;
+
+});
+// ============================================
+// FORMA DE PAGO GENERAL
+// ============================================
+
+if (todosMismaFormaPago) {
+
+    contenido += `
+
+        <div class="formas-pago">
+
+            <div class="titulo-pago">
+                FORMA DE PAGO
+            </div>
+
+            <div class="pago-seleccionado">
+                ${formasPago[0]}
+            </div>
+
+        </div>
+
+    `;
+
+}
+    contenido += `
+
+                <div class="linea"></div>
+
+                <div class="total">
+                    TOTAL: $${total.toLocaleString()}
+                </div>
+
+                <div class="gracias">
+                    ¡Gracias por tu compra! ❤️
+                </div>
+
+                <button
+                    class="boton-imprimir"
+                    onclick="window.print()">
+                    🖨️ Imprimir / Guardar PDF
+                </button>
+
+            </div>
+
+        </body>
+        </html>
+    `;
+
+    const ventana = window.open(
+        '',
+        '_blank',
+        'width=800,height=700'
+    );
+
+    ventana.document.write(contenido);
+
+    ventana.document.close();
+}
+
 
 function volverCatalogo() {
 
     window.location.href = '@Url.Action("ProductoDetalle", "Home")';
 }
 
-cargarCarrito();
+  fetch('/Home/ObtenerCarrito')
+    .then(response => response.json())
+    .then(productos => {
+        carrito = productos;
+        cargarCarrito();
+    })
+    .catch(error => {
+        console.error("Error al cargar el carrito desde MySQL:", error);
+    });
+
+function animarCarrito() {
+
+    const icono =
+        document.getElementById("iconoCarrito");
+
+    if (!icono) return;
+
+    icono.classList.remove("mover");
+
+    // Permite repetir la animación
+    void icono.offsetWidth;
+
+    icono.classList.add("mover");
+}
 
 </script>
 
-</body>
-</html>
+

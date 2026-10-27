@@ -1,4 +1,6 @@
-<script src="https://unpkg.com/html5-qrcode"></script>
+<!--
+<script src="~/js/html5-qrcode.min.js"></script>
+-->
 
 @{
     ViewData["Title"] = "Escaneo Codigo";
@@ -6,9 +8,19 @@
 
 <link rel="stylesheet" href="~/css/escaneo.css" />
 
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap"
+      rel="stylesheet"/>
+
+
 <h1 class="titulo">ESCANEO CÓDIGO PRODUCTO</h1>
 
 <div class="contenedor-escaneo">
+
+    <div class="contenedor-principal">
+
 
     <p class="mensaje">
         Por favor, apunte la cámara al código de la prenda
@@ -32,7 +44,7 @@
 
     <p id="error1" class="resultado1 error1" style="display:none;">
         Producto no encontrado ❌
-    </p>
+</p>
 
     <!-- MANUAL -->
     <div class="manual">
@@ -40,7 +52,186 @@
         <button onclick="buscarCodigo()">Buscar 🔎</button>
     </div>
 
+    </div>
+
+    <!-- TARJETA FLOTANTE -->
+
+<div id="tarjetaProducto"
+     class="producto-modal"
+     style="display:none;">
+
+    <div class="producto-card">
+
+        <img id="imgProducto"
+             class="foto-producto"
+             src="">
+
+        <h2 id="nombreProducto"></h2>
+
+        <div class="datos">
+
+            <div class="infoProducto">
+
+    <div class="fila">
+        <span class="tituloDato">Código</span>
+        <span id="codigoProducto"></span>
+    </div>
+
+    <div class="fila">
+        <span class="tituloDato">Precio</span>
+        <span>$<span id="precioProducto"></span></span>
+    </div>
+
+    <div class="fila">
+        <span class="tituloDato">Stock</span>
+        <span id="stockProducto"></span>
+    </div>
+
+    <div class="fila">
+        <span class="tituloDato">Categoría</span>
+        <span id="categoriaProducto"></span>
+    </div>
+
 </div>
+
+        </div>
+
+        <div class="botones">
+
+            <button
+                class="btn-detalle"
+                onclick="verDetalle()">
+
+                📄 Ver detalle
+
+            </button>
+
+            <button
+              class="btn-etiqueta"
+              onclick="imprimirEtiqueta()">
+           🖨 Imprimir etiqueta
+           </button>
+
+            <button
+                class="btn-cancelar"
+                onclick="cerrarTarjeta()">
+
+                ❌ Cancelar
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div id="modalEtiqueta" class="modal-etiqueta">
+
+    <div class="etiqueta">
+
+         <button
+        class="cerrar"
+        onclick="cerrarEtiqueta()">
+
+        ✖
+
+    </button>
+
+        <img
+            src="/images/logoMM.png"
+            class="logoEtiqueta">
+
+        <h2 id="etNombre"></h2>
+
+        <h3 id="etCodigo"></h3>
+
+        <h2 id="etPrecio"></h2>
+
+        <button
+            class="btn-imprimir"
+            onclick="window.print()">
+
+            🖨 Imprimir
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<div class="estadisticas">
+
+    <span>Total:
+        <strong id="totalEscaneos">0</strong>
+    </span>
+
+    <span style="color:green">
+        Disponibles:
+        <strong id="disp">0</strong>
+    </span>
+
+    <span style="color:red">
+        Agotados:
+        <strong id="agot">0</strong>
+    </span>
+
+    <span style="color:#555">
+    No encontrados:
+        <strong id="error">0</strong>
+    </span>
+
+</div>
+
+</div>
+
+
+<div class="botones-historial">
+
+    <button class="btn-limpiar" onclick="limpiarHistorial()">
+        🗑️ Limpiar historial
+    </button>
+
+    <button class="btn-exportar" onclick="exportarCSV()">
+        💾 Exportar historial
+    </button>
+
+</div>
+
+
+<div class="historial">
+
+    <h2>Historial de escaneos</h2>
+    <div class="tabla-scroll">
+
+    <table id="tablaHistorial">
+
+        <thead>
+
+            <tr>
+
+                <th>Hora</th>
+                <th>Producto</th>
+                <th>Código</th>
+                <th>Stock</th>
+                <th>Estado</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        </tbody>
+
+    </table>
+    </div>
+
+</div>
+
+</div> <!-- contenedor-escaneo -->
+
 
 <!-- 📷 SCANNER + LOGICA -->
 <script>
@@ -50,6 +241,13 @@ let sonidoError = new Audio("/sounds/error.mp3");
 
 let scanner;
 window.speechSynthesis.onvoiceschanged = () => {};
+
+let codigoEscaneado = "";
+// HISTORIAL
+let total = 0;
+let disponibles = 0;
+let agotados = 0;
+let errores = 0;
 
 
 // 🔊 VOZ
@@ -74,6 +272,16 @@ function hablar(texto) {
 
 // 📷 INICIAR ESCANEO
 function iniciarEscaneo() {
+
+     sonidoOk.play().then(() => {
+        sonidoOk.pause();
+        sonidoOk.currentTime = 0;
+    }).catch(()=>{});
+
+    sonidoError.play().then(() => {
+        sonidoError.pause();
+        sonidoError.currentTime = 0;
+    }).catch(()=>{});
 
     document.getElementById("reader").style.display = "block";
 
@@ -105,30 +313,87 @@ function iniciarEscaneo() {
 // 🟢 VALIDAR CODIGO
 function validarCodigo(codigo) {
 
-    fetch('/Home/BuscarPorCodigo?codigo=' + codigo)
-        .then(res => res.json())
-        .then(data => {
+    fetch("/Home/BuscarPorCodigo?codigo=" + codigo)
 
-            if (!data.encontrado) {
+    .then(r => r.json())
 
-                feedbackError();
+    .then(data => {
 
-                setTimeout(() => {
-                    window.location.href = "/Home/Inventario1?error=1";
-                }, 3000);
+        if (!data.encontrado) {
 
-                return;
-            }
+            feedbackError();
+            agregarError(codigo);
 
-            feedbackOk();
 
-            setTimeout(() => {
-                window.location.href =
-                "/Home/Inventario2?codigo=" + codigo;
-            }, 3000);
-        });
+            return;
+
+        }
+
+        feedbackOk();
+
+let mensaje = "Producto encontrado. " + data.nombre + ".";
+
+if(data.stock > 0){
+
+    mensaje += " Stock disponible " + data.stock;
+
+}else{
+
+    mensaje += " Stock agotado.";
+
 }
 
+setTimeout(()=>{
+
+    hablar(mensaje);
+
+},700);
+
+mostrarProducto(data,codigo);
+
+agregarHistorial(data,codigo);
+
+    });
+
+}
+
+function mostrarProducto(data, codigo) {
+
+    codigoEscaneado = codigo;
+
+    document.getElementById("imgProducto").src =
+        "/images/" + data.imagen;
+
+    document.getElementById("nombreProducto").innerText =
+        data.nombre;
+
+    document.getElementById("codigoProducto").innerText =
+        codigo;
+
+    document.getElementById("precioProducto").innerText =
+        Number(data.precio).toLocaleString("es-AR");
+
+    document.getElementById("stockProducto").innerText =
+        data.stock;
+
+    document.getElementById("categoriaProducto").innerText =
+        data.categoria;
+
+    // Mostrar la ficha
+    document.getElementById("tarjetaProducto").style.display = "flex";
+
+    // Ocultar la cámara
+document.querySelector(".camara-grande").style.display = "none";
+
+// Ocultar el lector QR
+document.getElementById("reader").style.display = "none";
+
+// Ocultar búsqueda manual
+document.querySelector(".manual").style.display = "none";
+
+// Ocultar el mensaje
+document.querySelector(".mensaje").style.display = "none";
+}
 
 // 🟢 BUSQUEDA MANUAL
 function buscarCodigo() {
@@ -145,29 +410,26 @@ function buscarCodigo() {
 // ✅ OK
 function feedbackOk() {
 
-    document.getElementById("ok1").style.display = "block";
-    document.getElementById("error1").style.display = "none";
+    document.getElementById("ok1").style.display="block";
+    document.getElementById("error1").style.display="none";
 
-    const flash = document.getElementById("flashOk");
+    const flash=document.getElementById("flashOk");
 
-    flash.style.display = "flex";
+    flash.style.display="flex";
 
-    try {
+    try{
 
-        sonidoOk.currentTime = 0;
+        sonidoOk.currentTime=0;
         sonidoOk.play();
 
-        // Espera a que termine el sonido
-        setTimeout(() => {
-            hablar("Producto encontrado");
-        }, 600);
+    }catch(e){}
 
-    }
-    catch (e) {}
+    setTimeout(()=>{
 
-    setTimeout(() => {
-        flash.style.display = "none";
-    }, 1000);
+        flash.style.display="none";
+
+    },1000);
+
 }
 
 
@@ -192,7 +454,7 @@ function feedbackError() {
 
         // ⏳ ESPERA PARA LA VOZ
         setTimeout(() => {
-            hablar("Producto no encontrado");
+           hablar("Producto no encontrado");
         }, 700);
 
     }
@@ -201,20 +463,204 @@ function feedbackError() {
     setTimeout(() => {
         flash.style.display = "none";
     }, 900);
+    
+}
+
+
+function agregarHistorial(producto,codigo){
+
+    let hora = new Date().toLocaleTimeString();
+
+    let estado;
+
+    if(producto.stock > 0){
+
+        estado = "🟢 Disponible";
+        disponibles++;
+
+    }else{
+
+        estado = "🔴 Agotado";
+        agotados++;
+
+    }
+
+    total++;
+
+    let fila = `
+
+<tr>
+
+<td>${hora}</td>
+
+<td>${producto.nombre}</td>
+
+<td>${codigo}</td>
+
+<td>${producto.stock}</td>
+
+<td>${estado}</td>
+
+</tr>
+
+`;
+
+    document
+        .querySelector("#tablaHistorial tbody")
+        .insertAdjacentHTML("beforeend",fila);
+
+    actualizarEstadisticas();
+
+}
+
+function actualizarEstadisticas(){
+
+    document.getElementById("totalEscaneos").innerText = total;
+
+    document.getElementById("disp").innerText = disponibles;
+
+    document.getElementById("agot").innerText = agotados;
+
+    document.getElementById("error").innerText = errores;
+
+}
+
+function agregarError(codigo){
+
+    let hora = new Date().toLocaleTimeString();
+
+    total++;
+    errores++;
+
+    let fila = `
+
+<tr>
+
+<td>${hora}</td>
+
+<td>No encontrado</td>
+
+<td>${codigo}</td>
+
+<td>-</td>
+
+<td>⚫ No encontrado</td>
+
+</tr>
+
+`;
+
+    document
+        .querySelector("#tablaHistorial tbody")
+        .insertAdjacentHTML("beforeend",fila);
+
+    actualizarEstadisticas();
+
+}
+
+function verDetalle() {
+
+    window.location.href =
+        "/Home/Inventario2?codigo=" + codigoEscaneado;
+
+}
+
+function cerrarTarjeta() {
+
+    document.getElementById("tarjetaProducto").style.display = "none";
+
+    document.querySelector(".camara-grande").style.display = "block";
+
+    document.querySelector(".manual").style.display = "flex";
+
+    document.querySelector(".mensaje").style.display = "block";
+
+}
+
+function imprimirEtiqueta() {
+
+    document.getElementById("etNombre").innerText =
+        document.getElementById("nombreProducto").innerText;
+
+    document.getElementById("etCodigo").innerText =
+        document.getElementById("codigoProducto").innerText;
+
+    document.getElementById("etPrecio").innerText =
+        "$ " + document.getElementById("precioProducto").innerText;
+
+    document.getElementById("modalEtiqueta").style.display = "flex";
+
+}
+
+function cerrarEtiqueta(){
+
+    document.getElementById("modalEtiqueta").style.display="none";
+
+}
+
+
+function irInventario2(){
+
+    window.location.href="/Home/Inventario2?codigo="+codigoEscaneado;
+
+}
+    function limpiarHistorial(){
+
+    document.querySelector("#tablaHistorial tbody").innerHTML="";
+
+    total = 0;
+    disponibles = 0;
+    agotados = 0;
+    errores = 0;
+
+    actualizarEstadisticas();
+
+}
+
+
+
+    function exportarCSV() {
+
+    let tabla = document.getElementById("tablaHistorial");
+
+    let csv = [];
+
+    for (let fila of tabla.rows) {
+
+        let datos = [];
+
+        for (let celda of fila.cells) {
+
+            datos.push(celda.innerText);
+
+        }
+
+        csv.push(datos.join(";"));
+    }
+
+    let archivo = new Blob(
+        [csv.join("\n")],
+        {
+            type: "text/csv;charset=utf-8;"
+        }
+    );
+
+    let enlace = document.createElement("a");
+
+    enlace.href = URL.createObjectURL(archivo);
+
+    enlace.download = "HistorialEscaneos.csv";
+
+    document.body.appendChild(enlace);
+
+    enlace.click();
+
+    document.body.removeChild(enlace);
+
+    URL.revokeObjectURL(enlace.href);
 }
 
 </script>
 
 
 
-<!-- 🔥 LOGOS -->
-<div class="logo-centro">
-    <img src="~/images/logoCDNsis.png" />
-</div>
-
-<div class="logo-derecha">
-    <img src="~/images/logoMM.png" />
-</div>
-
-<!-- 🔙 VOLVER -->
-<a href="/Home/Inventario1" class="btn-volver">⬅</a>

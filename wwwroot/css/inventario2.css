@@ -1,20 +1,66 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     background: rgba(216, 193, 193, 0.91);
     font-family: "Segoe UI", sans-serif;
     margin: 0;
-    padding: 0;
+   padding-bottom: 0px;
+   animation:
+        aparecerInventario2 0.6s ease;
 }
 
-/* TITULO */
+@keyframes aparecerInventario2 {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateY(12px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+    }
+
+}
+
+
+/* =====================================================
+   TÍTULO
+   ===================================================== */
 .titulo{
     text-align:center;
-    font-size:32px;
+    font-size:36px;
     letter-spacing:2px;
-    color:#2d2d2d;
+     color: #9B6C05;
     margin:25px 0;
-    font-family:'Trebuchet MS', sans-serif;
+   font-family: "Segoe UI", Tahoma, sans-serif;
     font-weight:700;
+     transition:
+        color 0.3s ease,
+        transform 0.3s ease,
+        letter-spacing 0.3s ease;
 }
+
+.titulo:hover {
+
+    color: #b8860b;
+
+    transform: translateY(-3px);
+
+    letter-spacing: 3px;
+
+}
+
 
 /* GRID PRINCIPAL */
 .contenedor-inv2{
@@ -26,7 +72,9 @@ body {
     padding:30px;
 }
 
-/* IMAGEN */
+/* =====================================================
+   IMAGEN DEL PRODUCTO
+   ===================================================== */
 .producto-img{
     display:flex;
     justify-content:center;
@@ -37,14 +85,26 @@ body {
     max-width:350px;
     border-radius:25px;
     box-shadow:0 20px 40px rgba(0,0,0,.20);
-    transition:.3s;
+    transition:
+        transform 0.4s ease,
+        box-shadow 0.4s ease;
 }
 
-.producto-img img:hover{
-    transform:scale(1.02);
+.producto-img img:hover {
+
+    transform:
+        scale(1.04)
+        translateY(-3px);
+
+    box-shadow:
+        0 25px 50px rgba(0,0,0,.25);
+
 }
 
-/* TARJETA INFORMACION */
+
+/* =====================================================
+   TARJETA DE INFORMACIÓN
+   ===================================================== */
 .info-producto{
     grid-column:1 / span 2;
 
@@ -58,11 +118,25 @@ body {
 
     box-shadow:
         0 20px 40px rgba(0,0,0,.12);
+         transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
 }
+
+.info-producto:hover {
+
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 25px 50px rgba(0,0,0,.17);
+
+}
+
 
 /* TEXTO GENERAL */
 .info-producto p{
-    font-size:26px;
+    font-size:20px;
     line-height:1.8;
     color:#222;
 }
@@ -79,22 +153,52 @@ body {
     margin:20px 0;
 }
 
-/* CODIGO */
-.codigo-producto{
-    font-size:30px !important;
-    font-weight:800 !important;
-    color:#6b7280 !important;
+/* =====================================================
+   CÓDIGO DEL PRODUCTO
+   ===================================================== */
+.info-producto p.codigo-producto {
+    font-size:18px;
+    font-weight:800;
+    color:#6b7280;
+     transition:
+        color 0.3s ease,
+        transform 0.3s ease;
+}
+.info-producto:hover .codigo-producto {
+
+    transform:
+        translateX(3px);
+
 }
 
-/* NOMBRE PRODUCTO */
-.nombre-producto{
-    font-size:38px !important;
-    font-weight:900 !important;
-    color:#111827 !important;
+.info-producto hr {
+    display: none;
+}
+/* =====================================================
+   NOMBRE DEL PRODUCTO
+   ===================================================== */
+.info-producto p.nombre-producto {
+    font-size:18px; 
+    font-weight:900; 
+    color:#111827;
     margin:15px 0;
+    transition:
+        color 0.3s ease,
+        transform 0.3s ease;
 }
 
-/* PROMOCION */
+.info-producto:hover .nombre-producto {
+
+    color: #9B6C05 !important;
+
+    transform:
+        translateY(-2px);
+
+}
+
+/* =====================================================
+   PROMOCIÓN
+   ===================================================== */
 .promo{
     background:rgba(255,255,255,.85);
     border-radius:25px;
@@ -108,6 +212,9 @@ body {
 
     box-shadow:
         0 15px 35px rgba(0,0,0,.12);
+        transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
 }
 
 .promo:hover{
@@ -123,60 +230,88 @@ body {
     font-size:30px;
 }
 
-/* SELECT */
-.dropdown select{
+/* =====================================================
+   SELECT
+   ===================================================== */
 
+.dropdown select {
     width:100%;
-    padding:18px;
-
+    padding:1px;
     border:none;
     border-radius:15px;
-
     background:white;
-
-    font-size:24px;
-    font-weight:800;
-
+    font-size:16px;
     color:#111827;
-
     box-shadow:
         0 6px 15px rgba(0,0,0,.10);
-
     cursor:pointer;
-
-    transition:.3s;
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.3s ease,
+        border 0.3s ease;
 }
 
-.dropdown select:hover{
-    transform:scale(1.02);
+.dropdown select:hover {
+    transform:
+        translateY(-2px)
+        scale(1.01);
+
 }
 
-.dropdown select:focus{
-    outline:none;
-
+.dropdown select:focus {
+    outline: none;
+    transform:
+        translateY(-2px);
     box-shadow:
-        0 0 0 4px rgba(155,108,5,.25);
+        0 0 0 4px rgba(155,108,5,.25),
+        0 8px 18px rgba(0,0,0,.12);
 }
 
 
-
-/* PRECIO ORIGINAL */
+/* =====================================================
+   PRECIO ORIGINAL
+   ===================================================== */
 #precio{
-    font-size:42px;
+    font-size:18px;
     font-weight:900;
     color:#111827;
+    transition:
+        transform 0.3s ease,
+        color 0.3s ease;
 }
 
-/* DESCUENTO */
+.info-producto:hover #precio {
+
+    transform:
+        translateX(3px);
+
+}
+
+/* =====================================================
+   DESCUENTO
+   ===================================================== */
 #descuento-texto{
-    font-size:34px !important;
+    font-size:18px !important;
     font-weight:900 !important;
     color:#9B6C05 !important;
+    transition:
+        transform 0.3s ease;
+
+}
+.info-producto:hover #descuento-texto {
+
+    transform:
+        scale(1.03);
+
 }
 
-/* PRECIO FINAL */
+
+
+/* =====================================================
+   PRECIO FINAL
+   ===================================================== */
 .precio-final{
-    font-size:60px;
+    font-size:32px;
     font-weight:900;
     text-align:center;
 
@@ -184,9 +319,26 @@ body {
 
     text-shadow:
         2px 2px 5px rgba(0,0,0,.15);
+    transition:
+        transform 0.35s ease,
+        text-shadow 0.35s ease;
 }
 
-/* STOCK */
+.info-producto:hover .precio-final {
+
+    transform:
+        scale(1.04);
+
+    text-shadow:
+        2px 3px 8px rgba(0,0,0,.20);
+
+}
+
+
+
+/* =====================================================
+   STOCK
+   ===================================================== */
 .stock-ok{
     color:#1f7a1f !important;
 }
@@ -202,53 +354,121 @@ body {
 .stock-ok,
 .stock-bajo,
 .stock-agotado{
-    font-size:32px !important;
+    font-size:20px !important;
     font-weight:900 !important;
+     display: inline-block;
+
+    transition:
+        transform 0.3s ease;
+
 }
 
-/* BOTON VOLVER */
-.btn-volver{
-    position:fixed;
-    top:20px;
-    left:20px;
+.info-producto:hover .stock-ok,
+.info-producto:hover .stock-bajo,
+.info-producto:hover .stock-agotado {
+    transform:
+        scale(1.04);
 
-    background:#9B6C05;
-    color:white;
-
-    padding:12px 18px;
-
-    text-decoration:none;
-
-    border-radius:12px;
-
-    font-size:18px;
-
-    transition:.3s;
 }
 
-.btn-volver:hover{
-    transform:scale(1.1);
+/* =====================================================
+   STOCK AGOTADO
+   ===================================================== */
+
+.stock-agotado {
+
+    animation:
+        pulsoStockAgotado 1.8s ease-in-out infinite;
+
 }
 
-/* LOGO CDN */
-.logo-centro{
-    position:fixed;
-    top:50%;
-    left:40px;
-    transform:translateY(-50%);
+@keyframes pulsoStockAgotado {
+
+    0% {
+
+        opacity: 1;
+
+    }
+
+    50% {
+
+        opacity: .65;
+
+    }
+
+    100% {
+
+        opacity: 1;
+
+    }
+
 }
 
-.logo-centro img{
-    width:200px;
+body.tema-oscuro .promo,
+body.tema-oscuro .info-producto {
+    background: #2b2035;
+    color: #f5eef7;
 }
 
-/* LOGO MM */
-.logo-derecha{
-    position:absolute;
-    top:160px;
-    right:30px;
+body.tema-oscuro .promo h2,
+body.tema-oscuro .info-producto p,
+body.tema-oscuro .info-producto strong {
+    color: #f5eef7;
 }
 
-.logo-derecha img{
-    width:80px;
+body.tema-oscuro .info-producto p.codigo-producto {
+    color: #c8bfd1;
 }
+
+body.tema-oscuro .info-producto p.nombre-producto {
+    color: #f5eef7 !important;
+}
+
+body.tema-oscuro #precio {
+    color: #f2c66d;
+}
+
+body.tema-oscuro #descuento {
+    background: #1e1b22;
+    color: #f5eef7;
+}
+
+/* =====================================================
+   ACCESIBILIDAD
+   ===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    * {
+
+        animation: none !important;
+
+        transition: none !important;
+
+    }
+
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+    .contenedor-inv2 {
+        width: calc(100% - 24px);
+        grid-template-columns: 1fr;
+        gap: 20px;
+        margin: 20px auto;
+        padding: 18px;
+    }
+
+    .info-producto {
+        grid-column: 1;
+    }
+
+    .titulo {
+        font-size: clamp(1.5rem, 5vw, 2.2rem);
+    }
+
+    .precio-final {
+        font-size: clamp(2rem, 8vw, 3rem);
+    }
+}
+

@@ -1,243 +1,1458 @@
+/* =========================================================
+   CONFIGURACIÓN GENERAL
+========================================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* =====================================================
+   CUERPO
+===================================================== */
 
 body {
-    background: rgba(216, 193, 193, 0.91);
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
+    background: linear-gradient(135deg, #d8caca, #eadede);
+    font-family: "Fredoka", sans-serif;
+    min-height: 100vh;
+    color: #2d2d2d;
+    padding-bottom: 0px;
 }
 
-/* TITULO */
+
+/* =====================================================
+   TITULO
+===================================================== */
+
 .titulo {
     text-align: center;
-    font-size: 42px;
-    margin-top: 25px;
-
-    font-family: "Trebuchet MS", sans-serif;
+    font-size: 36px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-family: "Fredoka", sans-serif;
     font-weight: 700;
     letter-spacing: 2px;
-
-    color: #2d2d2d;
+ color: #9B6C05;
+     
 }
 
-.btn-volver {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    background: #9B6C05;
-    color: white;
-    padding: 10px 15px;
-    text-decoration: none;
-    border-radius: 8px;
-    font-size: 18px;
-    transition: all 0.2s;
+.titulo:hover {
+
+    color: #b8860b;
+ transform: translateY(-3px);
+    letter-spacing: .5px;
+
 }
 
-.btn-volver:hover {
-    background: #7a5304;
-    transform: scale(1.1);
-}
 
-/* CONTENEDOR */
+/* =====================================================
+   CONTENEDOR PRINCIPAL DEL ESCANEO
+===================================================== */
+
 .contenedor-escaneo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    margin-top: 30px;
-}
 
-/* MENSAJE */
-.mensaje {
-    font-size: 22px;
+    width: 95%;
+
+    max-width: 1100px;
+
+    margin: 35px auto;
+
+    background: rgba(255,255,255,.94);
+
+    border-radius: 28px;
+
+    padding: 35px;
+
+    box-shadow:
+        0 18px 45px rgba(0,0,0,.16);
+
     text-align: center;
-    font-weight: 600;
-    color: #374151;
 }
 
-/* CAMARA */
-.camara-grande img{
-    width:220px;
 
-    background:#d8caca;
+/* =====================================================
+   MENSAJE
+===================================================== */
 
-    border-radius:50%;
+.mensaje {
 
-    padding:20px;
+    font-size: 22px;
+
+    text-align: center;
+
+    font-weight: 600;
+
+    color: #374151;
+
+    margin-bottom: 25px;
+}
+
+
+/* =====================================================
+   CAMARA
+===================================================== */
+
+.camara-grande {
+
+    display: flex;
+
+    justify-content: center;
+
+    margin: 20px 0;
+}
+
+
+.camara-grande img {
+
+    width: 220px;
+
+    background: #f7eaea;
+
+    border-radius: 50%;
+
+    padding: 20px;
 
     box-shadow:
         0 15px 35px rgba(0,0,0,.15);
 
-    transition:.3s;
+    transition: .35s;
+
+    cursor: pointer;
 }
+
 
 .camara-grande img:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+
+    transform: scale(1.07);
+
+    box-shadow:
+        0 20px 40px rgba(155,108,5,.25);
 }
 
-/* RESULTADOS 1 */
-.resultado1 {
-    font-size:22px;
-    font-weight:700;
-    color:#111827;
+
+/* =====================================================
+   RESULTADOS
+===================================================== */
+
+.resultado1,
+.resultado2 {
+
+    font-size: 22px;
+
+    font-weight: 700;
+
+    margin: 15px 0;
 }
 
-.ok1 {
-    color: green;
+
+.ok1,
+.ok2 {
+
+    color: #16a34a;
 }
 
-.error1 {
-    color: red;
+
+.error1,
+.error2 {
+
+    color: #dc2626;
 }
 
-/* INPUT MANUAL */
-.manual{
-    background:white;
 
-    padding:25px;
+/* =====================================================
+   INPUT MANUAL
+===================================================== */
 
-    border:none;
+.manual {
 
-    border-radius:20px;
+    width: fit-content;
 
-    display:flex;
+    max-width: 100%;
 
-    gap:12px;
+    margin: 25px auto;
+
+    background: white;
+
+    padding: 20px;
+
+    border-radius: 20px;
+
+    display: flex;
+
+    gap: 12px;
 
     box-shadow:
         0 10px 25px rgba(0,0,0,.12);
+
+    border: 1px solid #eee;
 }
 
-.manual input{
-    padding:14px;
 
-    font-size:18px;
+.manual input {
 
-    border:none;
+    padding: 14px;
 
-    border-radius:12px;
+    font-size: 18px;
 
-    background:#f5f5f5;
+    border: 2px solid #eee;
+
+    border-radius: 12px;
+
+    background: #f8f8f8;
+
+    outline: none;
+
+    transition: .3s;
+
+    min-width: 280px;
+}
+
+
+.manual input:focus {
+
+    border-color: #c9901c;
+
+    background: white;
 
     box-shadow:
-        inset 0 2px 4px rgba(0,0,0,.08);
+        0 0 0 3px rgba(201,144,28,.12);
 }
 
-.manual button{
-    background:#9B6C05;
 
-    color:white;
+/* =====================================================
+   BOTÓN BÚSQUEDA MANUAL
+===================================================== */
 
-    padding:14px 20px;
+.manual button {
 
-    border:none;
+    background: #9B6C05;
 
-    border-radius:12px;
+    color: white;
 
-    font-size:16px;
+    padding: 14px 22px;
 
-    font-weight:700;
+    border: none;
 
-    cursor:pointer;
+    border-radius: 12px;
 
-    transition:.3s;
-}
+    font-size: 16px;
 
-.manual button:hover{
-    transform:translateY(-2px);
+    font-weight: 700;
+
+    cursor: pointer;
+
+    position: relative;
+
+    overflow: hidden;
+
+    transition: .35s;
 
     box-shadow:
-        0 8px 20px rgba(0,0,0,.15);
-}
-
-/* RESULTADOS 2 */
-.resultado2 {
-    font-size:22px;
-    font-weight:700;
-    color:#111827;
-}
-
-.ok2 {
-    color: green;
-}
-
-.error2 {
-    color: red;
+        0 6px 15px rgba(0,0,0,.15);
 }
 
 
-.scanner-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
+.manual button:hover {
+
+    background: #7a5500;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 20px rgba(0,0,0,.20);
 }
 
-.laser {
+
+/* BRILLO */
+
+.manual button::before {
+
+    content: "";
+
     position: absolute;
-    top: 50%;
-    width: 100%;
-    height: 3px;
-    background: red;
-    animation: scan 1.2s infinite linear;
-    box-shadow: 0 0 10px red;
-}
 
-@keyframes scan {
-    0% { transform: translateY(-200px); }
-    50% { transform: translateY(0); }
-    100% { transform: translateY(200px); }
-}
-
-/* FLASH OK */
-.flash {
-    position: fixed;
     top: 0;
-    left: 0;
-    width: 100%;
+
+    left: -120px;
+
+    width: 60px;
+
     height: 100%;
-    font-size: 80px;
-    display: none;
+
+    background: rgba(255,255,255,.45);
+
+    transform: skewX(-25deg);
+
+    transition: .6s;
+}
+
+
+.manual button:hover::before {
+
+    left: 120%;
+}
+
+
+/* =====================================================
+   TARJETA DEL PRODUCTO ESCANEADO
+   IMPORTANTE: ESTA ES .producto-card
+===================================================== */
+
+.producto-card {
+
+    width: 100%;
+
+    max-width: 950px;
+
+    margin: 30px auto;
+
+    background: white;
+
+    border-radius: 30px;
+
+    padding: 30px;
+
+    box-shadow:
+        0 18px 45px rgba(0,0,0,.18);
+
+    display: grid;
+
+    grid-template-columns: 250px 1fr;
+
+    gap: 30px;
+
     align-items: center;
-    justify-content: center;
+
+    animation: aparece .45s ease;
+}
+
+
+/* =====================================================
+   FOTO PRODUCTO
+===================================================== */
+
+.foto-producto {
+
+    width: 230px;
+
+    height: 280px;
+
+    object-fit: cover;
+
+    border-radius: 22px;
+
+    display: block;
+
+    margin: auto;
+
+    background: #f7eaea;
+
+    padding: 10px;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.15);
+
+    transition: .35s;
+}
+
+
+.foto-producto:hover {
+
+    transform: scale(1.04);
+
+    box-shadow:
+        0 15px 30px rgba(155,108,5,.20);
+}
+
+
+/* =====================================================
+   NOMBRE DEL PRODUCTO
+===================================================== */
+
+#nombreProducto {
+
+    font-size: 34px;
+
+    color: #9B6C05;
+
+    font-weight: 900;
+
+    margin-bottom: 22px;
+
+    text-align: left;
+}
+
+
+/* =====================================================
+   DATOS
+===================================================== */
+
+.datos {
+
+    width: 100%;
+}
+
+
+.infoProducto {
+
+    width: 100%;
+}
+
+
+.fila {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 13px 16px;
+
+    margin-bottom: 10px;
+
+    background: #f7f7f7;
+
+    border-radius: 14px;
+
+    border: 1px solid #eeeeee;
+
+    transition: .25s;
+}
+
+
+.fila:hover {
+
+    background: #f7eaea;
+
+    transform: translateX(3px);
+}
+
+
+.tituloDato {
+
+    color: #777;
+
+    font-weight: 700;
+}
+
+
+.fila span:last-child {
+
+    font-weight: 700;
+
+    color: #222;
+
+    text-align: right;
+}
+
+
+/* =====================================================
+   BOTONES DE LA TARJETA
+   IMPORTANTE: SON .botones
+===================================================== */
+
+.botones {
+
+    width: 100%;
+
+    display: flex;
+
+    gap: 12px;
+
+    margin-top: 22px;
+
+    flex-wrap: wrap;
+}
+
+
+.botones button {
+
+    flex: 1;
+
+    min-width: 150px;
+
+    border: none;
+
+    border-radius: 15px;
+
+    padding: 14px 16px;
+
+    font-size: 16px;
+
     font-weight: bold;
+
+    cursor: pointer;
+
+    transition: .3s;
+
+    position: relative;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 6px 15px rgba(0,0,0,.12);
+}
+
+
+.botones button:hover {
+
+    transform: translateY(-3px) scale(1.02);
+
+    box-shadow:
+        0 10px 22px rgba(0,0,0,.20);
+}
+
+
+/* =====================================================
+   BOTÓN VER DETALLE
+===================================================== */
+
+.btn-detalle {
+
+    background: #2563eb;
+
+    color: white;
+}
+
+
+.btn-detalle:hover {
+
+    background: #1d4ed8;
+}
+
+
+/* =====================================================
+   BOTÓN ETIQUETA
+===================================================== */
+
+.btn-etiqueta {
+
+    background: #9B6C05;
+
+    color: white;
+}
+
+
+.btn-etiqueta:hover {
+
+    background: #7c5604;
+}
+
+
+/* =====================================================
+   BOTÓN CANCELAR
+===================================================== */
+
+.btn-cancelar {
+
+    background: #dc2626;
+
+    color: white;
+}
+
+
+.btn-cancelar:hover {
+
+    background: #b91c1c;
+}
+
+
+/* =====================================================
+   BRILLO EN BOTONES
+===================================================== */
+
+.botones button::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+
+    left: -120px;
+
+    width: 55px;
+
+    height: 100%;
+
+    background: rgba(255,255,255,.40);
+
+    transform: skewX(-25deg);
+
+    transition: .6s;
+}
+
+
+.botones button:hover::before {
+
+    left: 120%;
+}
+
+
+/* =====================================================
+   HISTORIAL
+===================================================== */
+
+.historial {
+
+    width: 95%;
+
+    max-width: 1100px;
+
+    margin: 40px auto;
+
+    background: white;
+
+    border-radius: 25px;
+
+    padding: 28px;
+
+    box-shadow:
+        0 12px 30px rgba(0,0,0,.12);
+}
+
+
+.historial h2 {
+
+    margin-bottom: 22px;
+
+    color: #9B6C05;
+
+    font-size: 28px;
+
+    font-weight: 800;
+
+    text-align: left;
+}
+
+
+/* =====================================================
+   BOTONES DEL HISTORIAL
+   SON BUTTON, NO DIV
+===================================================== */
+
+.historial button {
+
+    border: none;
+
+    border-radius: 12px;
+
+    padding: 12px 20px;
+
+    margin: 5px;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: .3s;
+
+    box-shadow:
+        0 5px 12px rgba(0,0,0,.12);
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+
+.historial button:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 18px rgba(0,0,0,.18);
+}
+
+
+/* Brillo para botones del historial */
+
+.historial button::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+
+    left: -120px;
+
+    width: 50px;
+
+    height: 100%;
+
+    background: rgba(255,255,255,.40);
+
+    transform: skewX(-25deg);
+
+    transition: .6s;
+}
+
+
+.historial button:hover::before {
+
+    left: 120%;
+}
+
+
+/* =====================================================
+   TABLA
+===================================================== */
+
+.historial table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    overflow: hidden;
+
+    border-radius: 12px;
+}
+
+
+.historial th {
+
+    background: #9B6C05;
+
+    color: white;
+
+    padding: 13px;
+
+    font-size: 15px;
+}
+
+
+.historial td {
+
+    padding: 12px;
+
+    border-bottom: 1px solid #ececec;
+
+    text-align: center;
+
+    font-size: 14px;
+}
+
+
+.historial tr:hover {
+
+    background: #f7eaea;
+}
+
+
+/* =====================================================
+   ESTADÍSTICAS
+===================================================== */
+
+.historial span {
+
+    display: inline-block;
+
+    background: #f7f7f7;
+
+    padding: 10px 16px;
+
+    margin: 5px;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 4px 10px rgba(0,0,0,.08);
+
+    font-weight: 600;
+}
+
+
+/* =====================================================
+   MODAL ETIQUETA
+===================================================== */
+
+.modal-etiqueta {
+
+    display: none;
+
+    position: fixed;
+
+    left: 0;
+
+    top: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    background: rgba(0,0,0,.55);
+
+    justify-content: center;
+
+    align-items: center;
+
     z-index: 9999;
 }
 
+
+.etiqueta {
+
+    width: 420px;
+
+    max-width: 90%;
+
+    background: white;
+
+    border-radius: 30px;
+
+    padding: 35px;
+
+    text-align: center;
+
+    box-shadow:
+        0 20px 45px rgba(0,0,0,.35);
+
+    position: relative;
+
+    animation: aparecer .35s;
+}
+
+
+.logoEtiqueta {
+
+    width: 80px;
+
+    margin-bottom: 20px;
+}
+
+
+#etNombre {
+
+    font-size: 34px;
+
+    font-weight: bold;
+
+    margin-bottom: 20px;
+
+    color: #222;
+}
+
+
+#etCodigo {
+
+    font-size: 28px;
+
+    letter-spacing: 3px;
+
+    margin-bottom: 15px;
+
+    color: #555;
+}
+
+
+#etPrecio {
+
+    font-size: 52px;
+
+    font-weight: bold;
+
+    color: #b37a00;
+
+    margin-bottom: 30px;
+}
+
+
+.etiqueta .cerrar {
+
+    position: absolute;
+
+    top: 15px;
+
+    right: 15px;
+
+    width: 42px;
+
+    height: 42px;
+
+    border: none;
+
+    background: #c0392b;
+
+    color: white;
+
+    font-size: 22px;
+
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+
+.etiqueta .cerrar:hover {
+
+    transform: scale(1.1);
+
+    background: #96281b;
+}
+
+
+/* =====================================================
+   BOTÓN IMPRIMIR
+===================================================== */
+
+.btn-imprimir {
+
+    background: #b37a00;
+
+    color: white;
+
+    border: none;
+
+    padding: 18px 45px;
+
+    font-size: 22px;
+
+    border-radius: 18px;
+
+    cursor: pointer;
+
+    transition: .25s;
+}
+
+
+.btn-imprimir:hover {
+
+    transform: scale(1.05);
+
+    background: #8d5f00;
+}
+
+
+/* =====================================================
+   FLASH DEL ESCÁNER
+===================================================== */
+
+.scanner-overlay {
+
+    position: fixed;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    pointer-events: none;
+}
+
+
+.laser {
+
+    position: absolute;
+
+    top: 50%;
+
+    width: 100%;
+
+    height: 3px;
+
+    background: red;
+
+    animation: scan 1.2s infinite linear;
+
+    box-shadow:
+        0 0 10px red;
+}
+
+
+@keyframes scan {
+
+    0% {
+        transform: translateY(-200px);
+    }
+
+    50% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(200px);
+    }
+}
+
+
+/* =====================================================
+   FLASH OK / ERROR
+===================================================== */
+
+.flash {
+
+    position: fixed;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    font-size: 80px;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-weight: bold;
+
+    z-index: 9999;
+}
+
+
 .flash.ok {
+
     background: rgba(0,255,0,0.3);
+
     color: white;
 }
+
 
 .flash.error {
+
     background: rgba(255,0,0,0.3);
+
     color: white;
 }
 
-/* LOGO CENTRO ABAJO */
-.logo-centro {
+/* ==========================================
+   BOTONES DEL HISTORIAL
+========================================== */
+
+.botones-historial {
+    width: 90%;
+    max-width: 1100px;
+
+    margin: 25px auto 0;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+/* ==========================================
+   BOTÓN LIMPIAR
+========================================== */
+
+.btn-limpiar {
+    background: #9B6C05;
+
+    color: white;
+
+    border: none;
+
+    padding: 12px 20px;
+
+    border-radius: 12px;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    position: relative;
+
+    overflow: hidden;
+
+    transition: .35s;
+
+    box-shadow:
+        0 6px 15px rgba(0,0,0,.15);
+}
+
+.btn-limpiar:hover {
+    background: #7a5500;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 20px rgba(0,0,0,.20);
+}
+
+.btn-limpiar::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120px;
+
+    width: 60px;
+    height: 100%;
+
+    background: rgba(255,255,255,.45);
+
+    transform: skewX(-25deg);
+
+    transition: .6s;
+}
+
+.btn-limpiar:hover::before {
+    left: 120%;
+}
+
+
+/* ==========================================
+   BOTÓN EXPORTAR
+========================================== */
+
+.btn-exportar {
+    background: #9B6C05;
+
+    color: white;
+
+    border: none;
+
+    padding: 12px 20px;
+
+    border-radius: 12px;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    position: relative;
+
+    overflow: hidden;
+
+    transition: .35s;
+
+    box-shadow:
+        0 6px 15px rgba(0,0,0,.15);
+}
+
+.btn-exportar:hover {
+    background: #7a5500;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 20px rgba(0,0,0,.20);
+}
+
+.btn-exportar::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120px;
+
+    width: 60px;
+    height: 100%;
+
+    background: rgba(255,255,255,.45);
+
+    transform: skewX(-25deg);
+
+    transition: .6s;
+}
+
+.btn-exportar:hover::before {
+    left: 120%;
+}
+
+/* =====================================================
+   ANIMACIONES
+===================================================== */
+
+@keyframes aparece {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(20px)
+            scale(.9);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+/* ==========================================
+   NAVBAR  ENLACE 
+========================================== */
+.navbar {
+    width: 100%;
+    padding: 1rem;
+
     display: flex;
     justify-content: center;
-    margin-top: 10px;
+    align-items: center;
 }
 
-.logo-centro img {
-    width: 200px;
+.navbar ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+
+    margin: 0;
+    padding: 0;
 }
 
-/* LOGO ESQUINA DERECHA */
-.logo-derecha {
-    position: fixed;
-    bottom: 700px;
-    right: 10px;
+.navbar li {
+    list-style: none;
 }
 
-.logo-derecha img {
-    width: 98px;
+.navbar li a {
+    display: inline-flex;
+    padding: 0.8rem 1rem;
+
+    color: #756a77;
+    font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+    font-weight: bold;
+    text-decoration: none;
+
+    border-radius: 1rem;
+
+    transition:
+        color 0.2s ease,
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.navbar li a:hover,
+.navbar li a:focus-visible {
+    color: #756a77;
+    background-color: #f2c66d;
+    transform: translateY(-2px);
+}
+
+.tabla-scroll {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.tabla-scroll table {
+    min-width: 600px;
+    
 }
 
 
-.navbar {
-    display: none;
+
+/* ==========================================
+   LOGOS DEL PIE DE PÁGINA
+========================================== */
+
+.logos-pie {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+    width: 100%;
+    margin-top: 2rem;
+    padding: 1.5rem;
+}
+
+.logos-pie img {
+    width: clamp(65px, 10vw, 125px);
+    height: auto;
+    object-fit: contain;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.logos-pie img:hover {
+    transform: scale(1.08);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.25));
+}
+
+body.tema-oscuro {
+    background: #371853;
+}
+
+body.tema-oscuro .contenedor-escaneo,
+body.tema-oscuro .historial {
+    background: #2b2035;
+    color: #f5eef7;
+    border-color: #594765;
+}
+
+body.tema-oscuro .contenedor-escaneo input,
+body.tema-oscuro .contenedor-escaneo select {
+    background: #1e1b22;
+    color: #f5eef7;
+    border-color: #594765;
+}
+
+body.tema-oscuro .producto-card {
+    background: #2b2035;
+    color: #f5eef7;
+}
+
+body.tema-oscuro .producto-card .fila,
+body.tema-oscuro .producto-card .fila:hover {
+    background: #392b45;
+    border-color: #594765;
+}
+
+body.tema-oscuro .producto-card .tituloDato {
+    color: #c8bfd1;
+}
+
+body.tema-oscuro .producto-card .fila span:last-child {
+    color: #f5eef7;
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 700px) {
+    .navbar {
+        padding: 0.5rem;
+    }
+
+    .navbar ul {
+        gap: 0.25rem;
+        flex-wrap: wrap;
+    }
+
+    .navbar li a {
+        font-size: 0.95rem;
+        padding: 0.45rem;
+    }
+
+    .titulo {
+    width: 100%;
+    max-width: 100%;
+    padding: 0 12px;
+    font-size: clamp(1.2rem, 6vw, 1.7rem);
+    letter-spacing: 0;
+    overflow-wrap: anywhere;
+    line-height: 1.15;
+    overflow-wrap:anywhere;
+}
+
+.contenedor-escaneo {
+    width: calc(100% - 24px);
+    max-width: 100%;
+    min-width: 0;
+    padding: 16px 12px;
+}
+
+    .mensaje {
+        font-size: 1rem;
+        max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+
+    }
+
+    .camara-grande img {
+        width: min(55vw, 180px);
+    }
+
+    .manual {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px;
+}
+
+.manual input,
+.manual button {
+    width: 100%;
+    min-width: 0;
+}
+
+.contenedor-escaneo,
+.manual,
+.manual input,
+.manual button {
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+.container {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    padding-inline: 12px;
+}
+
+.container > main {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+}
+
+.contenedor-escaneo {
+    width: 100%;
+    min-width: 0;
+}
+
+.producto-card {
+    grid-template-columns: 1fr;
+    width: 100%;
+    min-width: 0;
+    padding: 16px;
+    gap: 16px;
+}
+
+.foto-producto {
+    width: min(100%, 230px);
+    height: auto;
+    max-height: 280px;
+}
+
+#nombreProducto {
+    font-size: clamp(1.4rem, 7vw, 2rem);
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+
+.datos,
+.infoProducto,
+.botones {
+    width: 100%;
+    min-width: 0;
+}
+
+.fila {
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.botones {
+    flex-direction: column;
+}
+
+.botones button {
+    width: 100%;
+    min-width: 0;
+}
 }

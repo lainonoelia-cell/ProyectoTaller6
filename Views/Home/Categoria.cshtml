@@ -2,12 +2,20 @@
 
 @{
     ViewData["Title"] = "Categoria";
+
 }
 
 <link rel="stylesheet" href="~/css/categoria.css" />
+<link rel="stylesheet" href="~/css/badges.css" />
 
-<!-- BOTON VOLVER -->
-<a href="/Home/Inventario1" class="btn-volver">⬅</a>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap"
+      rel="stylesheet"/>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 <h1 class="titulo">@ViewBag.Tipo</h1>
 
@@ -20,13 +28,17 @@
     <input type="number" id="precio" placeholder="Precio" />
     <input type="text" id="imagen" placeholder="Nombre imagen (ej: remera.png)" />
 
-    <select id="tipo">
+<select id="tipo">
+
     <option value="General">General</option>
 
     @foreach (var s in ViewBag.Subcategorias)
     {
-        <option value="@s.Nombre">@s.Nombre</option>
+        <option value="@s.Nombre">
+            @s.Nombre
+        </option>
     }
+
 </select>
 
     <button class="btn-guardar" onclick="crearProducto()"> Guardar ✅ </button>
@@ -49,7 +61,9 @@ function crearProducto() {
 
     fetch('/Home/CrearProducto', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+            'Content-Type': 'application/json'
+        },
         body: JSON.stringify({
             Nombre: nombre,
             Stock: parseInt(stock),
@@ -61,22 +75,58 @@ function crearProducto() {
     })
     .then(res => res.json())
     .then(data => {
+
         if (data.ok) {
-            alert("Producto creado ✅");
-            location.reload();
+
+            Swal.fire({
+                icon: "success",
+                title: "Producto creado",
+                text: "El producto se creó correctamente."
+            }).then(() => {
+                location.reload();
+            });
+
+        } else {
+
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: data.mensaje
+            });
+
         }
+
     });
+
 }
 </script>
 
 <!-- FILTROS DINAMICOS -->
 <div class="subcategorias">
 
-<button onclick="filtrar('Todos')">Todos</button>
+<button onclick="filtrar('Todos')">
+    Todos
+</button>
 
 @foreach (var s in ViewBag.Subcategorias)
 {
-    <button onclick="filtrar('@s.Nombre')">@s.Nombre</button>
+    <div style="display:inline-block; margin:8px; text-align:center;">
+
+        <button onclick="filtrar('@s.Nombre')">
+            @s.Nombre
+        </button>
+
+        <br />
+
+        <button onclick="editarSubcategoria(@s.Id,'@s.Nombre')">
+            ✏
+        </button>
+
+        <button onclick="eliminarSubcategoria(@s.Id)">
+            🗑
+        </button>
+
+    </div>
 }
 
 </div>
@@ -100,10 +150,139 @@ function crearSub() {
     })
     .then(res => res.json())
     .then(data => {
-        if (data.ok) {
-            alert("Subcategoría creada ✅");
+
+    if(data.ok)
+    {
+        Swal.fire({
+            icon: "success",
+            title: "Subcategoría creada",
+            text: "La subcategoría se creó correctamente."
+        }).then(() => {
             location.reload();
+        });
+    }
+    else
+    {
+        Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: data.mensaje
+        });
+    }
+
+});
+}
+
+function editarSubcategoria(id, nombre) {
+
+    Swal.fire({
+        title: "Editar subcategoría",
+        input: "text",
+        inputValue: nombre,
+        inputPlaceholder: "Nuevo nombre",
+        showCancelButton: true,
+        confirmButtonText: "Guardar",
+        cancelButtonText: "Cancelar",
+        inputValidator: (value) => {
+            if (!value) {
+                return "Debe ingresar un nombre";
+            }
         }
+    }).then((result) => {
+
+        if (!result.isConfirmed)
+            return;
+
+        fetch("/Home/EditarSubcategoria", {
+
+            method: "PUT",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+
+                Id: id,
+                Nombre: result.value
+
+            })
+
+        })
+        .then(r => r.json())
+        .then(data => {
+
+            if (data.ok) {
+
+                Swal.fire({
+                    icon: "success",
+                    title: "Subcategoría actualizada",
+                    text: data.mensaje
+                }).then(() => {
+                    location.reload();
+                });
+
+            }
+            else {
+
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: data.mensaje
+                });
+
+            }
+
+        });
+
+    });
+
+}
+
+
+function eliminarSubcategoria(id)
+{
+    Swal.fire({
+        title: "¿Eliminar SubCategoría?",
+        text: "Esta acción no se puede deshacer.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Sí, eliminar",
+        cancelButtonText: "Cancelar"
+    }).then((result) => {
+
+        if (!result.isConfirmed)
+            return;
+
+        fetch("/Home/EliminarSubCategoria?id=" + id, {
+            method: "DELETE"
+        })
+        .then(r => r.json())
+        .then(data => {
+
+            if(data.ok)
+            {
+                Swal.fire({
+                    icon: "success",
+                    title: "Eliminada",
+                    text: data.mensaje
+                }).then(() => {
+                    location.reload();
+                });
+            }
+            else
+            {
+                Swal.fire({
+                    icon: "error",
+                    title: "No se pudo eliminar",
+                    text: data.mensaje
+                });
+            }
+
+        });
+
     });
 }
 </script>
@@ -114,25 +293,33 @@ function crearSub() {
     @foreach (var p in Model)
     {
         <div class="producto" data-tipo="@p.Tipo">
-            <img src="~/images/@p.Imagen" />
 
-<p class="nombre-producto">@p.Nombre</p>
+            @if (!string.IsNullOrEmpty(p.Badge))
+            {
+                <span class="badge @p.ColorBadge">
+                    @p.Badge
+                </span>
+            }
+
+            <img src="/images/@p.Imagen" />
+
+            <p class="nombre-producto">@p.Nombre</p>
            
             <p class="@(p.Stock == 0 ? "stock-agotado" :
            p.Stock <= 5 ? "stock-bajo" :
            "stock-ok")">
 
-    Stock: @p.Stock
+                Stock: @p.Stock
 
-</p>
-            
+            </p>
+
 <p class="precio-producto">
     Precio: $@p.Precio
 </p>
             <div class="acciones">
                 <a href="/Home/EditarProducto?id=@p.Id">
-                    <button>Editar</button>
-                </a>
+    <button>Editar</button>
+</a>
                 <button onclick="eliminarProducto(@p.Id)">Eliminar</button>
                 <button onclick="agregarCodigo(@p.Id)">Agregar</button>
             </div>
@@ -160,7 +347,13 @@ function filtrar(tipo) {
     <a href="/Home/EscaneoCodigo">
         <img src="~/images/camara2.png" />
     </a> 
+
+    
+
 </div>
+
+
+
 
 <script>
 function agregarCodigo(idProducto) {
@@ -170,40 +363,100 @@ function agregarCodigo(idProducto) {
     .then(data => {
 
         if (data.ok) {
-            alert("Código generado: " + data.codigo + " ✅");
-        } else {
-            alert("Error al generar código ❌");
+
+            Swal.fire({
+                icon: "success",
+                title: "Código generado",
+                html: `
+                    <p>El código se generó correctamente.</p>
+                    <input id="codigoGenerado"
+                           class="swal2-input"
+                           value="${data.codigo}"
+                           readonly>
+                `,
+                confirmButtonText: "Copiar código",
+                showCancelButton: true,
+                cancelButtonText: "Cerrar"
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+
+                    const input = document.getElementById("codigoGenerado");
+                    input.select();
+                    document.execCommand("copy");
+
+                    Swal.fire({
+                        icon: "success",
+                        title: "Copiado",
+                        text: "El código fue copiado al portapapeles."
+                    });
+
+                }
+
+            });
+
+        }
+        else {
+
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "No se pudo generar el código."
+            });
+
         }
 
     });
+
 }
 </script>
 
 
 <script>
-function eliminarProducto(id) {
+function eliminarProducto(id)
+{
+    Swal.fire({
+        title: "¿Eliminar producto?",
+        text: "Esta acción no se puede deshacer.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Sí, eliminar",
+        cancelButtonText: "Cancelar"
+    }).then((result) => {
 
-    if (!confirm("¿Seguro que querés eliminar este producto?")) return;
+        if (!result.isConfirmed)
+            return;
 
-    fetch('/Home/EliminarProducto?id=' + id, {
-        method: 'POST'
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.ok) {
-            alert("Producto eliminado ✅");
-            location.reload();
-        }
+        fetch('/Home/EliminarProducto?id=' + id, {
+            method: 'POST'
+        })
+        .then(res => res.json())
+        .then(data => {
+
+            if(data.ok)
+            {
+                Swal.fire({
+                    icon: "success",
+                    title: "Producto eliminado",
+                    text: data.mensaje
+                }).then(() => {
+                    location.reload();
+                });
+            }
+            else
+            {
+                Swal.fire({
+                    icon: "error",
+                    title: "No se pudo eliminar",
+                    text: data.mensaje
+                });
+            }
+
+        });
+
     });
+
 }
 </script>
-
-
-<!-- LOGOS -->
-<div class="logo-centro">
-    <img src="~/images/logoCDNsis.png" />
-</div>
-
-<div class="logo-derecha">
-    <img src="~/images/logoMM.png" />
-</div>

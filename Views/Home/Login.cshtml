@@ -2,79 +2,11 @@
     ViewData["Title"] = "Ingreso Administrativo";
 }
 
-<style>
-    body {
-        background-color: #1f1f1f;
-    }
+@section Styles {
+    <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
+}
 
-    .login-admin {
-        width: 140%;
-        min-height: 800px;
-        margin: 40px auto;
-        background-color: #dca98f;
-        position: relative;
-        text-align: center;
-        overflow: hidden;
-    }
 
-    .logo-fondo {
-        position: absolute;
-        width: 850px;
-        opacity: 0.18;
-        top: 40px;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
-    .titulo-admin {
-        position: relative;
-        z-index: 2;
-        font-size: 80px;
-        font-weight: bold;
-        margin-top: 25px;
-        color: black;
-    }
-
-    .form-admin {
-        position: relative;
-        z-index: 2;
-        margin-top: 70px;
-    }
-
-    .form-admin label {
-        display: block;
-        font-size: 42px;
-        font-weight: bold;
-        margin-top: 25px;
-    }
-
-    .form-admin input {
-        width: 340px;
-        height: 60px;
-        border-radius: 25px;
-        border: none;
-        background-color: rgba(255,255,255,0.75);
-        text-align: center;
-        font-size: 18px;
-    }
-
-    .btn-ingresar {
-        margin-top: 35px;
-        width: 140px;
-        height: 90px;
-        border-radius: 50%;
-        background-color: black;
-        color: white;
-        border: 5px solid white;
-        font-size: 20px;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-    .btn-ingresar:hover {
-        transform: scale(1.05);
-    }
-</style>
 
 <div class="login-admin">
 
@@ -82,13 +14,31 @@
 
     <h1 class="titulo-admin">Administración MM&M</h1>
 
+    <div id="flashLogin"></div>
+
     <form method="post" action="/Home/Login" class="form-admin">
 
         <label>Usuario:</label>
-        <input type="text" name="usuario" />
+        <input
+type="text"
+name="usuario"
+placeholder="Ingrese su usuario" />
 
         <label>Contraseña:</label>
-        <input type="password" name="password" />
+
+<div class="password-box">
+   <input
+type="password"
+id="password"
+name="password"
+placeholder="Ingrese su contraseña" />
+
+    <span id="ojo"
+      class="toggle-password"
+      onclick="mostrarPassword()">
+    👁
+</span>
+</div>
 
         <br />
 
@@ -105,4 +55,63 @@
 
     </form>
 
+
+<audio id="sonidoLoginError"
+        src="~/sounds/login-error.wav"
+        preload="auto">
+</audio>
 </div>
+<script>
+
+
+
+function mostrarPassword(){
+
+    let password = document.getElementById("password");
+    let ojo = document.getElementById("ojo");
+
+    if(password.type==="password"){
+        password.type="text";
+        ojo.innerHTML="🙈";
+    }
+    else{
+        password.type="password";
+        ojo.innerHTML="👁";
+    }
+
+    
+}
+
+window.addEventListener("load", function () {
+
+        const mensajeError =
+            document.querySelector("p[style*='color:red']");
+
+        const flash =
+            document.getElementById("flashLogin");
+
+        const sonido =
+            document.getElementById("sonidoLoginError");
+
+
+        if (mensajeError) {
+
+            flash.classList.add("error");
+
+            sonido.currentTime = 0;
+
+            sonido.play().catch(() => {});
+
+
+            setTimeout(function () {
+
+                flash.classList.remove("error");
+
+            }, 500);
+
+        }
+
+    });
+
+
+</script>

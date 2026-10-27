@@ -1,0 +1,303 @@
+.badge{
+
+display:inline-flex;
+
+justify-content:center;
+
+align-items:center;
+
+padding:10px 22px;
+
+border-radius:30px;
+
+font-size:15px;
+
+font-weight:bold;
+
+color:#222;
+
+box-shadow:0 8px 18px rgba(0,0,0,.18);
+
+transform:rotate(-8deg);
+
+transition:.30s;
+overflow:hidden;
+
+position:relative;
+
+}
+
+.badge::before{
+
+content:"";
+
+position:absolute;
+
+top:0;
+
+left:-120%;
+
+width:45%;
+
+height:100%;
+
+background:
+
+linear-gradient(
+
+90deg,
+
+transparent,
+
+rgba(255,255,255,.7),
+
+transparent
+
+);
+
+transform:skewX(-25deg);
+
+}
+
+
+.badge-rojo{
+
+background:linear-gradient(45deg,#ca6c62,#eaaba4);
+
+color:white;
+
+}
+
+.badge-rojo::before{
+
+animation:brillo 7s infinite;
+
+}
+
+
+.badge-verde{
+
+background:linear-gradient(45deg,#27ae60,#8ceab3);
+
+color:white;
+
+}
+
+.badge-verde::before{
+
+animation:brillo 7s infinite;
+
+}
+
+
+.badge-amarillo{
+
+background:linear-gradient(45deg,#b8860b,#f1c40f);
+
+color:#3b2a00;
+animation:estrella 2.5s infinite;
+
+}
+
+.badge-amarillo::before{
+
+animation:brillo 7s infinite;
+
+}
+
+.badge-celeste{
+
+background:linear-gradient(45deg,#6291b0,#9cd6f7);
+
+color:#0f3555;
+
+}
+
+.badge-celeste::before{
+
+animation:brillo 7s infinite;
+
+}
+
+.badge-violeta{
+
+background:linear-gradient(45deg,#8e44ad,#d198e9);
+
+color:white;
+
+animation:premium 2.8s infinite;
+
+}
+
+.badge-violeta::before{
+
+animation:brillo 7s infinite;
+
+}
+
+.badge-azul{
+
+background:linear-gradient(45deg,#2980b9,#9cc3dd);
+
+color:white;
+
+animation:nuevo .8s infinite;
+
+}
+
+.badge-azul::before{
+
+animation:brillo 7s infinite;
+
+}
+
+.badge-fuccia{
+
+background:linear-gradient(45deg,#b92963,#dd9cc0);
+
+color:white;
+
+animation:oferta 3s infinite;
+
+}
+
+.badge-fuccia::before{
+
+animation:brillo 7s infinite;
+
+}
+
+.badge-lavanda{
+
+background:linear-gradient(45deg,#776ac2,#afa7da);
+
+color:white;
+animation:envio 3s infinite;
+
+}
+
+.badge-lavanda::before{
+
+animation:brillo 7s infinite;
+
+}
+
+@keyframes brillo{
+
+0%{
+
+left:-120%;
+
+}
+
+15%{
+
+left:120%;
+
+}
+
+100%{
+
+left:120%;
+
+}
+
+}
+
+@keyframes premium{
+
+0%,100%{
+
+box-shadow:
+0 8px 18px rgba(0,0,0,.18);
+
+}
+
+50%{
+
+box-shadow:
+0 0 12px gold,
+0 0 25px rgba(255,215,0,.7),
+0 12px 20px rgba(0,0,0,.20);
+
+}
+
+}
+
+@keyframes estrella{
+
+0%,100%{
+
+opacity:1;
+
+}
+
+50%{
+
+opacity:.6;
+
+}
+
+}
+
+@keyframes oferta{
+
+0%,100%{
+
+transform:rotate(-8deg) scale(1);
+
+}
+
+50%{
+
+transform:rotate(-8deg) scale(1.08);
+
+}
+
+}
+
+@keyframes nuevo{
+
+0%,90%{
+
+transform:rotate(-8deg) translateY(0);
+
+}
+
+93%{
+
+transform:rotate(-8deg) translateY(-6px);
+
+}
+
+96%{
+
+transform:rotate(-8deg) translateY(2px);
+
+}
+
+100%{
+
+transform:rotate(-8deg) translateY(0);
+
+}
+
+}
+
+@keyframes envio{
+
+0%,100%{
+
+transform:rotate(-8deg);
+
+}
+
+50%{
+
+transform:
+rotate(-8deg)
+translateX(3px);
+
+}
+
+}

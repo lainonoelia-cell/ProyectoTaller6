@@ -19,10 +19,25 @@
     ViewData["Title"] = "Inventario1";
 }
 
+@if (TempData["LoginCorrecto"] != null)
+{
+    <audio id="sonidoLoginCorrecto"
+           src="~/sounds/login-success.wav"
+           preload="auto">
+    </audio>
+
+    <div id="flashLoginCorrecto"></div>
+}
+
 <link rel="stylesheet" href="~/css/inventario1.css" />
 
-<h1 class="titulo">GESTIÓN INVENTARIO 1- Admin</h1>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap"
+      rel="stylesheet"/>
 
+<h1 class="titulo">INVENTARIO 1- Admin</h1>
 <!-- 🔥 CREAR CATEGORIA -->
 <div style="margin-bottom:20px;">
     <input type="text" id="nombreCategoria" placeholder="Nombre categoría" />
@@ -39,24 +54,32 @@
 @foreach (var c in Model)
 {
     <div class="producto">
-        <a href="/Home/Categoria?tipo=@c.Nombre">
-            <img src="~/images/@c.Imagen" />
-        </a>
+
+    <a href="/Home/Categoria?tipo=@c.Nombre">
+        <img src="~/images/@c.Imagen" />
+    </a>
+
+
+    <div class="acciones">
+
+        <button onclick="editarCategoria(@c.Id,'@c.Nombre','@c.Imagen')">
+            ✏ Editar
+        </button>
+
+        <button onclick="eliminarCategoria(@c.Id)">
+            🗑 Eliminar
+        </button>
+
     </div>
+
+</div>
 }
 
 </div>
 
-<!-- LOGOS -->
-<div class="logo-centro">
-    <img src="~/images/logoCDNsis.png" />
-</div>
 
-<div class="logo-derecha">
-    <img src="~/images/logoMM.png" />
-</div>
 
-<a href="/Home/Bienvenida" class="btn-volver">⬅</a>
+
 
 <!-- 🔥 JS -->
 <script>
@@ -75,13 +98,27 @@ function crearCategoria() {
     })
     .then(res => res.json())
     .then(data => {
-        if (data.ok) {
-            alert("Categoría creada ✅");
+
+    if(data.ok)
+    {
+        Swal.fire({
+            icon: "success",
+            title: "Categoría creada",
+            text: "La categoría se creó correctamente."
+        }).then(() => {
             location.reload();
-        } else {
-            alert("Error ❌");
-        }
-    });
+        });
+    }
+    else
+    {
+        Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: data.mensaje
+        });
+    }
+
+});
 }
 
 function cerrarModal() {
@@ -107,4 +144,208 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 3000);
     }
 });
+
+function editarCategoria(id, nombre, imagen) {
+
+    Swal.fire({
+        title: "Editar categoría",
+
+        html: `
+            <input
+                id="swal-nombre"
+                class="swal2-input"
+                type="text"
+                placeholder="Nombre de la categoría"
+                value="${nombre}"
+            >
+
+            <input
+                id="swal-imagen"
+                class="swal2-input"
+                type="text"
+                placeholder="Imagen (ej: remera.png)"
+                value="${imagen}"
+            >
+        `,
+
+        showCancelButton: true,
+
+        confirmButtonText: "💾 Guardar",
+
+        cancelButtonText: "Cancelar",
+
+        focusConfirm: false,
+
+        preConfirm: () => {
+
+            const nuevoNombre =
+                document.getElementById("swal-nombre").value.trim();
+
+            const nuevaImagen =
+                document.getElementById("swal-imagen").value.trim();
+
+            if (!nuevoNombre) {
+
+                Swal.showValidationMessage(
+                    "Debe ingresar un nombre"
+                );
+
+                return false;
+            }
+
+            if (!nuevaImagen) {
+
+                Swal.showValidationMessage(
+                    "Debe ingresar una imagen"
+                );
+
+                return false;
+            }
+
+            return {
+                nombre: nuevoNombre,
+                imagen: nuevaImagen
+            };
+        }
+
+    }).then((result) => {
+
+        if (!result.isConfirmed)
+            return;
+
+        fetch("/Home/EditarCategoria", {
+
+            method: "PUT",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+
+                Id: id,
+
+                Nombre: result.value.nombre,
+
+                Imagen: result.value.imagen
+
+            })
+
+        })
+        .then(r => r.json())
+        .then(data => {
+
+            if (data.ok) {
+
+                Swal.fire({
+                    icon: "success",
+                    title: "Categoría actualizada",
+                    text: data.mensaje
+                }).then(() => {
+
+                    location.reload();
+
+                });
+
+            }
+            else {
+
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: data.mensaje
+                });
+
+            }
+
+        })
+        .catch(error => {
+
+            console.error(error);
+
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "No se pudo actualizar la categoría."
+            });
+
+        });
+
+    });
+
+}
+
+function eliminarCategoria(id)
+{
+    Swal.fire({
+        title: "¿Eliminar categoría?",
+        text: "Esta acción no se puede deshacer.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Sí, eliminar",
+        cancelButtonText: "Cancelar"
+    }).then((result) => {
+
+        if (!result.isConfirmed)
+            return;
+
+        fetch("/Home/EliminarCategoria?id=" + id, {
+            method: "DELETE"
+        })
+        .then(r => r.json())
+        .then(data => {
+
+            if(data.ok)
+            {
+                Swal.fire({
+                    icon: "success",
+                    title: "Eliminada",
+                    text: data.mensaje
+                }).then(() => {
+                    location.reload();
+                });
+            }
+            else
+            {
+                Swal.fire({
+                    icon: "error",
+                    title: "No se pudo eliminar",
+                    text: data.mensaje
+                });
+            }
+
+        });
+
+    });
+}
+
+window.addEventListener("load", function () {
+
+    const flash =
+        document.getElementById("flashLoginCorrecto");
+
+    const sonido =
+        document.getElementById("sonidoLoginCorrecto");
+
+    if (flash && sonido) {
+
+        flash.classList.add("mostrar");
+
+        sonido.currentTime = 0;
+
+        sonido.play().catch(() => {});
+
+        setTimeout(function () {
+
+            flash.classList.remove("mostrar");
+
+        }, 500);
+
+    }
+
+});
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
